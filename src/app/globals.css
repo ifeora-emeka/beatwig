@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --white: #ffff;
+  --white: #fdfaff;
 
   --background-dark: #171717;
   --background-light: #f1f2f5;
@@ -18,11 +18,16 @@
   --border-color-light: #EDEDEF;
 
   --muted-light: #A2A2AC;
-  --muted-dark: #666666;
+  --muted-dark: #989898;
+
+  --hover-color-dark: #2d2d2d;
+  --hover-color-light: #ece7ef;
 }
 
 @layer base {
   :root {
+    --hover-color: var(--hover-color-light);
+    
     --background: var(--background-light);
     --foreground: 222.2 84% 4.9%;
 
@@ -48,13 +53,15 @@
     --destructive-foreground: 210 40% 98%;
 
     --border: var(--border-color-light);
-    --input: 214.3 31.8% 91.4%;
+    --input: var(--border-color-light);
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
   }
 
   .dark {
+    --hover-color: var(--hover-color-dark);
+
     --background: var(--background-dark);
     --foreground: 210 40% 98%;
 
@@ -80,7 +87,7 @@
     --destructive-foreground: 210 40% 98%;
 
     --border: var(--border-color-dark);
-    --input: 217.2 32.6% 17.5%;
+    --input: var(--border-color-dark);
     --ring: 212.7 26.8% 83.9%;
   }
 }
