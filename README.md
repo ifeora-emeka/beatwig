@@ -1,3 +1,9 @@
+- https://dribbble.com/shots/21059619-UI-Components-Dark-Theme
+- https://dribbble.com/shots/21484880-CoDeck-Project-View-Dark-Mode
+- https://dribbble.com/shots/23125259-CoDeck-project-dashboard
+- https://dribbble.com/shots/18831601-UI-Components-Light-Dark-mode-Freebie
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
