@@ -6,6 +6,9 @@ import { Calendar, RadioTower } from 'lucide-react'
 import React from 'react'
 
 export default function HomePage({ football }: { football: any[] }) {
+
+    console.log('DATA::', football)
+
     return (
         <div className='flex justify-center'>
             <Container>
@@ -25,7 +28,7 @@ export default function HomePage({ football }: { football: any[] }) {
                             {`Today's lineup`}
                         </h1>
                         {
-                            football.map(league => {
+                            football?.map(league => {
                                 return <EachLineupContainer
                                     key={crypto.randomUUID()}
                                     data={league}
