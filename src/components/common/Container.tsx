@@ -13,7 +13,7 @@ export default function Container({ children }: Props) {
 }
 
 export const ContainerLg = ({ children }: any) => {
-  return <div className='md:px-default_spacing xl:min-w-[1200px] xl:max-w-[1200px] w-full'>
+  return <div className='lg:px-default_spacing xl:min-w-[1200px] xl:max-w-[1200px] w-full'>
     {children}
   </div>
 }
