@@ -5,7 +5,6 @@ import cheerio from 'cheerio'
 
 export async function GET() {
 
-    try {
         const { data: html } = await axios.get(football_url);
 
         const $ = cheerio.load(html);
@@ -31,10 +30,7 @@ export async function GET() {
             return { league, competitions };
         }).get();
 
-        return Response.json(tournaments);
-    } catch (error) {
-        console.error("Error:", error);
-        return { error: "Failed to retrieve league names" };
-    }
+        return Response.json({tournaments});
+   
 };
 
