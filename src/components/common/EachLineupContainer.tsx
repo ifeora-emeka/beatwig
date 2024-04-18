@@ -17,7 +17,7 @@ export default function EachLineupContainer() {
                     </CardTitle>
                     {/* <CardDescription>Card Description</CardDescription> */}
                 </CardHeader>
-                <CardContent className='flex flex-col gap-1 overflow-x-auto'>
+                <CardContent className='flex flex-col overflow-x-auto'>
                     <EachLineup isLive />
                     <EachLineup />
                     <EachLineup />
