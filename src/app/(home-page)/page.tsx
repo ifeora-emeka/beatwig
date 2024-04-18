@@ -10,7 +10,7 @@ export default async function page() {
 
   return (
     <>
-      <HomePage football={data?.tournaments} />
+      <HomePage football={data} />
     </>
   )
 }
