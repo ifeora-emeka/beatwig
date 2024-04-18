@@ -19,7 +19,7 @@ export default function FootballPlayer({ }: Props) {
             <Share className="h-4 w-4" />
           </button>
         </header>
-        <div className='md:h-[480px] h-[202px] bg-black lg:rounded-lg'>
+        <div className='md:h-[416px] h-[202px] bg-black lg:rounded-lg'>
           <iframe width="100%" height="100%" src="https://embedstreamgate.com/embed?key=2520" allowFullScreen allowTransparency className='lg:rounded-lg' />
         </div>
       </div>

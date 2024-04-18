@@ -9,7 +9,7 @@ type Props = {}
 
 export default function HomeHeader({ }: Props) {
     return (
-        <Card className='px-5 py-3 flex gap-5 justify-between sticky top-0'>
+        <Card className='px-5 py-3 z-50 flex gap-5 justify-between sticky top-0'>
             <BrandLogo />
             <div className="flex gap-5 items-center">
                 <div className="flex items-center border rounded-md p-2 gap-3">

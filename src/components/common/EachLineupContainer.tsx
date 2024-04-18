@@ -1,26 +1,29 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTheme } from 'next-themes'
-import { RadioTower } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-export default function EachLineupContainer() {
+export default function EachLineupContainer({ data }: any) {
     const { setTheme } = useTheme();
     return (
         <>
             <Card className='w-full'>
                 <CardHeader>
-                    <CardTitle className='flex gap-3 items-center'>
-                        <img className="rounded-full" src="https://cdn.sportfeeds.io/sdl/images/competition/badge/small/4c1nfi2j1m731hcay25fcgndq.png" alt="Europa League" loading="lazy" decoding="async" />
-                        International - Europa League
+                    <CardTitle className='flex gap-3 items-center z-0'>
+                        <div className="h-10 w-10 relative">
+                            <Image fill className="rounded-full absolute" src={data?.league?.img} alt="Europa League" />
+                        </div>
+                        {data?.league?.name}
                     </CardTitle>
                     {/* <CardDescription>Card Description</CardDescription> */}
                 </CardHeader>
                 <CardContent className='flex flex-col overflow-x-auto'>
-                    <EachLineup isLive />
-                    <EachLineup />
-                    <EachLineup />
+                    {
+                        data?.competitions.map((competition:any) => {
+                            return <EachLineup key={crypto.randomUUID()} data={competition} />
+                        })
+                    }
 
                     {/* <br />
                     <div className="flex">
@@ -33,16 +36,16 @@ export default function EachLineupContainer() {
     )
 }
 
-const EachLineup = ({ isLive }: { isLive?: boolean }) => {
+const EachLineup = ({data}:{data:any}) => {
     return <Link href='/live/sports/football/1234'>
         <div className='w-full flex items-center border-t md:gap-0 gap-3 cursor-pointer hover:bg-hover rounded-lg hover:shadow-sm'>
-            <div className='h-20 w-32 flex justify-center items-center'>
+            {/* <div className='h-20 w-32 flex justify-center items-center'>
                 <small>22:00</small>
-            </div>
-            <div className='flex-1 flex items-center gap-4 justify-center'>
+            </div> */}
+            <div className='flex-1 flex items-center gap-4 justify-center h-20'>
                 <div className="flex items-center gap-2">
-                    <small className='truncate'>Manchester City</small>
-                    <img className="crest team-crest_crest__Jp9_k" src="https://cdn.sportfeeds.io/sdl/images/team/crest/medium/a3nyxabgsqlnqfkeg41m6tnpp.png" alt="Manchester City" loading="lazy" decoding="async" height="32" width="32" />
+                    <small className='truncate'>{data?.team1?.name}</small>
+                    <Image className="rounded-full" src={data?.team1?.img} alt={data?.team1?.name} height="32" width="32" />
                 </div>
                 <div className="flex gap-2">
                     <span>0</span>
@@ -50,18 +53,18 @@ const EachLineup = ({ isLive }: { isLive?: boolean }) => {
                     <span>3</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <img className="crest team-crest_crest__Jp9_k" src="https://cdn.sportfeeds.io/sdl/images/team/crest/medium/a3nyxabgsqlnqfkeg41m6tnpp.png" alt="Manchester City" loading="lazy" decoding="async" height="32" width="32" />
-                    <small className='truncate'>Manchester City</small>
+                    <Image className="rounded-full" src={data?.team2?.img} alt={data?.team2?.name} height="32" width="32" />
+                    <small className='truncate'>{data?.team2?.name}</small>
                 </div>
             </div>
-            <div className='h-20 w-32 flex justify-center items-center'>
+            {/* <div className='h-20 w-32 flex justify-center items-center'>
                 {isLive &&
                     <small className='text-red-600 flex items-center gap-2'>
                         <RadioTower className='text-red-600' />
                         Live
                     </small>
                 }
-            </div>
+            </div> */}
         </div>
     </Link>
 }
