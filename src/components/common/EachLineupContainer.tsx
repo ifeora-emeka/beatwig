@@ -37,7 +37,8 @@ export default function EachLineupContainer({ data }: any) {
 }
 
 const EachLineup = ({data}:{data:any}) => {
-    return <Link href='/live/sports/football/1234'>
+    const competitionId = data.url.split('/').pop();
+    return <Link href={`/live/sports/football/${competitionId}`}>
         <div className='w-full flex items-center border-t md:gap-0 gap-3 cursor-pointer hover:bg-hover rounded-lg hover:shadow-sm'>
             {/* <div className='h-20 w-32 flex justify-center items-center'>
                 <small>22:00</small>

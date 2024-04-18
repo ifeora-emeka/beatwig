@@ -1,10 +1,13 @@
+'use client'
 import { Share } from 'lucide-react'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 import React from 'react'
 
 type Props = {}
 
 export default function FootballPlayer({ }: Props) {
+  const {match_id} = useParams();
   return (
     <div className='flex flex-col lg:gap-default_spacing'>
       <div className='bg-card lg:p-default_spacing lg:rounded-lg gap-default_spacing flex flex-col text-muted'>
@@ -20,7 +23,7 @@ export default function FootballPlayer({ }: Props) {
           </button>
         </header>
         <div className='md:h-[416px] h-[202px] bg-black lg:rounded-lg'>
-          <iframe width="100%" height="100%" src="https://embedstreamgate.com/embed?key=2520" allowFullScreen allowTransparency className='lg:rounded-lg' />
+          <iframe width="100%" height="100%" src={`https://embedstreamgate.com/embed?key=${match_id}`} allowFullScreen allowTransparency className='lg:rounded-lg' />
         </div>
       </div>
 

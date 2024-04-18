@@ -7,8 +7,6 @@ import React from 'react'
 
 export default function HomePage({ football }: { football: any[] }) {
 
-    console.log('DATA::', football)
-
     return (
         <div className='flex justify-center'>
             <Container>
