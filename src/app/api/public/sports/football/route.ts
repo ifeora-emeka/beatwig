@@ -1,11 +1,12 @@
 import { football_url } from '@/constants';
 import axios from 'axios'
 import cheerio from 'cheerio'
+import {NextRequest} from "next/server";
 
 
 export async function GET() {
 
-        const { data: html } = await axios.get(football_url);
+        const { data: html } = await axios.get(football_url + '/schedule/soccer');
 
         const $ = cheerio.load(html);
 
@@ -33,4 +34,25 @@ export async function GET() {
         return Response.json({tournaments});
    
 };
+
+
+export async function POST(request: NextRequest, route:any) {
+    try {
+        let data = await request.json();
+        const { match_id, match_slug } = data;
+        const url = football_url + `/match/soccer/${match_slug}/${match_id}`;
+        console.log('THE URL::', url);
+        const { data: html } = await axios.get(url);
+
+        const $ = cheerio.load(html);
+
+
+
+        return Response.json({  });
+    } catch (e) {
+        console.log('MATCH DETAILS ERROR::', e)
+        return Response.json({message: "Error don appin ooh" });
+    }
+
+}
 

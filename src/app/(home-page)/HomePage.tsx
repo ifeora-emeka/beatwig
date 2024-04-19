@@ -4,8 +4,9 @@ import EachLineupContainer from '@/components/common/EachLineupContainer'
 import HomeHeader from '@/components/common/nav/HomeHeader'
 import { Calendar, RadioTower } from 'lucide-react'
 import React from 'react'
+import {FootballTournament} from "@/app/types/sports.types";
 
-export default function HomePage({ football }: { football: any[] }) {
+export default function HomePage({ football }: { football: FootballTournament[] }) {
 
     return (
         <div className='flex justify-center'>

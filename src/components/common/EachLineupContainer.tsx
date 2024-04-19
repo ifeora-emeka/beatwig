@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTheme } from 'next-themes'
 import Link from 'next/link';
 import Image from 'next/image';
+import {FootballCompetition} from "@/app/types/sports.types";
 
 export default function EachLineupContainer({ data }: any) {
     const { setTheme } = useTheme();
@@ -20,7 +21,7 @@ export default function EachLineupContainer({ data }: any) {
                 </CardHeader>
                 <CardContent className='flex flex-col overflow-x-auto'>
                     {
-                        data?.competitions.map((competition:any) => {
+                        data?.competitions.map((competition:FootballCompetition) => {
                             return <EachLineup key={crypto.randomUUID()} data={competition} />
                         })
                     }
@@ -36,7 +37,7 @@ export default function EachLineupContainer({ data }: any) {
     )
 }
 
-const EachLineup = ({data}:{data:any}) => {
+const EachLineup = ({data}:{data:FootballCompetition}) => {
     const competitionId = data.url.split('/').pop();
     return <Link href={`/live/sports/football/${competitionId}`}>
         <div className='w-full flex items-center border-t md:gap-0 gap-3 cursor-pointer hover:bg-hover rounded-lg hover:shadow-sm'>
@@ -44,16 +45,14 @@ const EachLineup = ({data}:{data:any}) => {
                 <small>22:00</small>
             </div> */}
             <div className='flex-1 flex items-center gap-4 justify-center h-20'>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-1 justify-end">
                     <small className='truncate'>{data?.team1?.name}</small>
                     <Image className="rounded-full" src={data?.team1?.img} alt={data?.team1?.name} height="32" width="32" />
                 </div>
-                <div className="flex gap-2">
-                    <span>0</span>
-                    <span>-</span>
-                    <span>3</span>
+                <div className="flex gap-2 min-w-[100px] flext justify-center">
+                    {data.score}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-1">
                     <Image className="rounded-full" src={data?.team2?.img} alt={data?.team2?.name} height="32" width="32" />
                     <small className='truncate'>{data?.team2?.name}</small>
                 </div>
