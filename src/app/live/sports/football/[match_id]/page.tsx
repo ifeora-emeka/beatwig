@@ -4,9 +4,43 @@ import FootballComments from "./FootballComments";
 import FootballPlayer from "./FootballPlayer";
 import { baseUrl } from "@/constants";
 import axios from "axios";
+import { Metadata } from "next";
+import { FootballDetails } from "@/app/types/sports.types";
+
+export const revalidate = 30;
+
+export async function generateMetadata(
+    { params, searchParams }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    const res = await axios(`${baseUrl}/api/public/sports/football`, {
+        method: "POST",
+        data: {
+            match_id: params.match_id,
+        },
+    });
+
+    let details: FootballDetails = res.data.matchDetails
+
+    let title =
+        "Watch " +
+        details?.homeTeam.name +
+        " vs " +
+        details?.awayTeam.name +
+        " live (FREE)";
+
+    return {
+        title: title,
+        description: title + " on BeatWig app.",
+        openGraph: {
+            images: [details.homeTeam.logo, details.awayTeam.logo],
+        },
+        keywords: [details]
+    }
+}
 
 export default async function page(props: any) {
-    console.log(props.params.match_id);
     const res = await axios(`${baseUrl}/api/public/sports/football`, {
         method: "POST",
         data: {
@@ -14,9 +48,7 @@ export default async function page(props: any) {
         },
     });
 
-    console.log(res.data);
-
-    let details = res.data.matchDetails;
+    let details: FootballDetails = res.data.matchDetails;
 
     return (
         <div className="flex justify-center lg:py-default_spacing min-h-[100vh] max-h-[100vh]">
