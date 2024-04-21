@@ -18,3 +18,21 @@ export interface FootballCompetition {
     score: string;
     url: string;
 }
+
+export interface FootballDetails {
+    stream_url: string | null;
+    score: string;
+    status: string;
+    homeTeam: {
+        name: string;
+        logo: string;
+    };
+    awayTeam: {
+        name: string;
+        logo: string;
+    };
+    "startTime": {
+        "date": string;
+        "time": string;
+    },
+}

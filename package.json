@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "add:ui": "npx shadcn-ui@latest add"
+    "add:ui": "npx shadcn-ui@latest add",
+    "format": "prettier --write \"src/**/*.tsx\" --config .prettierrc"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -49,6 +50,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
     "postcss": "^8",
+    "prettier": "^3.1.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
