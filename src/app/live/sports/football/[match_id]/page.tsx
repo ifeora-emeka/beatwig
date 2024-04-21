@@ -24,7 +24,7 @@ export async function generateMetadata(
     let details: FootballDetails = res.data.matchDetails
 
     let title =
-        "Watch " +
+        "LIVE: " +
         details?.homeTeam.name +
         " vs " +
         details?.awayTeam.name +
