@@ -36,7 +36,7 @@ export async function generateMetadata(
         openGraph: {
             images: [details.homeTeam.logo, details.awayTeam.logo],
         },
-        keywords: [details]
+        keywords: [details.homeTeam.name, details.awayTeam.name, details.league_name, "live football", "live stream", "free"],
     }
 }
 
