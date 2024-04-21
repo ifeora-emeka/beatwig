@@ -1,4 +1,3 @@
-"use client"
 import { football_url } from '@/constants';
 import axios from 'axios'
 import cheerio from 'cheerio'
@@ -41,6 +40,7 @@ export async function GET() {
 };
 
 
+
 export async function POST(request: NextRequest, route: any) {
     try {
         let data = await request.json();
@@ -52,32 +52,41 @@ export async function POST(request: NextRequest, route: any) {
         const $ = cheerio.load(html);
 
         // Extracting match details
-        const startTimeFull = $(".duelParticipant__startTime").text().trim();
-        const [date, time] = startTimeFull.split(" ");
+        const startTime = $(".duelParticipant__startTime").text().trim();
         const homeTeamName = $(".duelParticipant__home .participant__participantName").text().trim();
         const homeTeamLogo = $(".duelParticipant__home .participant__image").attr("src");
-        const awayTeamName = $(".duelParticipant__away .participant__participantName").first().text().trim();
+        const awayTeamName = $(".duelParticipant__away .participant__participantName").text().trim();
         const awayTeamLogo = $(".duelParticipant__away .participant__image").attr("src");
         const score = $(".detailScore__wrapper").text().trim();
         const status = $(".detailScore__status .fixedHeaderDuel__detailStatus").text().trim();
-
-        // Extracting iframe src
+        const leagueName = $(".tournamentHeader__country a").text().trim();
         const streamUrl = $(".lf__lineUp .section iframe").attr("src");
+
+        // Extracting link buttons and their data types
+        const links: string[] = [];
+        $(".lf__lineUp .embed-link").each((index, element) => {
+            const link = $(element).attr("datatype");
+            if (link) {
+                links.push(link);
+            }
+        });
 
         // Construct response object
         const matchDetails = {
-            startTime: { date, time }, // Splitting startTime into date and time
+            startTime,
             homeTeam: {
-                name: homeTeamName.split("\n").find(Boolean), // Fixing home team name
+                name: homeTeamName,
                 logo: homeTeamLogo
             },
             awayTeam: {
-                name: awayTeamName.split("\n").find(Boolean), // Fixing away team name
+                name: awayTeamName,
                 logo: awayTeamLogo
             },
             score,
             status,
-            stream_url: streamUrl || null
+            stream_url: streamUrl || null,
+            league_name: leagueName,
+            links // Add links to the response
         };
 
         return Response.json({ matchDetails });

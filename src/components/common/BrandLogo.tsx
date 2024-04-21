@@ -1,19 +1,18 @@
 import Image from "next/image";
 import React from "react";
 
-type Props = {};
+type Props = {
+    size?: number;
+};
 
-export default function BrandLogo({}: Props) {
+export default function BrandLogo({ size }: Props) {
+    let defaultSize = 20;
     return (
-        <div className="flex items-center gap-5">
-            <div className="h-10 w-10 relative">
-                <Image
-                    src={"/brand_prev_ui.png"}
-                    alt="brand"
-                    fill
-                    className="absolute"
-                />
-            </div>
-        </div>
+        <Image
+            src={"/brand_prev_ui.png"}
+            alt="brand"
+            height={size || defaultSize}
+            width={size || defaultSize}
+        />
     );
 }

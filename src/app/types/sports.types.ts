@@ -23,6 +23,7 @@ export interface FootballDetails {
     stream_url: string | null;
     score: string;
     status: string;
+    league_name: string;
     homeTeam: {
         name: string;
         logo: string;
@@ -35,4 +36,5 @@ export interface FootballDetails {
         "date": string;
         "time": string;
     },
+    links: string[],
 }

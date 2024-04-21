@@ -11,6 +11,7 @@ export default function HomePage({
 }: {
     football: FootballTournament[];
 }) {
+    console.log('HOME DATA::', football)
     return (
         <div className="flex justify-center">
             <Container>
