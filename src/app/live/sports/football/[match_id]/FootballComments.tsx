@@ -40,7 +40,7 @@ export default function FootballComments({}: Props) {
             const messagesCollectionRef = collection(db, dbCollectionName.MESSAGES);
             const queryRef = query(
                 messagesCollectionRef,
-                where("match_id", "==", match_id),
+                // where("match_id", "==", match_id),
                 orderBy("createdAt")
             );
 
