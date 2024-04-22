@@ -33,12 +33,12 @@ export async function generateMetadata(
         title: title,
         description: title + " on BeatWig app.",
         openGraph: {
-            images: [details.homeTeam.logo, details.awayTeam.logo],
+            images: [details?.homeTeam?.logo, details?.awayTeam?.logo],
         },
         keywords: [
-            details.homeTeam.name,
-            details.awayTeam.name,
-            details.league_name,
+            details?.homeTeam?.name,
+            details?.awayTeam?.name,
+            details?.league_name,
             "live football",
             "live stream",
             "free",

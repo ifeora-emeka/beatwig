@@ -54,7 +54,7 @@ export default function FootballPlayer({ data }: Props) {
                             <Share className="h-4 w-4" />
                         </button>
                     </header>
-                    <div className="md:h-[416px] h-[202px] bg-black lg:rounded-lg">
+                    <div className="md:h-[416px] h-[202px] bg-black lg:rounded-lg flex justify-center items-center">
                         <CountdownTimer
                             matchStartTime={data.startTime}
                             done={() => console.log("Timer is done")}

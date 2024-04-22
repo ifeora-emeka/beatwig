@@ -56,7 +56,9 @@ export async function POST(request: NextRequest, route: any) {
         const $ = cheerio.load(html);
 
         // Extracting match details
-        const startTime = $(".duelParticipant__startTime").text().trim();
+        // const startTime = $(".duelParticipant__startTime").text().trim();
+        const startTimeFull = $(".duelParticipant__startTime").text().trim();
+        const [date, time] = startTimeFull.split(" ");
         const homeTeamName = $(".duelParticipant__home .participant__participantName").text().trim();
         const homeTeamLogo = $(".duelParticipant__home .participant__image").attr("src");
         const awayTeamName = $(".duelParticipant__away .participant__participantName").text().trim();
@@ -77,7 +79,7 @@ export async function POST(request: NextRequest, route: any) {
 
         // Construct response object
         const matchDetails = {
-            startTime,
+            startTime: { date, time },
             homeTeam: {
                 name: homeTeamName.split("\n").find(Boolean),
                 logo: homeTeamLogo

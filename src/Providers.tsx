@@ -3,6 +3,7 @@ import React from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Next13ProgressBar } from "next13-progressbar";
 import { themeColor } from "./constants";
+import { MatchProvider } from "@/context/match.context";
 
 export default function Providers({ children }: any) {
     return (
@@ -19,7 +20,7 @@ export default function Providers({ children }: any) {
                 enableSystem
                 disableTransitionOnChange
             >
-                {children}
+                <MatchProvider>{children}</MatchProvider>
             </ThemeProvider>
         </>
     );
