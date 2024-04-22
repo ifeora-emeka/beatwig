@@ -79,11 +79,11 @@ export async function POST(request: NextRequest, route: any) {
         const matchDetails = {
             startTime,
             homeTeam: {
-                name: homeTeamName,
+                name: homeTeamName.split("\n").find(Boolean),
                 logo: homeTeamLogo
             },
             awayTeam: {
-                name: awayTeamName,
+                name: awayTeamName.split("\n").find(Boolean),
                 logo: awayTeamLogo
             },
             score,
