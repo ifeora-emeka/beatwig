@@ -1,21 +1,24 @@
 import React, { createContext, useContext, useState } from "react";
 
-// Define the context
 interface MatchContextType {
     matchState: {
-        pending_messages: any[];
+        pending_messages: PendingMessage[];
     };
     setMatchState: (newState: State) => void;
     addPendingChat: (chat: any) => void;
 }
 
+export interface PendingMessage {
+    _id: string;
+    message: string;
+}
+
 interface State {
-    pending_messages: any[];
+    pending_messages: PendingMessage[];
 }
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
 
-// Define the custom hook
 export const useMatchContext = () => {
     const context = useContext(MatchContext);
     if (!context) {
@@ -24,7 +27,6 @@ export const useMatchContext = () => {
     return context;
 };
 
-// Define the provider
 export const MatchProvider = ({ children }: any) => {
     const [state, setState] = useState<State>({
         pending_messages: [],
@@ -37,7 +39,7 @@ export const MatchProvider = ({ children }: any) => {
         }));
     };
 
-    const addPendingChat = (chat: any) => {
+    const addPendingChat = (chat: PendingMessage) => {
         setState((prev) => ({
             ...prev,
             pending_messages: [...prev.pending_messages, chat],

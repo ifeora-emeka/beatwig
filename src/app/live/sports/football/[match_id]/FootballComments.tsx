@@ -1,17 +1,60 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import ChatBobble from "@/components/common/ChatBobble";
 import ChatInput from "@/components/common/ChatInput";
-import { useMatchContext } from "@/context/match.context";
+import { PendingMessage, useMatchContext } from "@/context/match.context";
+import { addDoc, collection, doc, getFirestore, onSnapshot, orderBy, query, where } from "@firebase/firestore";
+import { db, dbCollectionName } from "@/firebase/index.firebase";
+import { serverTimestamp } from "@firebase/firestore";
+import { useParams } from "next/navigation";
 
 type Props = {};
 
 export default function FootballComments({}: Props) {
+    const { match_id } = useParams();
     const [tabIndex, setTabIndex] = useState(0);
-    const { addPendingChat, matchState: { pending_messages } } = useMatchContext();
+    const [messageList, setMessageList] = useState([]);
+
+    const sendMessage = async (message: string) => {
+        try {
+            let _id = crypto.randomUUID().toString();
+            const messagesRef = collection(db, dbCollectionName.MESSAGES);
+            await addDoc(messagesRef, {
+                _id,
+                message,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+                match_id
+            });
+            console.log("Message sent successfully!");
+        } catch (error) {
+            console.error("Error sending message:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (match_id) {
+            const messagesCollectionRef = collection(db, dbCollectionName.MESSAGES);
+            const queryRef = query(
+                messagesCollectionRef,
+                where("match_id", "==", match_id),
+                orderBy("createdAt")
+            );
+
+            const unsubscribe = onSnapshot(queryRef, (snapshot) => {
+                const messages = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setMessageList(messages as any);
+            });
+
+            return () => unsubscribe();
+        }
+    }, [match_id]);
 
     return (
         <div className="bg-card lg:rounded-lg  h-full w-full">
@@ -43,12 +86,14 @@ export default function FootballComments({}: Props) {
                         "py-default_spacing w-full flex-col flex-1 overflow-y-auto overflow-x-hidden flex"
                     }
                 >
-                    {pending_messages.map((chat, i) => {
-                        return <ChatBobble key={`chat-${i}`} chat={chat} />;
+                    {messageList?.map((chat: PendingMessage, i) => {
+                        return (
+                            <ChatBobble key={chat._id} data={chat} isPending />
+                        );
                     })}
                 </div>
                 <div className={"p-default_spacing"}>
-                    <ChatInput onSend={addPendingChat} />
+                    <ChatInput onSend={sendMessage} />
                 </div>
             </div>
         </div>

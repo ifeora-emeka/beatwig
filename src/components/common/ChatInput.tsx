@@ -7,20 +7,26 @@ interface Props {
     isLoading?: boolean;
 }
 
-const ChatInput = ({onSend, isLoading, isDisabled}: Props) => {
-    const [message, setMessage] = useState('');
+const ChatInput = ({ onSend, isLoading, isDisabled }: Props) => {
+    const [message, setMessage] = useState("");
     const [isTextareaFocused, setIsTextareaFocused] = useState(false);
 
     const handleSend = () => {
         if (message && !isDisabled && !isLoading) {
             onSend(message);
-            setMessage('');
+            setMessage("");
         }
     };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "Enter" && isTextareaFocused && message && !isDisabled && !isLoading) {
+            if (
+                e.key === "Enter" &&
+                isTextareaFocused &&
+                message &&
+                !isDisabled &&
+                !isLoading
+            ) {
                 onSend(message);
             }
         };
@@ -41,7 +47,7 @@ const ChatInput = ({onSend, isLoading, isDisabled}: Props) => {
             <textarea
                 onFocus={() => setIsTextareaFocused(true)}
                 onBlur={() => setIsTextareaFocused(false)}
-                onChange={e => setMessage(e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
                 rows={1}
                 placeholder={"Type message..."}
                 value={message}
@@ -55,7 +61,11 @@ const ChatInput = ({onSend, isLoading, isDisabled}: Props) => {
                     "outline-0 bg-background flex-1 border-0 rounded-xl resize-none p-2 text-sm"
                 }
             />
-            <button disabled={isDisabled || isLoading} className={"p-2 text-primary rounded-full"} onClick={handleSend}>
+            <button
+                disabled={isDisabled || isLoading}
+                className={"p-2 text-primary rounded-full"}
+                onClick={handleSend}
+            >
                 <Send />
             </button>
         </div>

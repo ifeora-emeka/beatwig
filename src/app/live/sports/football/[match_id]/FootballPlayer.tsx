@@ -34,6 +34,10 @@ export default function FootballPlayer({ data }: Props) {
         data?.awayTeam.name +
         " live (FREE)";
 
+    if (!data) {
+        return <p>Please reload the page</p>;
+    }
+
     return (
         <>
             <div className="flex flex-col lg:gap-default_spacing">
