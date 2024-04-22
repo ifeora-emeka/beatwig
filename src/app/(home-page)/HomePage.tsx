@@ -33,7 +33,7 @@ export default function HomePage({
                     >
                         <div className={'flex gap-default_spacing items-center justify-center py-default_spacing_lg'}>
                             {["Yesterday", "Today", "Tomorrow"].map((label, i) => {
-                                return <div role={'button'} aria-label={label} className={cn("py-2 px-4 rounded-full", {
+                                return <div key={crypto.randomUUID()} role={'button'} aria-label={label} className={cn("py-2 px-4 rounded-full", {
                                     "bg-primary": i == 1,
                                     "bg-hover": i != 1
                                 })}>
