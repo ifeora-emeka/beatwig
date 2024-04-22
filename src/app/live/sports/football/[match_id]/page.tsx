@@ -11,9 +11,8 @@ export const revalidate = 30;
 
 export async function generateMetadata(
     { params, searchParams }: Props,
-    parent: ResolvingMetadata
+    parent: ResolvingMetadata,
 ): Promise<Metadata> {
-
     const res = await axios(`${baseUrl}/api/public/sports/football`, {
         method: "POST",
         data: {
@@ -21,7 +20,7 @@ export async function generateMetadata(
         },
     });
 
-    let details: FootballDetails = res.data.matchDetails
+    let details: FootballDetails = res.data.matchDetails;
 
     let title =
         "LIVE: " +
@@ -36,8 +35,15 @@ export async function generateMetadata(
         openGraph: {
             images: [details.homeTeam.logo, details.awayTeam.logo],
         },
-        keywords: [details.homeTeam.name, details.awayTeam.name, details.league_name, "live football", "live stream", "free"],
-    }
+        keywords: [
+            details.homeTeam.name,
+            details.awayTeam.name,
+            details.league_name,
+            "live football",
+            "live stream",
+            "free",
+        ],
+    };
 }
 
 export default async function page(props: any) {

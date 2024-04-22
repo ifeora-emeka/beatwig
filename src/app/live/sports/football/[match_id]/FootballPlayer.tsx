@@ -18,14 +18,13 @@ export default function FootballPlayer({ data }: Props) {
     const { match_id } = useParams();
     const [activeLink, setActiveLink] = useState(data?.stream_url || "");
 
-
     useEffect(() => {
         if (data.stream_url) {
             setActiveLink(data?.stream_url);
         }
     }, []);
 
-    console.log('PLAYER DATA::', data)
+    console.log("PLAYER DATA::", data);
 
     let title =
         "Watch " +
@@ -40,7 +39,10 @@ export default function FootballPlayer({ data }: Props) {
             <div className="flex flex-col lg:gap-default_spacing">
                 <div className="bg-card lg:p-default_spacing lg:rounded-lg gap-default_spacing flex flex-col text-muted">
                     <header className="hidden lg:flex gap-default_spacing items-center justify-between">
-                        <Link href={'/'} className="flex gap-default_spacing items-center">
+                        <Link
+                            href={"/"}
+                            className="flex gap-default_spacing items-center"
+                        >
                             <BrandLogo />
                             <span className="text-sm md:text-md">
                                 {data.league_name || "BeatWig"}
@@ -79,7 +81,8 @@ export default function FootballPlayer({ data }: Props) {
                                 <button
                                     key={`server-${i}`}
                                     className={cn("py-1 px-4 rounded-lg", {
-                                        "bg-primary text-white": activeLink == link,
+                                        "bg-primary text-white":
+                                            activeLink == link,
                                     })}
                                     onClick={() => setActiveLink(link)}
                                 >

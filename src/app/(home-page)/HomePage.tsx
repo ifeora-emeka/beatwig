@@ -12,7 +12,7 @@ export default function HomePage({
 }: {
     football: FootballTournament[];
 }) {
-    console.log('HOME DATA::', football)
+    console.log("HOME DATA::", football);
     return (
         <div className="flex justify-center">
             <Container>
@@ -31,15 +31,31 @@ export default function HomePage({
                         className="flex flex-col gap-default_spacing"
                         key={crypto.randomUUID()}
                     >
-                        <div className={'flex gap-default_spacing items-center justify-center py-default_spacing_lg'}>
-                            {["Yesterday", "Today", "Tomorrow"].map((label, i) => {
-                                return <div key={crypto.randomUUID()} role={'button'} aria-label={label} className={cn("py-2 px-4 rounded-full", {
-                                    "bg-primary": i == 1,
-                                    "bg-hover": i != 1
-                                })}>
-                                    {label}
-                                </div>
-                            })}
+                        <div
+                            className={
+                                "flex gap-default_spacing items-center justify-center py-default_spacing_lg"
+                            }
+                        >
+                            {["Yesterday", "Today", "Tomorrow"].map(
+                                (label, i) => {
+                                    return (
+                                        <div
+                                            key={crypto.randomUUID()}
+                                            role={"button"}
+                                            aria-label={label}
+                                            className={cn(
+                                                "py-2 px-4 rounded-full",
+                                                {
+                                                    "bg-primary": i == 1,
+                                                    "bg-hover": i != 1,
+                                                },
+                                            )}
+                                        >
+                                            {label}
+                                        </div>
+                                    );
+                                },
+                            )}
                         </div>
                         <h1 className="text-muted text-lg gap-3 flex">
                             <Calendar />
