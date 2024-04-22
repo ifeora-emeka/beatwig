@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import ChatBobble from "@/components/common/ChatBobble";
+import ChatBobble, { ChatListLoading } from "@/components/common/ChatBobble";
 import ChatInput from "@/components/common/ChatInput";
 import { PendingMessage, useMatchContext } from "@/context/match.context";
-import { addDoc, collection, doc, getFirestore, onSnapshot, orderBy, query, where } from "@firebase/firestore";
+import { addDoc, collection, doc, getFirestore, limit, onSnapshot, orderBy, query, where } from "@firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 import { serverTimestamp } from "@firebase/firestore";
 import { useParams } from "next/navigation";
@@ -17,6 +17,7 @@ export default function FootballComments({}: Props) {
     const { match_id } = useParams();
     const [tabIndex, setTabIndex] = useState(0);
     const [messageList, setMessageList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const sendMessage = async (message: string) => {
         try {
@@ -37,11 +38,14 @@ export default function FootballComments({}: Props) {
 
     useEffect(() => {
         if (match_id) {
+            setLoading(true)
             const messagesCollectionRef = collection(db, dbCollectionName.MESSAGES);
+            console.log('THE ID::',match_id);
             const queryRef = query(
                 messagesCollectionRef,
                 // where("match_id", "==", match_id),
-                orderBy("createdAt")
+                orderBy("createdAt"),
+                limit(50)
             );
 
             const unsubscribe = onSnapshot(queryRef, (snapshot) => {
@@ -49,6 +53,7 @@ export default function FootballComments({}: Props) {
                     id: doc.id,
                     ...doc.data(),
                 }));
+                setLoading(false)
                 setMessageList(messages as any);
             });
 
@@ -87,6 +92,7 @@ export default function FootballComments({}: Props) {
                         "py-default_spacing w-full flex-col flex-1 overflow-y-auto overflow-x-hidden flex"
                     }
                 >
+                    {loading && <ChatListLoading />}
                     {messageList?.map((chat: PendingMessage, i) => {
                         return (
                             <ChatBobble key={chat._id} data={chat} isPending />
