@@ -4,13 +4,13 @@ import FootballComments from "./FootballComments";
 import FootballPlayer from "./FootballPlayer";
 import { baseUrl } from "@/constants";
 import axios from "axios";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import { FootballDetails } from "@/app/types/sports.types";
 
 export const revalidate = 30;
 
 export async function generateMetadata(
-    { params, searchParams }: Props,
+    { params, searchParams }: any,
     parent: ResolvingMetadata,
 ): Promise<Metadata> {
     const res = await axios(`${baseUrl}/api/public/sports/football`, {
