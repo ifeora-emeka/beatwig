@@ -74,6 +74,7 @@ export default function FootballComments({}: Props) {
                                             tabIndex !== i,
                                     })}
                                     onClick={() => setTabIndex(i)}
+                                    key={crypto.randomUUID()}
                                 >
                                     {label}
                                 </button>
