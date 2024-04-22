@@ -31,6 +31,11 @@ export async function GET() {
                return { league, competitions };
            }).get();
 
+
+           console.log('TOURNAMENTS::::',tournaments)
+
+
+
            return Response.json({tournaments});
        } catch (e) {
            console.log("GET LINEUP ERROR::", e)
@@ -46,7 +51,6 @@ export async function POST(request: NextRequest, route: any) {
         let data = await request.json();
         const { match_id } = data;
         const url = `https://v1.givemeredditstreams.me/football/event/${match_id}`;
-        console.log('THE URL::', url);
         const { data: html } = await axios.get(url);
 
         const $ = cheerio.load(html);
