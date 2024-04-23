@@ -6,7 +6,7 @@ export interface UserData {
     display_name: string;
     email: string;
     provider: string;
-    avatar_url: string;
+    avatar_url: string | null;
 
     last_seen: Timestamp;
     createdAt: Timestamp;

@@ -1,5 +1,6 @@
 import { Send } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useAuthContext } from "@/context/auth.context";
 
 interface Props {
     onSend: (message: string) => void;
@@ -8,13 +9,16 @@ interface Props {
 }
 
 const ChatInput = ({ onSend, isLoading, isDisabled }: Props) => {
+    const { user } = useAuthContext();
     const [message, setMessage] = useState("");
     const [isTextareaFocused, setIsTextareaFocused] = useState(false);
 
     const handleSend = () => {
-        if (message && !isDisabled && !isLoading) {
-            onSend(message);
-            setMessage("");
+        if (user) {
+            if (message && !isDisabled && !isLoading) {
+                onSend(message);
+                setMessage("");
+            }
         }
     };
 

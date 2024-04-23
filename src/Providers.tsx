@@ -5,6 +5,7 @@ import { Next13ProgressBar } from "next13-progressbar";
 import { themeColor } from "./constants";
 import { MatchProvider } from "@/context/match.context";
 import { AuthProvider } from "@/context/auth.context";
+import AuthPopup from "@/components/auth/AuthPopup";
 
 export default function Providers({ children }: any) {
     return (
@@ -23,6 +24,7 @@ export default function Providers({ children }: any) {
             >
                 <AuthProvider>
                     <MatchProvider>
+                        <AuthPopup />
                         {children}
                     </MatchProvider>
                 </AuthProvider>

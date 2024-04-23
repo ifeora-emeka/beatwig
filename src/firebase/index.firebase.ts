@@ -15,5 +15,6 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 export const dbCollectionName = {
-    MESSAGES: 'messages'
+    MESSAGES: 'messages',
+    USERS: 'users'
 }

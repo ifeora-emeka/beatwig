@@ -16,10 +16,12 @@ import { db, dbCollectionName } from "@/firebase/index.firebase";
 import { useParams } from "next/navigation";
 import { MatchMessageData } from "@/types/message.types";
 import { firebaseTimeStamp } from "@/utils/date-time.utils";
+import { useAuthContext } from "@/context/auth.context";
 
 type Props = {};
 
 export default function FootballComments({}: Props) {
+    const { user, setAuthContextState } = useAuthContext();
     const { match_id } = useParams();
     const [tabIndex, setTabIndex] = useState(0);
     const [messageList, setMessageList] = useState<MatchMessageData[]>([]);
@@ -27,6 +29,9 @@ export default function FootballComments({}: Props) {
 
     const sendMessage = async (message: string) => {
         try {
+            if (!user) {
+                return setAuthContextState({ show_login: true });
+            }
             let _id = crypto.randomUUID().toString();
             const messagesRef = collection(db, dbCollectionName.MESSAGES);
 
