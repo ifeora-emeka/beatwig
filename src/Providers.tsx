@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Next13ProgressBar } from "next13-progressbar";
 import { themeColor } from "./constants";
 import { MatchProvider } from "@/context/match.context";
+import { AuthProvider } from "@/context/auth.context";
 
 export default function Providers({ children }: any) {
     return (
@@ -20,7 +21,11 @@ export default function Providers({ children }: any) {
                 enableSystem
                 disableTransitionOnChange
             >
-                <MatchProvider>{children}</MatchProvider>
+                <AuthProvider>
+                    <MatchProvider>
+                        {children}
+                    </MatchProvider>
+                </AuthProvider>
             </ThemeProvider>
         </>
     );
