@@ -14,7 +14,7 @@ interface Props {
 }
 
 const CountdownTimer: React.FC<Props> = ({ matchStartTime, done, overdue }) => {
-    console.log(matchStartTime);
+    // console.log(matchStartTime);
     const [countdown, setCountdown] = useState<string>("");
     const [isDone, setIsDone] = useState(false);
 

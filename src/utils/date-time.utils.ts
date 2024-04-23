@@ -1,21 +1,17 @@
 import moment from 'moment-timezone';
+import { Timestamp } from "@firebase/firestore";
 
 export const formatMatchDate = (dateString: string): string => {
-    // Parse the input date string using Moment.js
     const date = moment(dateString, 'DD.MM.YYYY');
-
-    // Format the date with the desired output format
-    const formattedDate = date.format('Do MMMM YYYY');
-
-    return formattedDate;
+    return date.format('Do MMMM YYYY');
 };
 
 export const format24HourTime = (timeString: string): string => {
-    // Parse the input time string using Moment.js
     const time = moment(timeString, 'HH:mm');
-
-    // Format the time with the desired output format
-    const formattedTime = time.format('HH:mmA');
-
-    return formattedTime;
+    return time.format('HH:mmA');
 };
+
+export const firebaseTimeStamp = ():Timestamp => {
+    const now = new Date();
+    return new Timestamp(now.getTime() / 1000, now.getMilliseconds() * 1000000);
+}

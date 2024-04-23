@@ -32,10 +32,6 @@ export async function GET() {
            }).get();
 
 
-           console.log('TOURNAMENTS::::',tournaments)
-
-
-
            return Response.json({tournaments});
        } catch (e) {
            console.log("GET LINEUP ERROR::", e)

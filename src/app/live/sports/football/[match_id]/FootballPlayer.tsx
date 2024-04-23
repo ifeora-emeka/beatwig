@@ -79,22 +79,24 @@ export default function FootballPlayer({ data }: Props) {
                             />
                         )}
                     </div>
-                    <div className={"flex gap-default_spacing items-center"}>
-                        {data.links.map((link, i) => {
-                            return (
-                                <button
-                                    key={`server-${i}`}
-                                    className={cn("py-1 px-4 rounded-lg", {
-                                        "bg-primary text-white":
-                                            activeLink == link,
-                                    })}
-                                    onClick={() => setActiveLink(link)}
-                                >
-                                    Server {i + 1}
-                                </button>
-                            );
-                        })}
-                    </div>
+                    {
+                        data.links.length ? <div className={"flex gap-default_spacing items-center"}>
+                            {data.links.map((link, i) => {
+                                return (
+                                    <button
+                                        key={`server-${i}`}
+                                        className={cn("py-1 px-4 rounded-lg", {
+                                            "bg-primary text-white":
+                                                activeLink == link,
+                                        })}
+                                        onClick={() => setActiveLink(link)}
+                                    >
+                                        Server {i + 1}
+                                    </button>
+                                );
+                            })}
+                        </div> : null
+                    }
                 </div>
 
                 <FootballMatchDetails data={data} />

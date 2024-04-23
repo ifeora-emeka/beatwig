@@ -1,36 +1,46 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Send } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import ChatBobble, { ChatListLoading } from "@/components/common/ChatBobble";
 import ChatInput from "@/components/common/ChatInput";
-import { PendingMessage, useMatchContext } from "@/context/match.context";
-import { addDoc, collection, doc, getFirestore, limit, onSnapshot, orderBy, query, where } from "@firebase/firestore";
+import {
+    addDoc,
+    collection,
+    limit,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+} from "@firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
-import { serverTimestamp } from "@firebase/firestore";
 import { useParams } from "next/navigation";
+import { MatchMessageData } from "@/types/message.types";
+import { firebaseTimeStamp } from "@/utils/date-time.utils";
 
 type Props = {};
 
 export default function FootballComments({}: Props) {
     const { match_id } = useParams();
     const [tabIndex, setTabIndex] = useState(0);
-    const [messageList, setMessageList] = useState([]);
+    const [messageList, setMessageList] = useState<MatchMessageData[]>([]);
     const [loading, setLoading] = useState(false);
 
     const sendMessage = async (message: string) => {
         try {
             let _id = crypto.randomUUID().toString();
             const messagesRef = collection(db, dbCollectionName.MESSAGES);
-            await addDoc(messagesRef, {
+
+
+
+            let payload: MatchMessageData = {
                 _id,
-                message,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp(),
-                match_id
-            });
-            console.log("Message sent successfully!");
+                content: message,
+                createdAt: firebaseTimeStamp(),
+                updatedAt: firebaseTimeStamp(),
+                match_id: String(match_id).trim().toLocaleLowerCase(),
+            }
+
+            await addDoc(messagesRef,payload);
         } catch (error) {
             console.error("Error sending message:", error);
         }
@@ -39,25 +49,31 @@ export default function FootballComments({}: Props) {
     useEffect(() => {
         if (match_id) {
             setLoading(true)
-            const messagesCollectionRef = collection(db, dbCollectionName.MESSAGES);
-            console.log('THE ID::',match_id);
-            const queryRef = query(
-                messagesCollectionRef,
-                // where("match_id", "==", match_id),
+            const q = query(
+                collection(db, dbCollectionName.MESSAGES),
+                where(
+                    "match_id",
+                    "==",
+                    String(match_id).trim().toLocaleLowerCase(),
+                ),
                 orderBy("createdAt"),
                 limit(50)
             );
-
-            const unsubscribe = onSnapshot(queryRef, (snapshot) => {
-                const messages = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const messages: any[] = [];
+                querySnapshot.forEach((doc) => {
+                    messages.push({
+                        ...doc.data(),
+                        _id: doc.id
+                    } as any);
+                });
                 setLoading(false)
-                setMessageList(messages as any);
+                setMessageList(messages as any)
             });
 
-            return () => unsubscribe();
+            return () => {
+                unsubscribe();
+            }
         }
     }, [match_id]);
 
@@ -93,7 +109,7 @@ export default function FootballComments({}: Props) {
                     }
                 >
                     {loading && <ChatListLoading />}
-                    {messageList?.map((chat: PendingMessage, i) => {
+                    {messageList?.map((chat: MatchMessageData, i) => {
                         return (
                             <ChatBobble key={chat._id} data={chat} isPending />
                         );
