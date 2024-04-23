@@ -30,17 +30,15 @@ export default function FootballComments({}: Props) {
             let _id = crypto.randomUUID().toString();
             const messagesRef = collection(db, dbCollectionName.MESSAGES);
 
-
-
             let payload: MatchMessageData = {
                 _id,
                 content: message,
                 createdAt: firebaseTimeStamp(),
                 updatedAt: firebaseTimeStamp(),
                 match_id: String(match_id).trim().toLocaleLowerCase(),
-            }
+            };
 
-            await addDoc(messagesRef,payload);
+            await addDoc(messagesRef, payload);
         } catch (error) {
             console.error("Error sending message:", error);
         }
@@ -48,7 +46,7 @@ export default function FootballComments({}: Props) {
 
     useEffect(() => {
         if (match_id) {
-            setLoading(true)
+            setLoading(true);
             const q = query(
                 collection(db, dbCollectionName.MESSAGES),
                 where(
@@ -57,23 +55,23 @@ export default function FootballComments({}: Props) {
                     String(match_id).trim().toLocaleLowerCase(),
                 ),
                 orderBy("createdAt"),
-                limit(50)
+                limit(50),
             );
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const messages: any[] = [];
                 querySnapshot.forEach((doc) => {
                     messages.push({
                         ...doc.data(),
-                        _id: doc.id
+                        _id: doc.id,
                     } as any);
                 });
-                setLoading(false)
-                setMessageList(messages as any)
+                setLoading(false);
+                setMessageList(messages as any);
             });
 
             return () => {
                 unsubscribe();
-            }
+            };
         }
     }, [match_id]);
 

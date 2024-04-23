@@ -1,14 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageData } from "@/types/message.types";
+import { MatchMessageData } from "@/types/message.types";
 import moment from "moment-timezone";
 
 type Props = {
-    data: MessageData;
+    data: MatchMessageData;
     isPending?: boolean;
 };
 
 export default function ChatBobble({ data, isPending }: Props) {
-
     return (
         <div className={"hover:bg-hover p-default_spacing rounded-xl"}>
             <div className={"flex gap-default_spacing items-start"}>
@@ -32,9 +31,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                             {moment(data.createdAt.toDate()).fromNow()}
                         </small>
                     </div>
-                    <small>
-                        {data.content}
-                    </small>
+                    <small>{data.content}</small>
                 </div>
             </div>
         </div>

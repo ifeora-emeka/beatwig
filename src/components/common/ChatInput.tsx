@@ -48,7 +48,11 @@ const ChatInput = ({ onSend, isLoading, isDisabled }: Props) => {
                 onFocus={() => setIsTextareaFocused(true)}
                 onBlur={() => setIsTextareaFocused(false)}
                 onChange={(e) => setMessage(e.target.value)}
-                rows={message.length > 30 ? Math.floor(message.length / 35 | 1) : 1}
+                rows={
+                    message.length > 30
+                        ? Math.floor((message.length / 35) | 1)
+                        : 1
+                }
                 placeholder={"Type message..."}
                 value={message}
                 onKeyDown={(e) => {

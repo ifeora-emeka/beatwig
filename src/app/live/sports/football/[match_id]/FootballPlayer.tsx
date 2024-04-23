@@ -79,8 +79,10 @@ export default function FootballPlayer({ data }: Props) {
                             />
                         )}
                     </div>
-                    {
-                        data.links.length ? <div className={"flex gap-default_spacing items-center"}>
+                    {data.links.length ? (
+                        <div
+                            className={"flex gap-default_spacing items-center"}
+                        >
                             {data.links.map((link, i) => {
                                 return (
                                     <button
@@ -95,8 +97,8 @@ export default function FootballPlayer({ data }: Props) {
                                     </button>
                                 );
                             })}
-                        </div> : null
-                    }
+                        </div>
+                    ) : null}
                 </div>
 
                 <FootballMatchDetails data={data} />
