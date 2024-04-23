@@ -42,7 +42,7 @@ export default function AuthPopup() {
                             email: user.email,
                             provider: user.providerData[0].providerId,
                             _id: user.uid,
-                            avatar_url: null,
+                            avatar_url: user.photoURL || null,
                             createdAt: firebaseTimeStamp(),
                             updatedAt: firebaseTimeStamp(),
                             display_name: user.displayName || "user-" + Date.now(),

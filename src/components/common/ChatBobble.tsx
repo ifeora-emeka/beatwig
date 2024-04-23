@@ -18,7 +18,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                 >
                     <img
                         src={
-                            "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"
+                            data.user?.avatar_url ? String(data.user.avatar_url) : "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"
                         }
                         alt={"user"}
                         className={"rounded-full"}
@@ -26,7 +26,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                 </div>
                 <div className={"flex flex-col"}>
                     <div className={"flex items-center gap-default_spacing"}>
-                        <small>User display name</small>
+                        <small>{data.user?.display_name}</small>
                         <small className={"text-muted"}>
                             {moment(data.createdAt.toDate()).fromNow()}
                         </small>

@@ -1,4 +1,5 @@
-import { Timestamp } from "@firebase/firestore";
+import { DocumentReference, Timestamp } from "@firebase/firestore";
+import { UserData } from "@/types/auth.types";
 
 export interface MatchMessageData {
     _id: string;
@@ -6,6 +7,9 @@ export interface MatchMessageData {
     updatedAt: Timestamp;
     match_id: string | null;
     content: string;
+    user_ref: DocumentReference
+
+    user?: UserData | null;
 }
 
 

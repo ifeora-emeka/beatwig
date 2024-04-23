@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: any) => {
             let theUser = {
                 ...(userSnapshot.data() as UserData),
                 _id: userSnapshot.id,
+                ref: userSnapshot.ref
             }
 
             setAuthContextStateWrapper({ user: theUser })
@@ -75,12 +76,19 @@ export const AuthProvider = ({ children }: any) => {
         };
 
         await setDoc(userRef, newUserData);
-        setAuthContextStateWrapper({ user: newUserData });
-        return {
+        const userSnapshot = await getDoc(userRef);
+
+        const theUser = {
             ...newUserData,
             _id: userData._id,
+            ref: userSnapshot.ref
         } as UserData;
+
+        setAuthContextStateWrapper({ user: theUser });
+        return theUser
     };
+
+    console.log('AUTH CONTEXT::', state)
 
     return (
         <AuthContext.Provider

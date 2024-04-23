@@ -1,4 +1,4 @@
-import { Timestamp } from "@firebase/firestore";
+import { DocumentReference, Timestamp } from "@firebase/firestore";
 
 export interface UserData {
     _id: string;
@@ -11,5 +11,7 @@ export interface UserData {
     last_seen: Timestamp;
     createdAt: Timestamp;
     updatedAt: Timestamp;
+
+    ref?: DocumentReference | null;
 }
 

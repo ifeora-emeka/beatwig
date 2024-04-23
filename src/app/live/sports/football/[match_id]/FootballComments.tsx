@@ -29,7 +29,7 @@ export default function FootballComments({}: Props) {
 
     const sendMessage = async (message: string) => {
         try {
-            if (!user) {
+            if (!user || !user.ref) {
                 return setAuthContextState({ show_login: true });
             }
             let _id = crypto.randomUUID().toString();
@@ -41,6 +41,7 @@ export default function FootballComments({}: Props) {
                 createdAt: firebaseTimeStamp(),
                 updatedAt: firebaseTimeStamp(),
                 match_id: String(match_id).trim().toLocaleLowerCase(),
+                user_ref: user.ref
             };
 
             await addDoc(messagesRef, payload);
