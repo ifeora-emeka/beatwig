@@ -100,8 +100,6 @@ export default function FootballComments({}: Props) {
         return userDoc.data();
     };
 
-
-
     return (
         <div className="bg-card lg:rounded-lg  h-full w-full">
             <div className={"flex flex-col h-full"}>
@@ -135,8 +133,8 @@ export default function FootballComments({}: Props) {
                 >
                     {loading && <ChatListLoading />}
                     {messageList?.map((chat: MatchMessageData, i) => {
-                        if(chat.is_notification) {
-                            return <ChatInfo data={chat} key={chat._id} />
+                        if (chat.is_notification) {
+                            return <ChatInfo data={chat} key={chat._id} />;
                         }
                         return (
                             <ChatBobble key={chat._id} data={chat} isPending />

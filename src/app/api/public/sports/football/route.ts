@@ -1,45 +1,67 @@
-import { football_url } from '@/constants';
 import axios from 'axios'
 import cheerio from 'cheerio'
 import {NextRequest} from "next/server";
 
 
 export async function GET() {
-       try {
-           const { data: html } = await axios.get(football_url + '/schedule/soccer');
+    try {
+        const { data: html } = await axios.get(`https://v1.givemeredditstreams.me/soccer/schedule`);
+        const $ = cheerio.load(html);
 
-           const $ = cheerio.load(html);
+        // Initialize arrays to store lineup data
+        const lineupData:any[] = [];
+        const liveLineups: any[] = [];
 
-           const tournaments = $(".body > .top-tournament").map((index, element) => {
-               const league = {
-                   name: $(element).find('.league-name').text().trim(),
-                   img: $(element).find('.league-name img').attr('src')
-               };
-               const competitions = $(element).find('.competitions > li').map((i, el) => {
-                   const team1 = {
-                       name: $(el).find('.competition-cell-side1 .name').text().trim(),
-                       img: $(el).find('.competition-cell-side1 img').attr('src')
-                   };
-                   const team2 = {
-                       name: $(el).find('.competition-cell-side2 .name').text().trim(),
-                       img: $(el).find('.competition-cell-side2 img').attr('src')
-                   };
-                   const score = $(el).find('.competition-cell-score').text().trim();
-                   const url = $(el).find('.competition a').attr('href');
-                   return { team1, team2, score, url };
-               }).get();
-               return { league, competitions };
-           }).get();
+        $('.event__header').each((index, element) => {
+            const leagueName = $(element).find('.event__title--name').text().trim();
+            const leagueLogo = $(element).find('.tournament-image').attr('src');
+            const lineups:any[] = [];
 
+            // Iterate over each event__match within the league
+            $(element).nextUntil('.event__header').each((idx, ele) => {
+                const lineup:any = {};
 
-           return Response.json({tournaments});
-       } catch (e) {
-           console.log("GET LINEUP ERROR::", e)
-           return Response.json({message: "GET LINEUP ERROR"});
-       }
-   
+                // Extract match details
+                lineup.startTime = $(ele).find('.event__stage--block').text().trim();
+                lineup.homeTeam = {
+                    name: $(ele).find('.event__participant--home').text().trim(),
+                    logo: $(ele).find('.event__logo--home').attr('src'),
+                    score: $(ele).find('.event__score--home').text().trim(),
+                };
+                lineup.awayTeam = {
+                    name: $(ele).find('.event__participant--away').text().trim(),
+                    logo: $(ele).find('.event__logo--away').attr('src'),
+                    score: $(ele).find('.event__score--away').text().trim(),
+                };
+
+                // Push lineup details to the lineups array
+                lineups.push(lineup);
+
+                // Check if the match is live and push to liveLineups if it is
+                if (lineup.startTime.includes("LIVE")) {
+                    liveLineups.push({
+                        leagueName,
+                        leagueLogo,
+                        lineup,
+                    });
+                }
+            });
+
+            // Push league details with lineups array to the lineupData array
+            lineupData.push({
+                leagueName,
+                leagueLogo,
+                lineups,
+            });
+        });
+
+        // Return the lineupData and liveLineups
+        return Response.json({ lineupData, liveLineups });
+    } catch (e) {
+        console.log("GET LINEUP ERROR::", e);
+        return Response.json({ message: "GET LINEUP ERROR" });
+    }
 };
-
 
 
 export async function POST(request: NextRequest, route: any) {

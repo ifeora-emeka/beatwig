@@ -1,13 +1,12 @@
-'use client'
+"use client";
 import { useEffect } from "react";
 import { createMatchMessage } from "@/firebase/messages.firebase";
 import { useAuthContext } from "@/context/auth.context";
 import { useParams } from "next/navigation";
 
-
 export default function MatchOnboarding() {
     const { match_id } = useParams();
-    const  { user } = useAuthContext();
+    const { user } = useAuthContext();
 
     useEffect(() => {
         if (user && match_id && user?.ref) {
@@ -20,7 +19,7 @@ export default function MatchOnboarding() {
         }
 
         return () => {
-            console.log('UNMOUNTED');
+            console.log("UNMOUNTED");
             if (user && match_id && user?.ref) {
                 createMatchMessage({
                     content: "left the chat",
@@ -32,6 +31,5 @@ export default function MatchOnboarding() {
         };
     }, [user, match_id]);
 
-    return null
+    return null;
 }
-

@@ -92,7 +92,6 @@ export const AuthProvider = ({ children }: any) => {
         return theUser;
     };
 
-
     return (
         <>
             <AuthContext.Provider

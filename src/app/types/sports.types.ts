@@ -1,22 +1,19 @@
-export interface FootballTournament {
-    league: {
-        name: string;
-        img: string;
-    },
-    competitions: FootballCompetition[];
+export interface SportTournament {
+    leagueName: string;
+    leagueLogo: string;
+    lineups: SportLineupData[];
 }
 
-export interface FootballCompetition {
-    team1: {
-        name: string;
-        img: string;
-    },
-    team2: {
-        name: string;
-        img: string;
-    },
+export interface SportLineupData {
+    startTime: string;
+    homeTeam: SportLineupTeamData;
+    awayTeam: SportLineupTeamData;
+}
+
+export interface SportLineupTeamData {
+    name: string;
+    logo: string;
     score: string;
-    url: string;
 }
 
 export interface FootballDetails {

@@ -4,7 +4,7 @@ import HomePage from "./HomePage";
 import { baseUrl } from "@/constants";
 import axios from "axios";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export const revalidate = 30;
 
 export default async function page() {
@@ -12,7 +12,7 @@ export default async function page() {
 
     return (
         <>
-            <HomePage football={res.data.tournaments} />
+            <HomePage football={res.data.lineupData} />
         </>
     );
 }

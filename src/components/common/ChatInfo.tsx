@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/context/auth.context";
 import { MatchMessageData } from "@/types/message.types";
 
-
 type Props = {
     data: MatchMessageData;
 };
@@ -12,12 +11,9 @@ export default function ChatInfo({ data }: Props) {
     const { user } = useAuthContext();
     return (
         <div
-            className={cn(
-                "p-2 rounded-xl group",
-                {
-                    "pb-default_spacing": !user,
-                },
-            )}
+            className={cn("p-2 rounded-xl group", {
+                "pb-default_spacing": !user,
+            })}
         >
             <div className={"flex gap-default_spacing items-center"}>
                 <div
@@ -42,7 +38,6 @@ export default function ChatInfo({ data }: Props) {
                         </small>
                         <small>{data.content}</small>
                     </div>
-
                 </div>
             </div>
         </div>

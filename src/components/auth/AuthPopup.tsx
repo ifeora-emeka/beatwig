@@ -1,6 +1,11 @@
 import { BiLogoGoogle, BiLogoFacebook } from "react-icons/bi";
 import { useAuthContext } from "@/context/auth.context";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@firebase/auth";
+import {
+    getAuth,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithPopup,
+} from "@firebase/auth";
 import { firebaseTimeStamp } from "@/utils/date-time.utils";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
