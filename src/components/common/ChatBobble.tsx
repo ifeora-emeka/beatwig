@@ -4,6 +4,7 @@ import moment from "moment-timezone";
 import { BiSolidQuoteAltRight, BiTrash } from "react-icons/bi";
 import { useAuthContext } from "@/context/auth.context";
 import { cn } from "@/lib/utils";
+import { deleteMessage } from "@/firebase/messages.firebase";
 
 type Props = {
     data: MatchMessageData;
@@ -12,13 +13,24 @@ type Props = {
 
 export default function ChatBobble({ data, isPending }: Props) {
     const { user } = useAuthContext();
+
+    const deleteMsg = async () => {
+        try {
+            await deleteMessage(data._id);
+        } catch (e) {
+            console.error("Error deleting message:", e);
+            alert("Error, please try again!");
+        }
+    };
+
     return (
         <div
-            className={
-                cn("hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group", {
+            className={cn(
+                "hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group",
+                {
                     "pb-default_spacing": !user,
-                })
-            }
+                },
+            )}
         >
             <div className={"flex gap-default_spacing items-start"}>
                 <div
@@ -38,7 +50,9 @@ export default function ChatBobble({ data, isPending }: Props) {
                 </div>
                 <div className={"flex flex-col"}>
                     <div className={"flex items-center gap-default_spacing"}>
-                        <small>{data.sender?.display_name}</small>
+                        <small className={"text-muted"}>
+                            {data.sender?.display_name}
+                        </small>
                         <small className={"text-muted"}>
                             {moment(data.createdAt.toDate()).fromNow()}
                         </small>
@@ -51,9 +65,9 @@ export default function ChatBobble({ data, isPending }: Props) {
                                     "flex gap-default_spacing md:opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"
                                 }
                             >
-
                                 {user._id == data.sender?._id ? (
                                     <button
+                                        onClick={deleteMsg}
                                         className={
                                             "flex gap-1 text-muted items-center text-xs hover:text-red-500"
                                         }
@@ -61,16 +75,18 @@ export default function ChatBobble({ data, isPending }: Props) {
                                         <BiTrash />
                                         Delete
                                     </button>
-                                ): <>
-                                    <button
-                                        className={
-                                            "flex gap-1 text-muted items-center text-xs hover:text-primary"
-                                        }
-                                    >
-                                        <BiSolidQuoteAltRight />
-                                        Reply
-                                    </button>
-                                </>}
+                                ) : (
+                                    <>
+                                        <button
+                                            className={
+                                                "flex gap-1 text-muted items-center text-xs hover:text-primary"
+                                            }
+                                        >
+                                            <BiSolidQuoteAltRight />
+                                            Reply
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </>
                     )}

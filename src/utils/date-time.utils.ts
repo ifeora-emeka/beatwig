@@ -11,7 +11,12 @@ export const format24HourTime = (timeString: string): string => {
     return time.format('HH:mmA');
 };
 
-export const firebaseTimeStamp = ():Timestamp => {
+export const firebaseTimeStamp = (fromNow?: number): Timestamp => {
     const now = new Date();
-    return new Timestamp(now.getTime() / 1000, now.getMilliseconds() * 1000000);
-}
+
+    if (typeof fromNow === 'number') {
+        now.setDate(now.getDate() + fromNow);
+    }
+
+    return new Timestamp(Math.floor(now.getTime() / 1000), now.getMilliseconds() * 1000000);
+};

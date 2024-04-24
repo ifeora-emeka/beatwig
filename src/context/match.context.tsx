@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
+import { MatchMessageData } from "@/types/message.types";
 
 interface MatchContextType {
-    matchState: {
-        pending_messages: PendingMessage[];
-    };
+    matchState: State;
     setMatchState: (newState: State) => void;
-    addPendingChat: (chat: any) => void;
 }
 
 export interface PendingMessage {
@@ -14,7 +12,7 @@ export interface PendingMessage {
 }
 
 interface State {
-    pending_messages: PendingMessage[];
+    active_message: MatchMessageData | null;
 }
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -29,7 +27,7 @@ export const useMatchContext = () => {
 
 export const MatchProvider = ({ children }: any) => {
     const [state, setState] = useState<State>({
-        pending_messages: [],
+        active_message: null,
     });
 
     const _setMatchState = (newState: Partial<State>) => {
@@ -39,19 +37,11 @@ export const MatchProvider = ({ children }: any) => {
         }));
     };
 
-    const addPendingChat = (chat: PendingMessage) => {
-        setState((prev) => ({
-            ...prev,
-            pending_messages: [...prev.pending_messages, chat],
-        }));
-    };
-
     return (
         <MatchContext.Provider
             value={{
                 matchState: state,
                 setMatchState: _setMatchState,
-                addPendingChat,
             }}
         >
             {children}

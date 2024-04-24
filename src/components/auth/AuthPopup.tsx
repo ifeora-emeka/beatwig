@@ -1,9 +1,9 @@
 import { BiLogoGoogle, BiLogoFacebook } from "react-icons/bi";
 import { useAuthContext } from "@/context/auth.context";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@firebase/auth";
 import { firebaseTimeStamp } from "@/utils/date-time.utils";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 
@@ -62,6 +62,20 @@ export default function AuthPopup() {
                     GoogleAuthProvider.credentialFromError(error);
             });
     };
+
+    useEffect(() => {
+        (async () => {
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const uid = user.uid;
+                    getAuthDependencies(uid);
+                } else {
+                    setAuthContextState({ auth_loading: false });
+                }
+            });
+        })();
+    }, []);
 
     if (!show_login) {
         return null;

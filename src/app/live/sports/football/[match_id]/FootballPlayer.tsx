@@ -1,6 +1,5 @@
 "use client";
 import { Share } from "lucide-react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FootballMatchDetails from "@/app/live/sports/football/[match_id]/FootballMatchDetails";
@@ -19,7 +18,7 @@ export default function FootballPlayer({ data }: Props) {
     const [activeLink, setActiveLink] = useState(data?.stream_url || "");
 
     useEffect(() => {
-        if (data.stream_url) {
+        if (data?.stream_url) {
             setActiveLink(data?.stream_url);
         }
     }, []);

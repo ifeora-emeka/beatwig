@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const getAuthDependencies = async (user_id: string): Promise<UserData> => {
         try {
-            setAuthContextStateWrapper({ auth_loading: true })
+            setAuthContextStateWrapper({ auth_loading: true });
             console.log("GETTING USER DEPENDENCIES::", user_id);
             const userRef = doc(db, dbCollectionName.USERS, user_id);
             const userSnapshot = await getDoc(userRef);
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: any) => {
 
             return Promise.resolve(theUser);
         } catch (error) {
-            setAuthContextStateWrapper({ auth_loading: false })
+            setAuthContextStateWrapper({ auth_loading: false });
             console.error("Error getting or creating user data:", error);
             return Promise.reject(error);
         }
@@ -92,35 +92,20 @@ export const AuthProvider = ({ children }: any) => {
         return theUser;
     };
 
-    console.log("AUTH CONTEXT::", state);
-
-    useEffect(() => {
-        (async () => {
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    const uid = user.uid;
-                    getAuthDependencies(uid)
-                } else {
-                    setAuthContextStateWrapper({ auth_loading: false })
-                }
-            });
-        })();
-    }, []);
 
     return (
         <>
-        <AuthContext.Provider
-            value={{
-                ...state,
-                setAuthContextState: setAuthContextStateWrapper,
-                getAuthDependencies,
-                createNewUser,
-            }}
-        >
-            {state.auth_loading && <AppLoading />}
-            {children}
-        </AuthContext.Provider>
+            <AuthContext.Provider
+                value={{
+                    ...state,
+                    setAuthContextState: setAuthContextStateWrapper,
+                    getAuthDependencies,
+                    createNewUser,
+                }}
+            >
+                {state.auth_loading && <AppLoading />}
+                {children}
+            </AuthContext.Provider>
         </>
     );
 };

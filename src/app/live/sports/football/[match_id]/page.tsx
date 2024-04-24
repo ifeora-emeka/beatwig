@@ -6,6 +6,7 @@ import { baseUrl } from "@/constants";
 import axios from "axios";
 import { Metadata, ResolvingMetadata } from "next";
 import { FootballDetails } from "@/app/types/sports.types";
+import MatchOnboarding from "@/app/live/sports/football/[match_id]/MatchOnboarding";
 
 export const revalidate = 30;
 
@@ -26,7 +27,8 @@ export async function generateMetadata(
         "LIVE: " +
         details?.homeTeam.name +
         " VS " +
-        details?.awayTeam.name + " on BeatWig"
+        details?.awayTeam.name +
+        " on BeatWig";
 
     return {
         title: title,
@@ -58,6 +60,7 @@ export default async function page(props: any) {
 
     return (
         <div className="flex justify-center lg:py-default_spacing min-h-[100vh] max-h-[100vh]">
+            <MatchOnboarding />
             <ContainerLg>
                 <div className="flex lg:gap-default_spacing lg:flex-row flex-col">
                     <div className="flex-1 flex flex-col gap-default_spacing">
