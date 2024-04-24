@@ -22,8 +22,8 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning className="select-none">
             <body className={font.className}>
-                <SpeedInsights />
                 <Providers>{children}</Providers>
+                <SpeedInsights />
             </body>
         </html>
     );
