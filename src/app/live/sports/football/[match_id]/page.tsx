@@ -25,21 +25,21 @@ export async function generateMetadata(
     let title =
         "LIVE: " +
         details?.homeTeam.name +
-        " vs " +
-        details?.awayTeam.name +
-        " live (FREE)";
+        " VS " +
+        details?.awayTeam.name + " on BeatWig"
 
     return {
         title: title,
-        description: title + " on BeatWig app.",
+        description: `Watch ${details?.homeTeam?.logo} VS ${details?.awayTeam?.logo} LIVE on the BeatWig app.`,
         openGraph: {
-            images: [details?.homeTeam?.logo, details?.awayTeam?.logo],
+            images: [details?.awayTeam?.logo, details?.homeTeam?.logo],
         },
         keywords: [
             details?.homeTeam?.name,
             details?.awayTeam?.name,
             details?.league_name,
             "live football",
+            "live sports",
             "live stream",
             "free",
         ],

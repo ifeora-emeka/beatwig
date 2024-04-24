@@ -12,7 +12,11 @@ type Props = {
 export default function ChatBobble({ data, isPending }: Props) {
     const { user } = useAuthContext();
     return (
-        <div className={"hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group"}>
+        <div
+            className={
+                "hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group"
+            }
+        >
             <div className={"flex gap-default_spacing items-start"}>
                 <div
                     className={
@@ -37,22 +41,36 @@ export default function ChatBobble({ data, isPending }: Props) {
                         </small>
                     </div>
                     <small>{data.content}</small>
-                    {
-                        user && <>
+                    {user && (
+                        <>
                             <div
-                                className={"flex gap-default_spacing opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"}>
-                                <button className={"flex gap-1 text-muted items-center text-xs hover:text-primary"}>
-                                    <BiSolidQuoteAltRight />
-                                    Reply
-                                </button>
-                                {user._id == data.sender?._id &&
-                                    <button className={"flex gap-1 text-muted items-center text-xs hover:text-red-500"}>
+                                className={
+                                    "flex gap-default_spacing opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"
+                                }
+                            >
+
+                                {user._id == data.sender?._id ? (
+                                    <button
+                                        className={
+                                            "flex gap-1 text-muted items-center text-xs hover:text-red-500"
+                                        }
+                                    >
                                         <BiTrash />
                                         Delete
-                                    </button>}
+                                    </button>
+                                ): <>
+                                    <button
+                                        className={
+                                            "flex gap-1 text-muted items-center text-xs hover:text-primary"
+                                        }
+                                    >
+                                        <BiSolidQuoteAltRight />
+                                        Reply
+                                    </button>
+                                </>}
                             </div>
                         </>
-                    }
+                    )}
                 </div>
             </div>
         </div>

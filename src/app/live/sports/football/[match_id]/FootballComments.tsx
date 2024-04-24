@@ -5,7 +5,8 @@ import ChatBobble, { ChatListLoading } from "@/components/common/ChatBobble";
 import ChatInput from "@/components/common/ChatInput";
 import {
     addDoc,
-    collection, DocumentReference,
+    collection,
+    DocumentReference,
     limit,
     onSnapshot,
     orderBy,
@@ -57,14 +58,18 @@ export default function FootballComments({}: Props) {
             const messagesRef = collection(db, dbCollectionName.MESSAGES);
             const q = query(
                 messagesRef,
-                where("match_id", "==", String(match_id).trim().toLocaleLowerCase()),
+                where(
+                    "match_id",
+                    "==",
+                    String(match_id).trim().toLocaleLowerCase(),
+                ),
                 orderBy("createdAt"),
-                limit(50)
+                limit(50),
             );
 
             const unsubscribe = onSnapshot(q, async (querySnapshot) => {
-                const messages:any = [];
-                const userPromises:any = [];
+                const messages: any = [];
+                const userPromises: any = [];
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
@@ -77,10 +82,12 @@ export default function FootballComments({}: Props) {
                 });
 
                 const users = await Promise.all(userPromises);
-                const messagesWithUsers = messages.map((message:any, index:number) => ({
-                    ...message,
-                    sender: users[index],
-                }));
+                const messagesWithUsers = messages.map(
+                    (message: any, index: number) => ({
+                        ...message,
+                        sender: users[index],
+                    }),
+                );
 
                 setLoading(false);
                 setMessageList(messagesWithUsers);
