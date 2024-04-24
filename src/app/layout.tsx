@@ -11,7 +11,7 @@ const font = Poppins({
 
 export const metadata: Metadata = {
     title: "Beatwig",
-    description: "#1 online community",
+    description: "#1 online community. Watch live sports and stream movies",
 };
 
 export default function RootLayout({
