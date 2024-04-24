@@ -62,7 +62,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                         <>
                             <div
                                 className={
-                                    "flex gap-default_spacing md:opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"
+                                    "flex gap-default_spacing md:opacity-0 group-hover:opacity-100 md:h-0 group-hover:h-7 smooth-transition items-center"
                                 }
                             >
                                 {user._id == data.sender?._id ? (
