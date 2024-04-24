@@ -34,9 +34,8 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                     <HomeHeader />
                     <hr />
 
-                    <div
+                    <main
                         className="flex flex-col gap-default_spacing"
-                        key={crypto.randomUUID()}
                     >
                         <div
                             className={
@@ -92,7 +91,7 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                                     />
                                 );
                             })}
-                    </div>
+                    </main>
                 </div>
             </Container>
         </div>
