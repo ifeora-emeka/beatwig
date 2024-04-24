@@ -5,7 +5,7 @@ import ChatBobble, { ChatListLoading } from "@/components/common/ChatBobble";
 import ChatInput from "@/components/common/ChatInput";
 import {
     addDoc,
-    collection,
+    collection, DocumentReference,
     limit,
     onSnapshot,
     orderBy,
@@ -17,6 +17,7 @@ import { useParams } from "next/navigation";
 import { MatchMessageData } from "@/types/message.types";
 import { firebaseTimeStamp } from "@/utils/date-time.utils";
 import { useAuthContext } from "@/context/auth.context";
+import { getDoc } from "firebase/firestore";
 
 type Props = {};
 
@@ -41,7 +42,7 @@ export default function FootballComments({}: Props) {
                 createdAt: firebaseTimeStamp(),
                 updatedAt: firebaseTimeStamp(),
                 match_id: String(match_id).trim().toLocaleLowerCase(),
-                user_ref: user.ref
+                user_ref: user.ref,
             };
 
             await addDoc(messagesRef, payload);
@@ -53,26 +54,36 @@ export default function FootballComments({}: Props) {
     useEffect(() => {
         if (match_id) {
             setLoading(true);
+            const messagesRef = collection(db, dbCollectionName.MESSAGES);
             const q = query(
-                collection(db, dbCollectionName.MESSAGES),
-                where(
-                    "match_id",
-                    "==",
-                    String(match_id).trim().toLocaleLowerCase(),
-                ),
+                messagesRef,
+                where("match_id", "==", String(match_id).trim().toLocaleLowerCase()),
                 orderBy("createdAt"),
-                limit(50),
+                limit(50)
             );
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const messages: any[] = [];
+
+            const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+                const messages:any = [];
+                const userPromises:any = [];
+
                 querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const user_ref = data.user_ref;
+                    userPromises.push(getUserData(user_ref));
                     messages.push({
-                        ...doc.data(),
+                        ...data,
                         _id: doc.id,
-                    } as any);
+                    });
                 });
+
+                const users = await Promise.all(userPromises);
+                const messagesWithUsers = messages.map((message:any, index:number) => ({
+                    ...message,
+                    sender: users[index],
+                }));
+
                 setLoading(false);
-                setMessageList(messages as any);
+                setMessageList(messagesWithUsers);
             });
 
             return () => {
@@ -80,6 +91,11 @@ export default function FootballComments({}: Props) {
             };
         }
     }, [match_id]);
+
+    const getUserData = async (user_ref: DocumentReference) => {
+        const userDoc = await getDoc(user_ref);
+        return userDoc.data();
+    };
 
     return (
         <div className="bg-card lg:rounded-lg  h-full w-full">

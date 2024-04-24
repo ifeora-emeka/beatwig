@@ -9,7 +9,8 @@ export interface MatchMessageData {
     content: string;
     user_ref: DocumentReference
 
-    user?: UserData | null;
+    sender?: UserData | null;
+
 }
 
 

@@ -45,7 +45,8 @@ export default function AuthPopup() {
                             avatar_url: user.photoURL || null,
                             createdAt: firebaseTimeStamp(),
                             updatedAt: firebaseTimeStamp(),
-                            display_name: user.displayName || "user-" + Date.now(),
+                            display_name:
+                                user.displayName || "user-" + Date.now(),
                             last_seen: firebaseTimeStamp(),
                             username: "user-" + Date.now(),
                         });
@@ -134,7 +135,7 @@ export default function AuthPopup() {
                                 "flex justify-center gap-default_spacing items-center bg-primary text-white w-full rounded-lg py-default_spacing"
                             }
                         >
-                            {loading ? "Loading...": "Continue"}
+                            {loading ? "Loading..." : "Continue"}
                         </button>
                     </>
                 )}

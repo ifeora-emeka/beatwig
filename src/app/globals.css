@@ -101,3 +101,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.smooth-transition {
+  transition: ease-in-out 0.3s;
+}

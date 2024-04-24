@@ -42,16 +42,16 @@ export const AuthProvider = ({ children }: any) => {
 
     const getAuthDependencies = async (user_id: string): Promise<UserData> => {
         try {
-            console.log('GETTING USER DEPENDENCIES::', user_id)
+            console.log("GETTING USER DEPENDENCIES::", user_id);
             const userRef = doc(db, dbCollectionName.USERS, user_id);
             const userSnapshot = await getDoc(userRef);
             let theUser = {
                 ...(userSnapshot.data() as UserData),
                 _id: userSnapshot.id,
-                ref: userSnapshot.ref
-            }
+                ref: userSnapshot.ref,
+            };
 
-            setAuthContextStateWrapper({ user: theUser })
+            setAuthContextStateWrapper({ user: theUser });
 
             return Promise.resolve(theUser);
         } catch (error) {
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const createNewUser = async (userData: UserData): Promise<UserData> => {
-        console.log('CREATING NEW USER::', userData);
+        console.log("CREATING NEW USER::", userData);
         const userRef = doc(db, dbCollectionName.USERS, userData._id);
         const newUserData: UserData = {
             _id: userData._id,
@@ -81,14 +81,14 @@ export const AuthProvider = ({ children }: any) => {
         const theUser = {
             ...newUserData,
             _id: userData._id,
-            ref: userSnapshot.ref
+            ref: userSnapshot.ref,
         } as UserData;
 
         setAuthContextStateWrapper({ user: theUser });
-        return theUser
+        return theUser;
     };
 
-    console.log('AUTH CONTEXT::', state)
+    console.log("AUTH CONTEXT::", state);
 
     return (
         <AuthContext.Provider
