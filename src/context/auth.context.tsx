@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { UserData } from "@/types/auth.types";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
+import AppLoading from "@/components/AppLoading";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 interface AuthContextType {
     user: any;
@@ -42,6 +44,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const getAuthDependencies = async (user_id: string): Promise<UserData> => {
         try {
+            setAuthContextStateWrapper({ auth_loading: true })
             console.log("GETTING USER DEPENDENCIES::", user_id);
             const userRef = doc(db, dbCollectionName.USERS, user_id);
             const userSnapshot = await getDoc(userRef);
@@ -51,10 +54,11 @@ export const AuthProvider = ({ children }: any) => {
                 ref: userSnapshot.ref,
             };
 
-            setAuthContextStateWrapper({ user: theUser });
+            setAuthContextStateWrapper({ user: theUser, auth_loading: false });
 
             return Promise.resolve(theUser);
         } catch (error) {
+            setAuthContextStateWrapper({ auth_loading: false })
             console.error("Error getting or creating user data:", error);
             return Promise.reject(error);
         }
@@ -90,7 +94,22 @@ export const AuthProvider = ({ children }: any) => {
 
     console.log("AUTH CONTEXT::", state);
 
+    useEffect(() => {
+        (async () => {
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const uid = user.uid;
+                    getAuthDependencies(uid)
+                } else {
+                    setAuthContextStateWrapper({ auth_loading: false })
+                }
+            });
+        })();
+    }, []);
+
     return (
+        <>
         <AuthContext.Provider
             value={{
                 ...state,
@@ -99,7 +118,9 @@ export const AuthProvider = ({ children }: any) => {
                 createNewUser,
             }}
         >
+            {state.auth_loading && <AppLoading />}
             {children}
         </AuthContext.Provider>
+        </>
     );
 };

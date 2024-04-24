@@ -3,6 +3,7 @@ import { MatchMessageData } from "@/types/message.types";
 import moment from "moment-timezone";
 import { BiSolidQuoteAltRight, BiTrash } from "react-icons/bi";
 import { useAuthContext } from "@/context/auth.context";
+import { cn } from "@/lib/utils";
 
 type Props = {
     data: MatchMessageData;
@@ -14,7 +15,9 @@ export default function ChatBobble({ data, isPending }: Props) {
     return (
         <div
             className={
-                "hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group"
+                cn("hover:bg-hover pt-default_spacing px-default_spacing rounded-xl group", {
+                    "pb-default_spacing": !user,
+                })
             }
         >
             <div className={"flex gap-default_spacing items-start"}>
@@ -45,7 +48,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                         <>
                             <div
                                 className={
-                                    "flex gap-default_spacing opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"
+                                    "flex gap-default_spacing md:opacity-0 group-hover:opacity-100 h-0 group-hover:h-7 smooth-transition items-center"
                                 }
                             >
 
