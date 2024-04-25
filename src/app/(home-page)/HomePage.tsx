@@ -24,7 +24,6 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                 }
             });
         setLiveTournaments(allLives);
-        // console.log('ALL LIVES::', allLives)
     }, [lineups]);
 
     return (
@@ -36,45 +35,50 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                     <main
                         className="flex flex-col gap-default_spacing"
                     >
-                        <div
-                            className={
-                                "flex gap-default_spacing items-center justify-center py-default_spacing_lg"
-                            }
-                        >
-                            {["Yesterday", "Today", "Tomorrow"].map(
-                                (label, i) => {
-                                    return (
-                                        <div
-                                            key={crypto.randomUUID()}
-                                            role={"button"}
-                                            aria-label={label}
-                                            className={cn(
-                                                "py-2 px-4 rounded-full",
-                                                {
-                                                    "bg-primary": i == 1,
-                                                    "bg-hover": i != 1,
-                                                },
-                                            )}
-                                        >
-                                            {label}
-                                        </div>
-                                    );
-                                },
-                            )}
-                        </div>
+                        {/*<div*/}
+                        {/*    className={*/}
+                        {/*        "flex gap-default_spacing items-center justify-center py-default_spacing_lg"*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*    {["Yesterday", "Today", "Tomorrow"].map(*/}
+                        {/*        (label, i) => {*/}
+                        {/*            return (*/}
+                        {/*                <div*/}
+                        {/*                    key={crypto.randomUUID()}*/}
+                        {/*                    role={"button"}*/}
+                        {/*                    aria-label={label}*/}
+                        {/*                    className={cn(*/}
+                        {/*                        "py-2 px-4 rounded-full",*/}
+                        {/*                        {*/}
+                        {/*                            "bg-primary text-white": i == 1,*/}
+                        {/*                            "bg-hover": i != 1,*/}
+                        {/*                        },*/}
+                        {/*                    )}*/}
+                        {/*                >*/}
+                        {/*                    {label}*/}
+                        {/*                </div>*/}
+                        {/*            );*/}
+                        {/*        },*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
                         <div className="flex flex-col gap-default_spacing">
                             <h3 className="text-muted md:text-lg flex gap-3 px-default_spacing_lg md:px-0">
                                 <RadioTower />
                                 Live Now
                             </h3>
-                            {liveTournaments?.map((data) => {
+                            {
+                                liveTournaments.length > 0 ? liveTournaments?.map((data) => {
                                 return (
                                     <EachSportCompetition
                                         data={data}
                                         key={crypto.randomUUID()}
                                     />
                                 );
-                            })}
+                            }):
+                                    <div className={'bg-card rounded-lg text-muted p-default_spacing text-center'}>
+                                        <span>No Live matches at the moment</span>
+                                    </div>
+                            }
                         </div>
                         <hr />
                         <h3 className="text-muted md:text-lg gap-3 flex px-default_spacing_lg md:px-0">

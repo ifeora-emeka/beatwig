@@ -6,6 +6,7 @@ export interface SportTournament {
 
 export interface SportLineupData {
     startTime: string;
+    match_id: string;
     homeTeam: SportLineupTeamData;
     awayTeam: SportLineupTeamData;
 }

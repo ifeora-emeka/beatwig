@@ -113,7 +113,7 @@ export default function FootballComments({}: Props) {
                             return (
                                 <button
                                     className={cn("px-4 py-1 rounded-full ", {
-                                        "bg-primary": tabIndex === i,
+                                        "bg-primary text-white shadow-md": tabIndex === i,
                                         "hover:bg-hover text-muted":
                                             tabIndex !== i,
                                     })}
