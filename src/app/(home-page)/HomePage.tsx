@@ -33,7 +33,6 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                 <div className="flex flex-col gap-default_spacing_lg md:py-5 md:mb-0 mb-5">
                     <HomeHeader />
                     <hr />
-
                     <main
                         className="flex flex-col gap-default_spacing"
                     >

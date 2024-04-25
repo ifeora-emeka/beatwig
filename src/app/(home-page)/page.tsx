@@ -4,8 +4,8 @@ import HomePage from "./HomePage";
 import { baseUrl } from "@/constants";
 import axios from "axios";
 
-// export const dynamic = "force-dynamic";
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
+export const revalidate = 930;
 
 export default async function page() {
     const res = await axios(`${baseUrl}/api/public/sports/football`);
