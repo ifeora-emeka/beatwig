@@ -31,7 +31,6 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
             <Container>
                 <div className="flex flex-col gap-default_spacing_lg md:py-5 md:mb-0 mb-5">
                     <HomeHeader />
-                    <hr />
                     <main
                         className="flex flex-col gap-default_spacing"
                     >
@@ -67,20 +66,21 @@ export default function HomePage({ lineups }: { lineups: SportTournament[] }) {
                                 Live Now
                             </h3>
                             {
-                                liveTournaments.length > 0 ? liveTournaments?.map((data) => {
-                                return (
-                                    <EachSportCompetition
-                                        data={data}
-                                        key={crypto.randomUUID()}
-                                    />
-                                );
-                            }):
-                                    <div className={'bg-card rounded-lg text-muted p-default_spacing text-center'}>
+                                liveTournaments?.length > 0 ?
+                                    liveTournaments?.map((data) => {
+                                        return (
+                                            <EachSportCompetition
+                                                data={data}
+                                                key={crypto.randomUUID()}
+                                            />
+                                        );
+                                    }) :
+                                    <div className={"bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"}>
                                         <span>No Live matches at the moment</span>
                                     </div>
                             }
                         </div>
-                        <hr />
+                        <br />
                         <h3 className="text-muted md:text-lg gap-3 flex px-default_spacing_lg md:px-0">
                             <Calendar />
                             {`Today's lineup`}
