@@ -44,7 +44,7 @@ export default function PageContainer({ children }: any) {
                         >
                             {topLinks.map((link) => {
                                 return (
-                                    <Link href={link.link}>
+                                    <Link href={link.link} key={crypto.randomUUID()}>
                                         <Button className={"text-white"}>
                                             {link.label}
                                         </Button>
