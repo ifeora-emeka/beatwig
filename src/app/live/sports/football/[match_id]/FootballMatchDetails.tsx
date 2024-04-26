@@ -8,7 +8,7 @@ type Props = {
 
 export default function FootballMatchDetails({ data }: Props) {
     return (
-        <div className="bg-card lg:py-default_spacing px-default_spacing md:rounded-lg text-muted  items-center flex justify-between">
+        <div className="hidden bg-card lg:py-default_spacing px-default_spacing md:rounded-lg text-muted md:visible items-center md:flex justify-between">
             <div
                 className={
                     "flex items-center gap-default_spacing min-w-[40%] max-w-[40%]"

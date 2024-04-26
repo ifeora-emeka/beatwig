@@ -103,7 +103,7 @@ export default function FootballComments({}: Props) {
     return (
         <div className="bg-card lg:rounded-lg  h-full w-full">
             <div className={"flex flex-col h-full"}>
-                <div className={"md:p-default_spacing px-default_spacing"}>
+                <div className={"md:p-default_spacing px-default_spacing h-[58px] md:h-auto flex items-center justify-center"}>
                     <div
                         className={
                             "h-12 bg-background gap-default_spacing flex items-center rounded-full w-full px-default_spacing"
