@@ -38,7 +38,7 @@ export default function EachSportCompetition({
                         .toLocaleLowerCase()
                         .includes("live");
                     return (
-                        <Link href={`/live/sports/football/${lineup.match_id}`} onClick={() => enterMatch(lineup.match_id)}>
+                        <Link href={`/live/sports/football/${lineup.match_id}`} onClick={() => enterMatch(lineup.match_id)} key={crypto.randomUUID()}>
 
                             <article
                                 key={crypto.randomUUID()}
