@@ -1,6 +1,6 @@
 
 
-export interface MoviesData {
+export interface FilmData {
     film_id: string;
     poster: string;
     title: string;

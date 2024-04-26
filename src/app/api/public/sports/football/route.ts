@@ -1,55 +1,18 @@
-import { sports_site_url } from '@/constants';
 import axios from 'axios'
 import cheerio from 'cheerio'
 import {NextRequest} from "next/server";
+import { getAllFootballSchedule } from "@/app/api/public/sports/sport.api";
 
 
 export async function GET() {
     try {
-        const { data: html } = await axios.get(`${sports_site_url}/soccer/schedule`);
-        const $ = cheerio.load(html);
-
-        const lineupData: any[] = [];
-
-        $('.event__header').each((index, element) => {
-            const leagueName = $(element).find('.event__title--name').text().trim();
-            const leagueLogo = $(element).find('.tournament-image').attr('src');
-            const lineups: any[] = [];
-
-            $(element).nextUntil('.event__header').each((idx, ele) => {
-                const lineup: any = {};
-
-                lineup.match_id = $(ele).find('a > div').attr('id');
-                lineup.startTime = $(ele).find('.event__stage--block').text().trim();
-                lineup.homeTeam = {
-                    name: $(ele).find('.event__participant--home').text().trim(),
-                    logo: $(ele).find('.event__logo--home').attr('src'),
-                    score: $(ele).find('.event__score--home').text().trim(),
-                };
-                lineup.awayTeam = {
-                    name: $(ele).find('.event__participant--away').text().trim(),
-                    logo: $(ele).find('.event__logo--away').attr('src'),
-                    score: $(ele).find('.event__score--away').text().trim(),
-                };
-
-                lineups.push(lineup);
-            });
-
-            lineupData.push({
-                leagueName,
-                leagueLogo,
-                lineups,
-            });
-        });
-
+       let lineupData = await getAllFootballSchedule();
         return Response.json({ lineupData });
     } catch (e) {
         console.log("GET LINEUP ERROR::", e);
         return Response.json({ lineupData: [] }, { status: 500 });
     }
-}
-
-
+};
 
 
 export async function POST(request: NextRequest, route: any) {

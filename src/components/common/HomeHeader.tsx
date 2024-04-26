@@ -2,7 +2,7 @@
 import { Card } from "@/components/ui/card";
 import React from "react";
 import BrandLogo from "./BrandLogo";
-import { User, RefreshCwIcon, Search } from "lucide-react";
+import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next13-progressbar";
 import { useAuthContext } from "@/context/auth.context";
@@ -10,11 +10,11 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BiPowerOff, BiUser } from "react-icons/bi";
+import Link from "next/link";
 
 type Props = {};
 
@@ -24,7 +24,9 @@ export default function HomeHeader({}: Props) {
 
     return (
         <Card className="px-5 py-3 z-50 flex gap-5 justify-between sticky top-0">
-            <BrandLogo size={35} />
+            <Link href={"/"} className={"flex items-center"}>
+                <BrandLogo size={35} />
+            </Link>
             <div className="flex gap-5 items-center">
                 {/*<Button*/}
                 {/*    onClick={() => router.refresh()}*/}
