@@ -1,4 +1,4 @@
-import { SportTournament } from "@/app/types/sports.types";
+import { SportTournament } from "@/types/sports.types";
 import { RadioTower } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React from "react";
@@ -13,14 +13,14 @@ export default function EachSportCompetition({
 }) {
     const { user } = useAuthContext();
 
-    const enterMatch = (match_id:string) => {
-        if(user){
-            joinMatchChat(user, match_id)
+    const enterMatch = (match_id: string) => {
+        if (user) {
+            joinMatchChat(user, match_id);
         }
-    }
+    };
 
     return (
-        <section
+        <div
             className={"flex flex-col bg-card rounded-xl overflow-hidden"}
             key={crypto.randomUUID()}
         >
@@ -38,8 +38,11 @@ export default function EachSportCompetition({
                         .toLocaleLowerCase()
                         .includes("live");
                     return (
-                        <Link href={`/live/sports/football/${lineup.match_id}`} onClick={() => enterMatch(lineup.match_id)} key={crypto.randomUUID()}>
-
+                        <Link
+                            href={`/live/sports/football/${lineup.match_id}`}
+                            onClick={() => enterMatch(lineup.match_id)}
+                            key={crypto.randomUUID()}
+                        >
                             <article
                                 key={crypto.randomUUID()}
                                 className={"border-t hover:bg-hover"}
@@ -65,8 +68,8 @@ export default function EachSportCompetition({
                                                     .includes("live"),
                                             })}
                                         >
-                                        {lineup.startTime}
-                                    </span>
+                                            {lineup.startTime}
+                                        </span>
                                     </div>
                                     <div
                                         className={
@@ -84,8 +87,8 @@ export default function EachSportCompetition({
                                                 width={25}
                                             />
                                             <span className={"truncate"}>
-                                            {lineup.homeTeam.name}
-                                        </span>
+                                                {lineup.homeTeam.name}
+                                            </span>
                                         </div>
                                         <div
                                             className={
@@ -98,25 +101,27 @@ export default function EachSportCompetition({
                                                 width={25}
                                             />
                                             <span className={"truncate"}>
-                                            {lineup.awayTeam.name}
-                                        </span>
+                                                {lineup.awayTeam.name}
+                                            </span>
                                         </div>
                                     </div>
-                                    <div className={"flex flex-col items-center"}>
-                                    <span
-                                        className={
-                                            "p-default_spacing text-center"
-                                        }
+                                    <div
+                                        className={"flex flex-col items-center"}
                                     >
-                                        {lineup.homeTeam.score}
-                                    </span>
                                         <span
                                             className={
                                                 "p-default_spacing text-center"
                                             }
                                         >
-                                        {lineup.awayTeam.score}
-                                    </span>
+                                            {lineup.homeTeam.score}
+                                        </span>
+                                        <span
+                                            className={
+                                                "p-default_spacing text-center"
+                                            }
+                                        >
+                                            {lineup.awayTeam.score}
+                                        </span>
                                     </div>
                                 </div>
                             </article>
@@ -124,6 +129,6 @@ export default function EachSportCompetition({
                     );
                 })}
             </div>
-        </section>
+        </div>
     );
 }

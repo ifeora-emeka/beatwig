@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/Providers";
+import "swiper/css";
 
 const font = Poppins({
     weight: ["100", "300", "400", "700", "900"],

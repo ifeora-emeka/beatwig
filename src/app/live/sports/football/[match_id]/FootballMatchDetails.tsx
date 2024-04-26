@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { FootballDetails } from "@/app/types/sports.types";
+import { FootballDetails } from "@/types/sports.types";
 
 type Props = {
     data: FootballDetails;

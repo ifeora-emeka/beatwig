@@ -57,6 +57,7 @@ const config = {
       spacing: {
         default_spacing: '0.75rem', 
         default_spacing_lg: '1.25rem', 
+        default_spacing_xl: '3.25rem',
       },
       borderRadius: {
         lg: "var(--radius)",

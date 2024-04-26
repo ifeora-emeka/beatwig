@@ -45,7 +45,7 @@ export async function GET() {
         return Response.json({ lineupData });
     } catch (e) {
         console.log("GET LINEUP ERROR::", e);
-        return Response.json({ lineupData: [] });
+        return Response.json({ lineupData: [] }, { status: 500 });
     }
 }
 

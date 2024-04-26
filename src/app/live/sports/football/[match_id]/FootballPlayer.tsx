@@ -3,7 +3,7 @@ import { Share } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FootballMatchDetails from "@/app/live/sports/football/[match_id]/FootballMatchDetails";
-import { FootballDetails } from "@/app/types/sports.types";
+import { FootballDetails } from "@/types/sports.types";
 import CountdownTimer from "@/components/common/CountdownTimmer";
 import BrandLogo from "@/components/common/BrandLogo";
 import { cn } from "@/lib/utils";
@@ -63,6 +63,13 @@ export default function FootballPlayer({ data }: Props) {
                             done={() => console.log("Timer is done")}
                             overdue={() => console.log("TIME is overdue")}
                         />
+                        {/*<iframe*/}
+                        {/*    src={"https://vidsrc.to/embed/movie/438631"}*/}
+                        {/*    width={"100%"}*/}
+                        {/*    height={300}*/}
+                        {/*    allowFullScreen*/}
+                        {/*    allowTransparency*/}
+                        {/*/>*/}
                         {activeLink && (
                             <iframe
                                 // @ts-ignore

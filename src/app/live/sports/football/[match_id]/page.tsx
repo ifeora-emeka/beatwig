@@ -5,8 +5,7 @@ import FootballPlayer from "./FootballPlayer";
 import { baseUrl } from "@/constants";
 import axios from "axios";
 import { Metadata, ResolvingMetadata } from "next";
-import { FootballDetails } from "@/app/types/sports.types";
-
+import { FootballDetails } from "@/types/sports.types";
 
 export const revalidate = 30;
 
