@@ -27,7 +27,7 @@
 @layer base {
   :root {
     --hover-color: var(--hover-color-light);
-    
+
     --background: var(--background-light);
     --foreground: 222.2 84% 4.9%;
 

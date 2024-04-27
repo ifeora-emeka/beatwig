@@ -10,18 +10,18 @@ import AuthPopup from "@/components/auth/AuthPopup";
 export default function Providers({ children }: any) {
     return (
         <>
-            <Next13ProgressBar
-                height="4px"
-                color={themeColor}
-                options={{ showSpinner: false }}
-                showOnShallow
-            />
             <ThemeProvider
                 attribute="class"
                 defaultTheme="system"
                 enableSystem
                 disableTransitionOnChange
             >
+                <Next13ProgressBar
+                    height="4px"
+                    color={themeColor}
+                    options={{ showSpinner: false }}
+                    showOnShallow
+                />
                 <AuthProvider>
                     <MatchProvider>
                         <AuthPopup />

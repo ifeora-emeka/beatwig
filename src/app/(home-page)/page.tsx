@@ -12,7 +12,11 @@ export default async function page() {
 
     return (
         <>
-            <HomePage lineups={res.data.lineupData} movies={res.data.movies} series={res.data.series} />
+            <HomePage
+                lineups={res.data.football_lineup}
+                movies={res.data.movies}
+                series={res.data.series}
+            />
         </>
     );
 }

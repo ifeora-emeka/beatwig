@@ -3,9 +3,17 @@ import React, { useEffect, useState } from "react";
 import { SportTournament } from "@/types/sports.types";
 import PageContainer from "@/components/common/PageContainer";
 import PageSection from "@/components/common/PageSection";
-import { BiBroadcast, BiFilm, BiTv, BiVideoRecording } from "react-icons/bi";
+import {
+    BiBroadcast,
+    BiCalendar,
+    BiFilm,
+    BiTv,
+    BiVideoRecording,
+} from "react-icons/bi";
 import EachFilm from "@/app/film/components/EachFilm";
 import { FilmData } from "@/types/film.types";
+import EachSportCompetition from "@/app/sports/components/EachSportCompetition";
+import Link from "next/link";
 
 interface Props {
     lineups: SportTournament[];
@@ -32,26 +40,45 @@ export default function HomePage({ lineups, movies, series }: Props) {
         setLiveTournaments(allLives);
     }, [lineups]);
 
-    console.log("THE HOME PAGE:::", { lineups, movies });
+    console.log("THE HOME PAGE:::", { lineups, movies, series });
 
     return (
         <PageContainer>
             <PageSection Icon={BiBroadcast} heading={"Live football"}>
-                <h1>How va</h1>
+                {liveTournaments?.length > 0 ? (
+                    liveTournaments?.map((data) => {
+                        return (
+                            <EachSportCompetition
+                                data={data}
+                                key={crypto.randomUUID()}
+                            />
+                        );
+                    })
+                ) : (
+                    <div
+                        className={
+                            "bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"
+                        }
+                    >
+                        <span>No Live matches at the moment</span>
+                    </div>
+                )}
             </PageSection>
-            <PageSection Icon={BiFilm} heading={"Popular movies"}>
+            <PageSection Icon={BiFilm} heading={"Popular movie"}>
                 <div
                     className={
-                        "flex gap-default_spacing overflow-x-auto py-default_spacing md:px-0 px-default_spacing"
+                        "flex gap-default_spacing overflow-x-auto pb-default_spacing md:px-0 px-default_spacing"
                     }
                 >
                     {movies &&
                         movies.map((movie) => {
                             return (
-                                <EachFilm
+                                <Link
+                                    href={`/film${movie.slug}`}
                                     key={crypto.randomUUID()}
-                                    data={movie}
-                                />
+                                >
+                                    <EachFilm data={movie} />
+                                </Link>
                             );
                         })}
                 </div>
@@ -59,16 +86,28 @@ export default function HomePage({ lineups, movies, series }: Props) {
             <PageSection Icon={BiTv} heading={"Popular series"}>
                 <div
                     className={
-                        "flex gap-default_spacing overflow-x-auto py-default_spacing md:px-0 px-default_spacing"
+                        "flex gap-default_spacing overflow-x-auto pb-default_spacing md:px-0 px-default_spacing"
                     }
                 >
-                    {
-                        series && series.map(tv => {
-                            return <EachFilm key={crypto.randomUUID()} data={tv} />
-                        })
-                    }
+                    {series &&
+                        series.map((tv) => {
+                            return (
+                                <EachFilm key={crypto.randomUUID()} data={tv} />
+                            );
+                        })}
                 </div>
             </PageSection>
+            <PageSection Icon={BiCalendar} heading={`Today's lineup`}>
+                {lineups &&
+                    lineups?.map((data) => {
+                        return (
+                            <EachSportCompetition
+                                data={data}
+                                key={crypto.randomUUID()}
+                            />
+                        );
+                    })}
+            </PageSection>
         </PageContainer>
-);
+    );
 }

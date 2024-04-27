@@ -32,28 +32,26 @@ export default function FootballPage({
 
     return (
         <PageContainer>
-            <div className="flex flex-col gap-default_spacing_lg">
-                <PageSection Icon={BiBroadcast} heading={"Live Now"}>
-                    {liveTournaments?.length > 0 ? (
-                        liveTournaments?.map((data) => {
-                            return (
-                                <EachSportCompetition
-                                    data={data}
-                                    key={crypto.randomUUID()}
-                                />
-                            );
-                        })
-                    ) : (
-                        <div
-                            className={
-                                "bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"
-                            }
-                        >
-                            <span>No Live matches at the moment</span>
-                        </div>
-                    )}
-                </PageSection>
-            </div>
+            <PageSection Icon={BiBroadcast} heading={"Live Now"}>
+                {liveTournaments?.length > 0 ? (
+                    liveTournaments?.map((data) => {
+                        return (
+                            <EachSportCompetition
+                                data={data}
+                                key={crypto.randomUUID()}
+                            />
+                        );
+                    })
+                ) : (
+                    <div
+                        className={
+                            "bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"
+                        }
+                    >
+                        <span>No Live matches at the moment</span>
+                    </div>
+                )}
+            </PageSection>
 
             <PageSection Icon={BiCalendar} heading={`Today's lineup`}>
                 {lineups &&
