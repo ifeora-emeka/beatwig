@@ -21,7 +21,7 @@ export default function EachSportCompetition({
 
     return (
         <div
-            className={"flex flex-col bg-card rounded-xl overflow-hidden"}
+            className={"flex flex-col bg-card rounded-xl overflow-hidden text-white"}
             key={crypto.randomUUID()}
         >
             <header

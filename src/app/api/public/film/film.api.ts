@@ -75,7 +75,6 @@ export const getPopularSeries = async () => {
 
 export async function getFilmDetails({ film_slug, film_type }: { film_slug: string; film_type: string }) {
     try {
-        // console.log('THE URL:::', `${movies_site_algorithm}/${film_type}/${film_slug}`)
         const { data: html } = await axios.get(`${movies_site_algorithm}/${film_type}/${film_slug}`);
         const $ = cheerio.load(html);
 
@@ -83,22 +82,43 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
         const title = $('.header.large.border.first .header.poster h2 a').text() || '';
         const certification = $('.header.large.border.first .header.poster .certification').text().trim() || '';
         const release = $('.header.large.border.first .header.poster .release').text().trim() || '';
-        const genres = $('.header.large.border.first .header.poster .genres a').map((_, element) => $(element).text()).get() || [];
+
+        // Extract genres with hrefs
+        const genres: { name: string; slug: string }[] = [];
+        $('.header.large.border.first .header.poster .genres a').each((_, element) => {
+            const name = $(element).text().trim();
+            const href = $(element).attr('href') || '';
+            genres.push({ name, slug: href });
+        });
+
         const runtime = $('.header.large.border.first .header.poster .runtime').text().trim() || '';
         const tagline = $('.header.large.border.first .header_info .tagline').text().trim() || '';
         const overview = $('.header.large.border.first .header_info .overview p').text().trim() || '';
-        const people = $('.header.large.border.first .header_info .people .profile').map((_, element) => {
+        const people = $('.panel.top_billed .people .card').map((_, element) => {
             const name = $(element).find('a').text().trim();
             const role = $(element).find('.character').text().trim();
-            return { name, role };
+            const image = $(element).find('.profile img').attr('src') || '';
+            return { name, role, image };
         }).get() || [];
 
         let backdrop = '';
-
         $('.backdrop img').each((_, element) => {
             backdrop = $(element).attr('src') || '';
             return false;
         });
+
+        const additionalInfo: { [key: string]: string } = {};
+        $('.facts.left_column p').each((_, element) => {
+            const key = $(element).find('strong bdi').text().trim();
+            const value = $(element).clone().children().remove().end().text().trim();
+            additionalInfo[key] = value;
+        });
+
+        // Extract specific details
+        const { Status, 'Original Language': OriginalLanguage, Budget, Revenue } = additionalInfo;
+
+        let recommendations = await getMovieRecommendations(genres[0].slug);
+
 
         const filmDetails = {
             poster,
@@ -111,6 +131,13 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
             overview,
             people,
             backdrop,
+            info: {
+                status: Status || '',
+                language: OriginalLanguage || '',
+                budget: Budget || '',
+                revenue: Revenue || '',
+            },
+            recommendations
         };
 
         return filmDetails;
@@ -119,6 +146,34 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
     }
 };
 
+
+export async function getMovieRecommendations(slug: string) {
+    if (!slug) {
+        return [];
+    }
+
+
+    try {
+        const { data: html } = await axios.get(`${movies_site_algorithm}/${slug}?sort_by=popularity.desc`);
+        const $ = cheerio.load(html);
+
+        const moviesData = $('.card.v4.tight').map((_, element) => {
+            const poster = $(element).find('.poster img').attr('src');
+            const titleElement = $(element).find('.title a h2');
+            const title = titleElement.text();
+            const slug = $(element).find('.title a').attr('href');
+            const releaseDate = $(element).find('.release_date').text();
+            const overview = $(element).find('.overview p').text();
+
+            return { poster, title, slug: slug || "", date: releaseDate, overview };
+        }).get();
+
+        return moviesData;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+}
 
 
 function extractFilmIdFromSlug(slug: string): string {

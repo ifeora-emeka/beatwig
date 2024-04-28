@@ -7,6 +7,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'streamsgate.net',
             },
+            {
+                protocol: 'https',
+                hostname: 'media.themoviedb.org',
+            },
         ],
     },
 };

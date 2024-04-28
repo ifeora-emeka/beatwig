@@ -12,10 +12,10 @@ export default function FilmHero({ data }:any) {
             <div className={'flex md:flex-row flex-col gap-default_spacing_lg p-default_spacing'}>
                 <div
                     className={
-                        "flex gap-default_spacing_lg md:justify-start justify-center"
+                        "flex gap-default_spacing_lg sm:justify-start justify-center"
                     }
                 >
-                    <div className={"h-[17rem] w-52 rounded-lg bg-card"} style={{ backgroundImage: `url(${data.poster})`}} />
+                    <div className={"h-[17rem] w-52 rounded-lg bg-card bg-cover bg-center"} style={{ backgroundImage: `url(${data.poster})`}} />
                 </div>
                 <div className={"flex gap-default_spacing_lg flex-col"}>
                     <div className={"flex flex-col gap-1"}>
@@ -28,6 +28,7 @@ export default function FilmHero({ data }:any) {
                                 {data?.certification}
                             </div>
                             <div>{data?.release}</div>
+                            <div>{data?.runtime}</div>
                         </div>
                         <h1 className={"text-3xl mb-2"}>
                             {data?.title}
@@ -35,7 +36,7 @@ export default function FilmHero({ data }:any) {
                         <div className={"flex gap-default_spacing flex-wrap"}>
                             {
                                 data?.genres?.map((genre:any) => {
-                                    return <Badge className={"text-white"} key={crypto.randomUUID()}>{genre}</Badge>
+                                    return <Badge className={"text-muted font-normal"} key={crypto.randomUUID()} variant={'outline'}>{genre?.name}</Badge>
                                 })
                             }
                         </div>
