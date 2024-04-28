@@ -3,13 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SportTournament } from "@/types/sports.types";
 import PageContainer from "@/components/common/PageContainer";
 import PageSection from "@/components/common/PageSection";
-import {
-    BiBroadcast,
-    BiCalendar,
-    BiFilm,
-    BiTv,
-    BiVideoRecording,
-} from "react-icons/bi";
+import { BiBroadcast, BiCalendar, BiFilm, BiTv } from "react-icons/bi";
 import EachFilm from "@/app/film/components/EachFilm";
 import { FilmData } from "@/types/film.types";
 import EachSportCompetition from "@/app/sports/components/EachSportCompetition";
@@ -39,8 +33,6 @@ export default function HomePage({ lineups, movies, series }: Props) {
             });
         setLiveTournaments(allLives);
     }, [lineups]);
-
-    console.log("THE HOME PAGE:::", { lineups, movies, series });
 
     return (
         <PageContainer>

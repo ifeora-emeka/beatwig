@@ -26,12 +26,12 @@
 
 @layer base {
   :root {
-    --hover-color: var(--hover-color-light);
+    --hover-color: var(--hover-color-dark);
 
-    --background: var(--background-light);
+    --background: var(--background-dark);
     --foreground: 222.2 84% 4.9%;
 
-    --card: var(--cark-light);
+    --card: var(--card-dark);
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
@@ -43,7 +43,7 @@
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: var(--muted-light);
+    --muted: var(--muted-dark);
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 210 40% 96.1%;
@@ -52,8 +52,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: var(--border-color-light);
-    --input: var(--border-color-light);
+    --border: var(--border-color-dark);
+    --input: var(--border-color-dark);
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
@@ -110,4 +110,9 @@
 .bottom-gradient {
   background: rgb(0,0,0);
   background: linear-gradient(180deg, rgba(0,0,0,0.04805672268907568) 45%, rgba(0,0,0,0.5662640056022409) 70%, rgba(0,0,0,1) 100%);
+}
+
+.hero-gradient {
+  background: rgb(0,0,0);
+  background: linear-gradient(270deg, rgba(0,0,0,0.41220238095238093) 0%, rgba(0,0,0,0.7679446778711485) 29%, rgba(0,0,0,0.8687850140056023) 58%);
 }
