@@ -84,7 +84,12 @@ export default function HomePage({ lineups, movies, series }: Props) {
                     {series &&
                         series.map((tv) => {
                             return (
-                                <EachFilm key={crypto.randomUUID()} data={tv} />
+                                <Link
+                                    href={`/film${tv?.slug}`}
+                                    key={crypto.randomUUID()}
+                                >
+                                    <EachFilm data={tv} />
+                                </Link>
                             );
                         })}
                 </div>

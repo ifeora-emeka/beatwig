@@ -1,7 +1,11 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { BiBookmark, BiPlay } from "react-icons/bi";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
-export default function FilmHero({ data }:any) {
+export default function FilmHero({ data }: any) {
+    const { slug, type } = useParams();
     return (
         <div
             // style={{ backgroundImage: `url(${data.backdrop})`, backgroundSize: '800px' }}
@@ -9,13 +13,22 @@ export default function FilmHero({ data }:any) {
                 "bg-no-repeat rounded-lg overflow-hidden text-white bg-right bg-card"
             }
         >
-            <div className={'flex md:flex-row flex-col gap-default_spacing_lg p-default_spacing'}>
+            <div
+                className={
+                    "flex md:flex-row flex-col gap-default_spacing_lg p-default_spacing"
+                }
+            >
                 <div
                     className={
                         "flex gap-default_spacing_lg sm:justify-start justify-center"
                     }
                 >
-                    <div className={"h-[17rem] w-52 rounded-lg bg-card bg-cover bg-center"} style={{ backgroundImage: `url(${data.poster})`}} />
+                    <div
+                        className={
+                            "h-[17rem] w-52 rounded-lg bg-card bg-cover bg-center"
+                        }
+                        style={{ backgroundImage: `url(${data.poster})` }}
+                    />
                 </div>
                 <div className={"flex gap-default_spacing_lg flex-col"}>
                     <div className={"flex flex-col gap-1"}>
@@ -30,15 +43,19 @@ export default function FilmHero({ data }:any) {
                             <div>{data?.release}</div>
                             <div>{data?.runtime}</div>
                         </div>
-                        <h1 className={"text-3xl mb-2"}>
-                            {data?.title}
-                        </h1>
+                        <h1 className={"text-3xl mb-2"}>{data?.title}</h1>
                         <div className={"flex gap-default_spacing flex-wrap"}>
-                            {
-                                data?.genres?.map((genre:any) => {
-                                    return <Badge className={"text-muted font-normal"} key={crypto.randomUUID()} variant={'outline'}>{genre?.name}</Badge>
-                                })
-                            }
+                            {data?.genres?.map((genre: any) => {
+                                return (
+                                    <Badge
+                                        className={"text-muted font-normal"}
+                                        key={crypto.randomUUID()}
+                                        variant={"outline"}
+                                    >
+                                        {genre?.name}
+                                    </Badge>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -50,16 +67,18 @@ export default function FilmHero({ data }:any) {
                         >
                             <BiBookmark />
                         </button>
-                        <button className={"flex items-center"} role={"button"}>
+                        <Link
+                            href={`/film/${type}/${slug}/watch`}
+                            className={"flex items-center"}
+                            role={"button"}
+                        >
                             <BiPlay size={25} />
                             <span>Watch Now</span>
-                        </button>
+                        </Link>
                     </div>
                     <div className={"flex flex-col"}>
                         <h3>Overview</h3>
-                        <p className={"text-sm text-muted"}>
-                            {data?.overview}
-                        </p>
+                        <p className={"text-sm text-muted"}>{data?.overview}</p>
                     </div>
                 </div>
             </div>

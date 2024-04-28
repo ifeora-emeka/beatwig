@@ -176,7 +176,7 @@ export async function getMovieRecommendations(slug: string) {
 }
 
 
-function extractFilmIdFromSlug(slug: string): string {
+export function extractFilmIdFromSlug(slug: string): string {
     let result = slug.split("/");
     let _slug = result[result.length - 1];
     return _slug.split("-")[0];
