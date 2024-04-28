@@ -49,10 +49,10 @@ export default function FilmPlayerRight({
                             {seasonList.map((val, i) => {
                                 return (
                                     <Link
+                                        key={crypto.randomUUID()}
                                         href={`/film/${type}/${slug}/watch?season=${i + 1}&episode=1`}
                                     >
                                         <EachSeason
-                                            key={crypto.randomUUID()}
                                             heading={val?.title}
                                             subHeading={val?.overview}
                                             img={val?.image}
@@ -86,10 +86,10 @@ export default function FilmPlayerRight({
                             {episodeList.map((val, i) => {
                                 return (
                                     <Link
+                                        key={crypto.randomUUID()}
                                         href={`/film/${type}/${slug}/watch?season=${season}&episode=${i + 1}`}
                                     >
                                         <EachSeason
-                                            key={crypto.randomUUID()}
                                             heading={`Episode ${i + 1}`}
                                             subHeading={
                                                 val?.title +
