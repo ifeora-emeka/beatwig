@@ -10,6 +10,10 @@ export async function getSeriesEpisodes({ slug, season }: {slug: string; season:
 
         const episodes: any[] = [];
 
+        if(!season){
+            return []
+        }
+
         $('.episode_list .card').each((index, element) => {
             const episodeNumber = $(element).find('.title .episode_number').text().trim();
             const title = $(element).find('.title .episode_title h3 a').text().trim();
@@ -39,7 +43,6 @@ export async function getSeriesEpisodes({ slug, season }: {slug: string; season:
 
 export async function getSeriesSeasons(slug: string) {
     try {
-        console.log('GETTING :::', `${movies_site_algorithm}/${slug}/seasons`)
         const { data: html } = await axios.get(`${movies_site_algorithm}/${slug}/seasons`);
         const $ = cheerio.load(html);
 
@@ -68,6 +71,7 @@ export async function getSeriesSeasons(slug: string) {
 
         return seasons;
     } catch (e) {
+        console.log('SESSION ERROR::', e)
         return Promise.reject(e);
     }
 }

@@ -68,7 +68,7 @@ export default function FilmHero({ data }: any) {
                             <BiBookmark />
                         </button>
                         <Link
-                            href={`/film/${type}/${slug}/watch`}
+                            href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
                             className={"flex items-center"}
                             role={"button"}
                         >
