@@ -66,7 +66,7 @@ const ChatInput = ({ onSend, isLoading, isDisabled }: Props) => {
                     }
                 }}
                 className={
-                    "outline-0 bg-background flex-1 border-0 rounded-xl resize-none p-2 text-sm"
+                    "outline-0 bg-background flex-1 border-0 rounded-xl resize-none p-2 text-sm text-white"
                 }
             />
             <button
