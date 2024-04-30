@@ -95,6 +95,19 @@ export default function FootballComments({}: Props) {
         }
     }, [match_id]);
 
+    useEffect(() => {
+        const scrollToBottom = () => {
+            const endDiv = document.getElementById('end');
+            if (endDiv) {
+                endDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        scrollToBottom();
+
+        scrollToBottom();
+    }, [messageList]);
+
     const getUserData = async (user_ref: DocumentReference) => {
         const userDoc = await getDoc(user_ref);
         return userDoc.data();
@@ -145,6 +158,7 @@ export default function FootballComments({}: Props) {
                             <ChatBobble key={chat._id} data={chat} isPending />
                         );
                     })}
+                    <div id={'end'} />
                 </div>
                 <div className={"p-default_spacing"}>
                     <ChatInput onSend={sendMessage} />
