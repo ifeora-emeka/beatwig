@@ -18,7 +18,7 @@ export default async function Page(props: any) {
         },
     });
 
-    let info = res.data.result.info;
+    let info = res.data?.result?.info;
 
     return (
         <div
