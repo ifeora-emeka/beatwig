@@ -36,7 +36,7 @@ export default function ChatInfo({ data }: Props) {
                         <small className={"text-muted"}>
                             {data.sender?.display_name}
                         </small>
-                        <small>{data.content}</small>
+                        <small className={'text-muted'}>{data.content}</small>
                     </div>
                 </div>
             </div>
