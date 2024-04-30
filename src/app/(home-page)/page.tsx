@@ -5,13 +5,13 @@ import { baseUrl } from "@/constants";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 // export const revalidate = 930;
 
 export default async function page() {
     const res = await axios(`${baseUrl}/api/public`);
 
-    revalidatePath('/');
+    revalidatePath("/");
 
     return (
         <>

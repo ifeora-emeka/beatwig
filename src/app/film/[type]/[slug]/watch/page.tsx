@@ -22,11 +22,15 @@ export default async function Page(props: any) {
     let episode = query?.episode || 0;
     let season = query?.season || 1;
 
-    let seasons = type?.includes('tv') ? await getSeriesSeasons("tv/" + slug): [];
-    let episodes = type?.includes('tv') ? await getSeriesEpisodes({
-        slug: `tv/${slug}`,
-        season: String(season),
-    }): [];
+    let seasons = type?.includes("tv")
+        ? await getSeriesSeasons("tv/" + slug)
+        : [];
+    let episodes = type?.includes("tv")
+        ? await getSeriesEpisodes({
+              slug: `tv/${slug}`,
+              season: String(season),
+          })
+        : [];
 
     return (
         <div className={"text-white flex justify-center py-default_spacing_xl"}>

@@ -207,6 +207,7 @@ export async function scrapeSearch({keyword, type}:{type:string; keyword:string}
     return films
 }
 
+
 export function extractFilmIdFromSlug(slug: string): string {
     let result = slug.split("/");
     let _slug = result[result.length - 1];

@@ -21,7 +21,7 @@ export default function EachFilm({ data }: Props) {
                 }
             >
                 <h5 className={"truncate"}>{data.title}</h5>
-                <p className={"text-sm text-muted"}>{data.date}</p>
+                <p className={"text-sm text-muted"}>{data.date || "-"}</p>
             </div>
 
             <div

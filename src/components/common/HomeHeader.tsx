@@ -23,13 +23,14 @@ type Props = {};
 export default function HomeHeader({}: Props) {
     const router = useRouter();
     const { user } = useAuthContext();
-    const { appState: { showSearch }, setAppContextState } = useAppContext();
+    const {
+        appState: { showSearch },
+        setAppContextState,
+    } = useAppContext();
 
     return (
         <>
-            {
-                showSearch && <SearchPopup />
-            }
+            {showSearch && <SearchPopup />}
             <Card className="px-5 py-3 z-50 flex gap-5 justify-between sticky top-0">
                 <Link href={"/"} className={"flex items-center"}>
                     <BrandLogo size={35} />
@@ -39,7 +40,7 @@ export default function HomeHeader({}: Props) {
                         onClick={() => setAppContextState({ showSearch: true })}
                         variant="outline"
                         size="icon"
-                        className="bg-inherit text-muted"
+                        className="bg-inherit text-muted hover:bg-card hover:text-muted"
                     >
                         <SearchIcon className="h-5 w-5" />
                     </Button>
@@ -59,10 +60,15 @@ export default function HomeHeader({}: Props) {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuItem>
-                                    <BiUser size={20} className={"text-muted"} />
+                                    <BiUser
+                                        size={20}
+                                        className={"text-muted"}
+                                    />
                                     My Account
                                 </DropdownMenuItem>
-                                <DropdownMenuSeparator className={"bg-border"} />
+                                <DropdownMenuSeparator
+                                    className={"bg-border"}
+                                />
                                 <DropdownMenuItem>
                                     <BiPowerOff
                                         size={20}
