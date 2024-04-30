@@ -20,6 +20,7 @@ export default function FilmRecommendations({ data }: any) {
                         data.map((film: FilmData) => {
                             return (
                                 <Link
+                                    key={crypto.randomUUID()}
                                     href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
                                 >
                                     <EachFilm
