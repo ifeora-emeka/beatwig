@@ -142,7 +142,7 @@ export default function AuthPopup() {
                         <Input
                             placeholder={"Ex. johnDoe"}
                             className={
-                                "outline-0 text-center py-default_spacing min-h-14"
+                                "outline-0 text-center py-default_spacing min-h-14 text-white"
                             }
                             onChange={(e) => setDisplayName(e.target.value)}
                             autoFocus
