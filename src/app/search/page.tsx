@@ -28,12 +28,12 @@ export default async function Page(props: any) {
                 <div className={"flex justify-center py-default_spacing_lg"}>
                     <Container>
                         <div
-                            className={"flex flex-col gap-default_spacing_lg "}
+                            className={"flex flex-col gap-default_spacing_xl "}
                         >
                             <HomeHeader />
 
-                            <h1 className={"text-muted text-lg"}>
-                                Result: {searchParams.q}
+                            <h1 className={"text-muted text-xl"}>
+                                Result for: <strong>"{searchParams.q}"</strong>
                             </h1>
 
                             <PageSection Icon={VideoIcon} heading={"Movies"}>

@@ -146,7 +146,7 @@ export default function FootballComments({}: Props) {
                 </div>
                 <div
                     className={
-                        "py-default_spacing w-full flex-col flex-1 overflow-y-auto overflow-x-hidden flex"
+                        "md:py-default_spacing w-full flex-col flex-1 overflow-y-auto overflow-x-hidden flex pb-40 "
                     }
                 >
                     {loading && <ChatListLoading />}
@@ -160,7 +160,7 @@ export default function FootballComments({}: Props) {
                     })}
                     <div id={'end'} />
                 </div>
-                <div className={"p-default_spacing"}>
+                <div className={"p-default_spacing bg-card flex fixed md:relative bottom-0 w-full md:rounded-lg md:w-auto"}>
                     <ChatInput onSend={sendMessage} />
                 </div>
             </div>

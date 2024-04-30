@@ -57,37 +57,37 @@ export default function FootballPlayer({ data }: Props) {
                             <Share className="h-4 w-4" />
                         </button>
                     </header>
-                    <div className="md:h-[416px] h-[202px] bg-black lg:rounded-lg flex justify-center items-center">
-                        <CountdownTimer
-                            matchStartTime={data.startTime}
-                            done={() => console.log("Timer is done")}
-                            overdue={() => console.log("TIME is overdue")}
-                        />
-                        {/*<iframe*/}
-                        {/*    src={"https://vidsrc.to/embed/movie/438631"}*/}
-                        {/*    width={"100%"}*/}
-                        {/*    height={300}*/}
-                        {/*    allowFullScreen*/}
-                        {/*    allowTransparency*/}
-                        {/*/>*/}
-                        {activeLink && (
-                            <iframe
-                                // @ts-ignore
-                                scrolling="no"
-                                // @ts-ignore
-                                // allowtransparencysandbox="allow-forms allow-scripts allow-same-origin allow-top-navigation"
-                                width="100%"
-                                height="100%"
-                                src={activeLink}
-                                allowFullScreen
-                                allowTransparency
-                                className="lg:rounded-lg"
+                    <div>
+                        <div className="md:h-[416px] h-[202px] bg-black lg:rounded-lg flex justify-center items-center">
+                            <CountdownTimer
+                                matchStartTime={data.startTime}
+                                done={() => console.log("Timer is done")}
+                                overdue={() => console.log("TIME is overdue")}
                             />
-                        )}
-                    </div>
-                    {data.links.length ? (
+                            {/*<iframe*/}
+                            {/*    src={"https://vidsrc.to/embed/movie/438631"}*/}
+                            {/*    width={"100%"}*/}
+                            {/*    height={300}*/}
+                            {/*    allowFullScreen*/}
+                            {/*    allowTransparency*/}
+                            {/*/>*/}
+                            {activeLink && (
+                                <iframe
+                                    // @ts-ignore
+                                    scrolling="no"
+                                    // @ts-ignore
+                                    // allowtransparencysandbox="allow-forms allow-scripts allow-same-origin allow-top-navigation"
+                                    width="100%"
+                                    height="100%"
+                                    src={activeLink}
+                                    allowFullScreen
+                                    allowTransparency
+                                    className="lg:rounded-lg"
+                                />
+                            )}
+                        </div>
                         <div
-                            className={"flex gap-default_spacing items-center"}
+                            className={"flex gap-default_spacing items-center md:pt-0 pt-2 md:px-0 px-default_spacing h-[50px] md:items-end"}
                         >
                             {data.links.map((link, i) => {
                                 return (
@@ -104,7 +104,7 @@ export default function FootballPlayer({ data }: Props) {
                                 );
                             })}
                         </div>
-                    ) : null}
+                    </div>
                 </div>
 
                 <FootballMatchDetails data={data} />
