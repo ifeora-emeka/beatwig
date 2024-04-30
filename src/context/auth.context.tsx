@@ -3,7 +3,7 @@ import { UserData } from "@/types/auth.types";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 import AppLoading from "@/components/AppLoading";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+
 
 interface AuthContextType {
     user: any;
@@ -91,6 +91,12 @@ export const AuthProvider = ({ children }: any) => {
         setAuthContextStateWrapper({ user: theUser });
         return theUser;
     };
+
+    useEffect(() => {
+        if(state.user && !state.user?.display_name){
+            setAuthContextStateWrapper({ show_login: true })
+        }
+    },[state.user])
 
     return (
         <>

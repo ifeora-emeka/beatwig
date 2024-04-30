@@ -43,6 +43,8 @@ export default function AuthPopup() {
                         await getAuthDependencies(user?.uid as string);
                         setLoading(false);
                     } else {
+                        const displayName = user?.displayName && user?.displayName?.length > 17 ? user.displayName.slice(0, 17) : user.displayName || "user-" + Date.now();
+
                         await createNewUser({
                             email: user.email,
                             provider: user.providerData[0].providerId,
@@ -50,8 +52,7 @@ export default function AuthPopup() {
                             avatar_url: user.photoURL || null,
                             createdAt: firebaseTimeStamp(),
                             updatedAt: firebaseTimeStamp(),
-                            display_name:
-                                user.displayName || "user-" + Date.now(),
+                            display_name: displayName,
                             last_seen: firebaseTimeStamp(),
                             username: "user-" + Date.now(),
                         });
@@ -81,6 +82,20 @@ export default function AuthPopup() {
             });
         })();
     }, []);
+
+    const updateDisplayName = async () => {
+        if(displayName && user) {
+            setLoading(true);
+
+            const washingtonRef = doc(db, dbCollectionName.USERS, user?._id);
+            await updateDoc(washingtonRef, {
+                display_name: displayName
+            });
+            await getAuthDependencies(user._id);
+
+            setLoading(false);
+        }
+    }
 
     if (!show_login) {
         return null;
@@ -145,17 +160,20 @@ export default function AuthPopup() {
                                 "outline-0 text-center py-default_spacing min-h-14 text-white"
                             }
                             onChange={(e) => setDisplayName(e.target.value)}
+                            value={displayName}
+                            maxLength={17}
                             autoFocus
                         />
                         <button
                             disabled={loading}
-                            // onClick={updateDisplayName}
+                            onClick={updateDisplayName}
                             className={
                                 "flex justify-center gap-default_spacing items-center bg-primary text-white w-full rounded-lg py-default_spacing"
                             }
                         >
                             {loading ? "Loading..." : "Continue"}
                         </button>
+                        <br />
                     </>
                 )}
             </div>
