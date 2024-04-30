@@ -20,7 +20,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning className="select-none">
+        <html lang="en" suppressHydrationWarning className="select-none text-muted">
             <body className={font.className}>
                 <Providers>{children}</Providers>
             </body>

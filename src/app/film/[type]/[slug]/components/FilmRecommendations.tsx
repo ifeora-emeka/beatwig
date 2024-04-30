@@ -3,8 +3,11 @@ import PageSection from "@/components/common/PageSection";
 import { BiMovie } from "react-icons/bi";
 import EachFilm from "@/app/film/components/EachFilm";
 import { FilmData } from "@/types/film.types";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function FilmRecommendations({ data }: any) {
+    const { type, slug } = useParams();
     return (
         <div className={"bg-card p-default_spacing rounded-lg"}>
             <PageSection Icon={BiMovie} heading={"Recommendations"}>
@@ -16,10 +19,12 @@ export default function FilmRecommendations({ data }: any) {
                     {data &&
                         data.map((film: FilmData) => {
                             return (
-                                <EachFilm
-                                    data={film}
-                                    key={crypto.randomUUID()}
-                                />
+                                <Link href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}>
+                                    <EachFilm
+                                        data={film}
+                                        key={crypto.randomUUID()}
+                                    />
+                                </Link>
                             );
                         })}
                 </div>

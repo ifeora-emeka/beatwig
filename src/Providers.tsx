@@ -6,6 +6,7 @@ import { themeColor } from "./constants";
 import { MatchProvider } from "@/context/match.context";
 import { AuthProvider } from "@/context/auth.context";
 import AuthPopup from "@/components/auth/AuthPopup";
+import { AppProvider } from "@/context/app.context";
 
 export default function Providers({ children }: any) {
     return (
@@ -22,12 +23,14 @@ export default function Providers({ children }: any) {
                     options={{ showSpinner: false }}
                     showOnShallow
                 />
-                <AuthProvider>
-                    <MatchProvider>
-                        <AuthPopup />
-                        {children}
-                    </MatchProvider>
-                </AuthProvider>
+                <AppProvider>
+                    <AuthProvider>
+                        <MatchProvider>
+                            <AuthPopup />
+                            {children}
+                        </MatchProvider>
+                    </AuthProvider>
+                </AppProvider>
             </ThemeProvider>
         </>
     );
