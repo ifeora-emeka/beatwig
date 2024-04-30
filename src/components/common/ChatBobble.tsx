@@ -57,7 +57,7 @@ export default function ChatBobble({ data, isPending }: Props) {
                             {moment(data.createdAt.toDate()).fromNow()}
                         </small>
                     </div>
-                    <small>{data.content}</small>
+                    <small className={'text-muted'}>{data.content}</small>
                     {user && (
                         <>
                             <div
