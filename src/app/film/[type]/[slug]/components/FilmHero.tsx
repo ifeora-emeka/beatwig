@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function FilmHero({ data }: any) {
     const { slug, type } = useParams();
     return (
-        <div
+        <section
             // style={{ backgroundImage: `url(${data.backdrop})`, backgroundSize: '800px' }}
             className={
                 "bg-no-repeat rounded-lg overflow-hidden text-white bg-right bg-card"
@@ -82,6 +82,6 @@ export default function FilmHero({ data }: any) {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

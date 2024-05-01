@@ -1,13 +1,41 @@
 import { ContainerLg } from "@/components/common/Container";
 import FilmHero from "@/app/film/[type]/[slug]/components/FilmHero";
 import axios from "axios";
-import { baseUrl } from "@/constants";
+import { appData, baseUrl } from "@/constants";
 import FilmDetailsLeft from "@/app/film/[type]/[slug]/components/FilmDetailsLeft";
 import { BiInfoCircle, BiMovie } from "react-icons/bi";
 import PageSection from "@/components/common/PageSection";
 import FilmRecommendations from "@/app/film/[type]/[slug]/components/FilmRecommendations";
 import HomeHeader from "@/components/common/HomeHeader";
 import { getFilmDetails } from "@/app/api/public/film/film.api";
+import { Metadata, ResolvingMetadata } from "next";
+
+
+export async function generateMetadata(
+    { params, searchParams }: any,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    let res = await getFilmDetails({
+        film_type: params.type,
+        film_slug: params.slug
+    });
+
+    return {
+        title: `Watch ${res.title} on ${appData.name}`,
+        description: res.overview || `Watch ${res.title} on ${appData.name}`,
+        keywords: [
+            ...res.genres.map(genre => genre.name),
+            appData.name,
+            ...appData.keywords
+        ],
+        openGraph: {
+            images: [res.poster],
+        },
+    }
+}
+
+
 
 export default async function Page(props: any) {
     const { params } = props;
@@ -22,11 +50,11 @@ export default async function Page(props: any) {
     return (
         <div
             className={
-                "flex justify-center gap-default_spacing py-default_spacing_xl px-2"
+                "flex justify-center gap-default_spacing py-default_spacing px-2"
             }
         >
             <ContainerLg>
-                <div className={'flex flex-col gap-default_spacing_lg'}>
+                <div className={'flex flex-col gap-default_spacing_xl'}>
                         <HomeHeader />
                     <div className={"flex flex-col gap-default_spacing"}>
                         <FilmHero data={res} />

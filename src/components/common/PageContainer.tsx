@@ -1,10 +1,13 @@
+'use client'
 import HomeHeader from "@/components/common/HomeHeader";
 import React from "react";
 import Container from "@/components/common/Container";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function PageContainer({ children }: any) {
+    const pathname = usePathname();
     let topLinks: {
         label: string;
         link: string;
@@ -19,7 +22,7 @@ export default function PageContainer({ children }: any) {
         },
         {
             label: "Movies",
-            link: "/",
+            link: "/movies",
         },
         // {
         //     label: "TV Series",
@@ -37,24 +40,30 @@ export default function PageContainer({ children }: any) {
                 <div className="flex flex-col gap-default_spacing_lg md:py-5 md:mb-0 mb-5">
                     <HomeHeader />
                     <main className="flex flex-col gap-default_spacing_xl">
-                        <div
-                            className={
-                                "flex gap-default_spacing items-center overflow-x-auto py-default_spacing md:px-0 px-default_spacing"
-                            }
+                        <nav
+
                         >
-                            {topLinks.map((link) => {
-                                return (
-                                    <Link
-                                        href={link.link}
-                                        key={crypto.randomUUID()}
-                                    >
-                                        <Button className={"text-white"}>
-                                            {link.label}
-                                        </Button>
-                                    </Link>
-                                );
-                            })}
-                        </div>
+                            <ul className={
+                                "flex gap-default_spacing items-center overflow-x-auto py-default_spacing md:px-0 px-default_spacing"
+                            }>
+                                {topLinks.map((link) => {
+                                    return (
+                                        <li key={crypto.randomUUID()}>
+                                            <Link
+                                                href={link.link}
+                                            >
+                                                <div className={cn("px-8 py-2 rounded-lg", {
+                                                    "bg-primary text-white": pathname === link.link,
+                                                    "text-muted": pathname !==  link.link,
+                                                })}>
+                                                    {link.label}
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
                         {children}
                     </main>
                 </div>

@@ -10,6 +10,35 @@ import {
     getSeriesSeasons,
 } from "@/app/api/public/film/series/series.api";
 import HomeHeader from "@/components/common/HomeHeader";
+import { Metadata, ResolvingMetadata } from "next";
+import { appData } from "@/constants";
+
+
+export async function generateMetadata(
+    { params, searchParams }: any,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    let res = await getFilmDetails({
+        film_type: params.type,
+        film_slug: params.slug
+    });
+
+    return {
+        title: `Watch ${res.title} on ${appData.name}`,
+        description: res.overview || `Watch ${res.title} on ${appData.name}`,
+        keywords: [
+            ...res.genres.map(genre => genre.name),
+            appData.name,
+            "Live steam"
+        ],
+        openGraph: {
+            images: [res.poster],
+        },
+    }
+}
+
+
 
 export default async function Page(props: any) {
     const { slug, type } = props.params;

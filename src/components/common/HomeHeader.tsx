@@ -58,7 +58,7 @@ export default function HomeHeader({}: Props) {
                                     />
                                 </div>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent>
+                            <DropdownMenuContent className={'bg-card text-muted'}>
                                 <DropdownMenuItem>
                                     <BiUser
                                         size={20}

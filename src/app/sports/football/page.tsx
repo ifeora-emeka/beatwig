@@ -1,11 +1,18 @@
 import axios from "axios";
-import { baseUrl } from "@/constants";
+import { appData, baseUrl } from "@/constants";
 import PageSection from "@/components/common/PageSection";
 import { BiBroadcast, BiCalendar } from "react-icons/bi";
 import EachSportCompetition from "@/app/sports/components/EachSportCompetition";
 import PageContainer from "@/components/common/PageContainer";
 import React from "react";
 import { SportTournament } from "@/types/sports.types";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: `Watch Football Live Stream Online - Stream Matches from Any League | ${appData.name}`,
+    description: `Stream live football matches from any league worldwide on ${appData.name}. Enjoy HD quality streams of Premier League, La Liga, Serie A, Bundesliga, and more. Never miss a game with our streaming service!`,
+};
 
 export default async function Page() {
     const res = await axios(`${baseUrl}/api/public/sports/football`);
