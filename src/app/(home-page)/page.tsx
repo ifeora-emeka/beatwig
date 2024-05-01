@@ -7,7 +7,8 @@ import { revalidatePath } from "next/cache";
 import { shuffleArray } from "@/utils/index.utils";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
+export const revalidate = 10;
 
 export const metadata: Metadata = {
     title: `Stream Movies, TV Series & Live Football | ${appData.name}`,
