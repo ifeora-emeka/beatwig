@@ -8,6 +8,7 @@ import React from "react";
 import { SportTournament } from "@/types/sports.types";
 import { Metadata } from "next";
 
+export const revalidate = 20;
 
 export const metadata: Metadata = {
     title: `Watch Football Live Stream Online - Stream Matches from Any League | ${appData.name}`,

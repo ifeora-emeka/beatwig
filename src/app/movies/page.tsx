@@ -8,7 +8,7 @@ import Link from "next/link";
 import EachFilm from "@/app/film/components/EachFilm";
 import React from "react";
 
-
+export const revalidate = 20;
 
 export default async function Page() {
     let movies: any[] = await getPopularMovies();
