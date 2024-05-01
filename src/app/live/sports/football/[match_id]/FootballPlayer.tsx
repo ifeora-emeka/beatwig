@@ -71,7 +71,7 @@ export default function FootballPlayer({ data }: Props) {
                             {/*    allowFullScreen*/}
                             {/*    allowTransparency*/}
                             {/*/>*/}
-                            {activeLink && (
+                            {activeLink ? (
                                 <iframe
                                     // @ts-ignore
                                     scrolling="no"
@@ -84,7 +84,9 @@ export default function FootballPlayer({ data }: Props) {
                                     allowTransparency
                                     className="lg:rounded-lg"
                                 />
-                            )}
+                            ): <div className={'h-full w-full flex justify-center items-center'}>
+                                <p>Live streaming will start by {data?.startTime.time}</p>
+                            </div>}
                         </div>
                         <div
                             className={"flex gap-default_spacing items-center md:pt-0 pt-2 md:px-0 px-default_spacing h-[50px] md:items-end"}

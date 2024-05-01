@@ -10,7 +10,7 @@ export default function FilmRecommendations({ data }: any) {
     const { type } = useParams();
     return (
         <div className={"bg-card p-default_spacing rounded-lg"}>
-            <PageSection Icon={BiMovie} heading={"Similar movies"}>
+            <PageSection Icon={BiMovie} heading={"Recommendations"}>
                 <div
                     className={
                         "flex gap-default_spacing overflow-x-auto pb-default_spacing"
