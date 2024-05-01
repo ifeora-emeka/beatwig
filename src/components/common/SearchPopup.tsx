@@ -17,7 +17,6 @@ export default function SearchPopup() {
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (keyword) {
-            console.log("THE KEYWORD::", keyword);
             router?.push(`/search?q=${keyword}`);
             setAppContextState({ showSearch: false });
         }
@@ -39,29 +38,31 @@ export default function SearchPopup() {
                 }
             >
                 <Container>
-                    <div className={"p-default_spacing bg-card md:rounded-lg"}>
-                        <div
-                            className={
-                                "h-12 flex items-center gap-default_spacing"
-                            }
-                        >
-                            <SearchIcon />
-                            <input
-                                placeholder={"Search for movies.."}
-                                className={"bg-card flex-1 outline-none h-full"}
-                                autoFocus
-                                onChange={(e) => setKeyword(e.target.value)}
-                            />
-                            <button
-                                onClick={() =>
-                                    setAppContextState({
-                                        showSearch: false,
-                                    })
+                    <div className={'flex justify-center p-2 md:p-0'}>
+                        <div className={"p-default_spacing bg-card rounded-lg w-full"}>
+                            <div
+                                className={
+                                    "h-12 flex items-center gap-default_spacing"
                                 }
-                                type={"button"}
                             >
-                                <CloseIcon />
-                            </button>
+                                <SearchIcon />
+                                <input
+                                    placeholder={"Search for movies.."}
+                                    className={"bg-card flex-1 outline-none h-full"}
+                                    autoFocus
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                />
+                                <button
+                                    onClick={() =>
+                                        setAppContextState({
+                                            showSearch: false,
+                                        })
+                                    }
+                                    type={"button"}
+                                >
+                                    <CloseIcon />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Container>
