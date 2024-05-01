@@ -21,14 +21,14 @@ export default function PageContainer({ children }: any) {
             label: "Movies",
             link: "/",
         },
-        {
-            label: "TV Series",
-            link: "/",
-        },
-        {
-            label: "Software",
-            link: "/",
-        },
+        // {
+        //     label: "TV Series",
+        //     link: "/",
+        // },
+        // {
+        //     label: "Software",
+        //     link: "/",
+        // },
     ];
 
     return (

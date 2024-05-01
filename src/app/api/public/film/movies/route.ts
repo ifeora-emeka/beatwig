@@ -10,6 +10,7 @@ export async function GET(): Promise<Response> {
     }
 };
 
+// get film details
 export async function POST(req:Request) {
     try {
         let { film_slug, film_type } = await req.json()

@@ -4,9 +4,10 @@ import HomePage from "./HomePage";
 import { baseUrl } from "@/constants";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
+import { shuffleArray } from "@/utils/index.utils";
 
 export const dynamic = "force-dynamic";
-// export const revalidate = 930;
+
 
 export default async function page() {
     const res = await axios(`${baseUrl}/api/public`);
@@ -17,8 +18,8 @@ export default async function page() {
         <>
             <HomePage
                 lineups={res.data.football_lineup}
-                movies={res.data.movies}
-                series={res.data.series}
+                movies={shuffleArray(res.data.movies)}
+                series={shuffleArray(res.data.series)}
             />
         </>
     );

@@ -71,7 +71,6 @@ export async function getSeriesSeasons(slug: string) {
 
         return seasons;
     } catch (e) {
-        console.log('SESSION ERROR::', e)
         return Promise.reject(e);
     }
 }

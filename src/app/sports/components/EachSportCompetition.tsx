@@ -1,3 +1,4 @@
+'use client'
 import { SportTournament } from "@/types/sports.types";
 import { RadioTower } from "lucide-react";
 import { cn } from "@/lib/utils";

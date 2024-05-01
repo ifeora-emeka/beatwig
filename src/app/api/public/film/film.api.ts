@@ -2,6 +2,7 @@ import axios from "axios";
 import { movies_site_algorithm } from "@/constants";
 import cheerio from "cheerio";
 import { FilmData } from "@/types/film.types";
+import { shuffleArray } from "@/utils/index.utils";
 
 
 export const getPopularMovies = async () => {
@@ -117,7 +118,7 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
         // Extract specific details
         const { Status, 'Original Language': OriginalLanguage, Budget, Revenue } = additionalInfo;
 
-        let recommendations = await getMovieRecommendations(genres[0].slug);
+        let recommendations = await getMovieRecommendations(genres?.length > 2 ? genres[1].slug : genres[0].slug);
 
 
         const filmDetails = {
@@ -168,7 +169,7 @@ export async function getMovieRecommendations(slug: string) {
             return { poster, title, slug: slug || "", date: releaseDate, overview };
         }).get();
 
-        return moviesData;
+        return shuffleArray(moviesData);
     } catch (error) {
         console.error('Error:', error);
         return [];

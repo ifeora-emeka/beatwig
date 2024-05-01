@@ -9,6 +9,7 @@ import {
     getSeriesEpisodes,
     getSeriesSeasons,
 } from "@/app/api/public/film/series/series.api";
+import HomeHeader from "@/components/common/HomeHeader";
 
 export default async function Page(props: any) {
     const { slug, type } = props.params;
@@ -33,9 +34,12 @@ export default async function Page(props: any) {
         : [];
 
     return (
-        <div className={"text-white flex justify-center py-default_spacing_xl"}>
+        <div className={"text-white flex justify-center py-default_spacing"}>
             <ContainerLg>
                 <div className={"flex flex-col gap-default_spacing"}>
+                <div className={'hidden md:block'}>
+                    <HomeHeader />
+                </div>
                     <div
                         className={
                             "flex md:flex-row flex-col gap-default_spacing md:h-[500px] h-[650px]"

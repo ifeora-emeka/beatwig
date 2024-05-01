@@ -7,19 +7,17 @@ import { BiInfoCircle, BiMovie } from "react-icons/bi";
 import PageSection from "@/components/common/PageSection";
 import FilmRecommendations from "@/app/film/[type]/[slug]/components/FilmRecommendations";
 import HomeHeader from "@/components/common/HomeHeader";
+import { getFilmDetails } from "@/app/api/public/film/film.api";
 
 export default async function Page(props: any) {
     const { params } = props;
 
-    const res = await axios(`${baseUrl}/api/public/film/movies`, {
-        method: "POST",
-        data: {
-            film_slug: params.slug,
-            film_type: params.type,
-        },
-    });
+    let res = await getFilmDetails({
+        film_type: params.type,
+        film_slug: params.slug
+    })
 
-    let info = res.data?.result?.info;
+    let info = res?.info;
 
     return (
         <div
@@ -31,13 +29,13 @@ export default async function Page(props: any) {
                 <div className={'flex flex-col gap-default_spacing_lg'}>
                         <HomeHeader />
                     <div className={"flex flex-col gap-default_spacing"}>
-                        <FilmHero data={res.data.result} />
+                        <FilmHero data={res} />
                         <div
                             className={
                                 "flex gap-default_spacing lg:flex-row flex-col-reverse"
                             }
                         >
-                            <FilmDetailsLeft data={res.data.result} />
+                            <FilmDetailsLeft data={res} />
                             <div
                                 className={
                                     "flex-1 p-default_spacing bg-card rounded-lg text-white"
@@ -69,7 +67,7 @@ export default async function Page(props: any) {
                             </div>
                         </div>
                         <FilmRecommendations
-                            data={res.data.result.recommendations}
+                            data={res.recommendations}
                         />
                     </div>
                 </div>

@@ -7,10 +7,10 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function FilmRecommendations({ data }: any) {
-    const { type, slug } = useParams();
+    const { type } = useParams();
     return (
         <div className={"bg-card p-default_spacing rounded-lg"}>
-            <PageSection Icon={BiMovie} heading={"Recommendations"}>
+            <PageSection Icon={BiMovie} heading={"Similar movies"}>
                 <div
                     className={
                         "flex gap-default_spacing overflow-x-auto pb-default_spacing"
@@ -21,7 +21,7 @@ export default function FilmRecommendations({ data }: any) {
                             return (
                                 <Link
                                     key={crypto.randomUUID()}
-                                    href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
+                                    href={`/film${film.slug}`}
                                 >
                                     <EachFilm
                                         data={film}

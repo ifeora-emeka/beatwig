@@ -36,7 +36,7 @@ export default function HomePage({ lineups, movies, series }: Props) {
 
     return (
         <PageContainer>
-            <PageSection Icon={BiBroadcast} heading={"Live football"}>
+            <PageSection Icon={BiBroadcast} heading={"Now playing!"}>
                 {liveTournaments?.length > 0 ? (
                     liveTournaments?.map((data) => {
                         return (
