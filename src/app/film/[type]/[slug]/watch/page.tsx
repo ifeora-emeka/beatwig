@@ -79,13 +79,13 @@ export default async function Page(props: any) {
                                 "bg-card p-default_spacing rounded-lg md:h-full min-h-[229px] bg-black flex-1"
                             }
                         >
-                            <iframe
-                                src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
-                                width="100%"
-                                height="100%"
-                                allowFullScreen
-                                className={"rounded-lg"}
-                            />
+                            {/*<iframe*/}
+                            {/*    src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}*/}
+                            {/*    width="100%"*/}
+                            {/*    height="100%"*/}
+                            {/*    allowFullScreen*/}
+                            {/*    className={"rounded-lg"}*/}
+                            {/*/>*/}
                         </div>
                         {type?.includes("tv") && (
                             <FilmPlayerRight

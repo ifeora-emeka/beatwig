@@ -4,4 +4,10 @@ export function shuffleArray(array: any[]) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+};
+
+export function minutesToMilliseconds(minutes: number): number {
+    const millisecondsPerMinute: number = 60000;
+    return minutes * millisecondsPerMinute;
 }
+

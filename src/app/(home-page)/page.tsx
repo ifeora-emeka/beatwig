@@ -21,9 +21,11 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-    const res = await axios(`${baseUrl}/api/public`);
+    const req = await fetch(`${baseUrl}/api/public`);
+    const data = await req.json();
+    const res = { data }
 
-    revalidatePath("/");
+    // revalidatePath("/");
 
     return (
         <>

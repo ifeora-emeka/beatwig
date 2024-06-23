@@ -1,7 +1,7 @@
 import { getPopularMovies, getPopularSeries } from "@/app/api/public/film/film.api";
 import { getAllFootballSchedule } from "@/app/api/public/sports/sport.api";
 
-
+export const dynamic = "force-dynamic";
 export async function GET(): Promise<Response> {
     try {
         let movies: any[] = await getPopularMovies();

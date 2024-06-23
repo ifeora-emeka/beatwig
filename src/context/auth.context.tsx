@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }: any) => {
     const getAuthDependencies = async (user_id: string): Promise<UserData> => {
         try {
             setAuthContextStateWrapper({ auth_loading: true });
-            console.log("GETTING USER DEPENDENCIES::", user_id);
             const userRef = doc(db, dbCollectionName.USERS, user_id);
             const userSnapshot = await getDoc(userRef);
             let theUser = {

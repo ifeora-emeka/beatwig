@@ -4,10 +4,33 @@ import { BiMovie } from "react-icons/bi";
 import EachFilm from "@/app/film/components/EachFilm";
 import { FilmData } from "@/types/film.types";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { db, dbCollectionName } from "@/firebase/index.firebase";
+import { useEffect } from "react";
+import { addDoc, collection } from "@firebase/firestore";
 
 export default function FilmRecommendations({ data }: any) {
-    const { type } = useParams();
+
+    const saveMovieProgress = async (filmData: Partial<FilmData>) => {
+        try {
+            console.log('STORING MOVIE')
+            const messagesRef = collection(db, dbCollectionName.WATCHED_MOVIE);
+
+            return await addDoc(messagesRef, filmData);
+        } catch (error) {
+            console.error('Error saving movie progress:', error);
+        }
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            // saveMovieProgress({
+            //     title: "This is the title"
+            // });
+        }, 1000);
+
+    }, []);
+
+
     return (
         <div className={"bg-card p-default_spacing rounded-lg"}>
             <PageSection Icon={BiMovie} heading={"Recommendations"}>
