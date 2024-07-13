@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { RefreshCwIcon } from 'lucide-react'
 import React from "react";
 
-export default function ErrorPage() {
+export default function ErrorPage(props:any) {
+    console.log('THE ERROR:::', props)
     const router = useRouter();
 
     const handleReload = () => {
