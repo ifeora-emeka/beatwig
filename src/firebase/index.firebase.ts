@@ -17,5 +17,6 @@ export const db = getFirestore(app);
 export const dbCollectionName = {
     MESSAGES: 'messages',
     USERS: 'users',
-    WATCHED_MOVIE: 'watched_movie'
+    WATCHED_MOVIE: 'watched_movies',
+    FILM_BOOKMARK: 'film_bookmarks'
 }

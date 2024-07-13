@@ -48,7 +48,7 @@ export default function EachSportCompetition({
                         >
                             <article
                                 key={crypto.randomUUID()}
-                                className={"border-t hover:bg-hover"}
+                                className={"border-t hover:bg-hover text-card-foreground hover:shadow-sm"}
                             >
                                 <div className={"flex items-center"}>
                                     <div

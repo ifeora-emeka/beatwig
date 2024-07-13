@@ -10,7 +10,7 @@ export default function PersonCard({ avatar_url, name, role }: Props) {
     return (
         <div
             className={
-                "p-default_spacing rounded-lg bg-hover flex flex-col gap-default_spacing min-w-[160px] text-white"
+                "p-default_spacing rounded-lg bg-hover text-card-foreground flex flex-col gap-default_spacing min-w-[160px] text-white"
             }
         >
             <div className={"h-40 rounded-lg relative overflow-hidden"}>
@@ -22,7 +22,7 @@ export default function PersonCard({ avatar_url, name, role }: Props) {
                 />
             </div>
             <div className={"flex flex-col"}>
-                <h5 className={"text-sm truncate"}>{name}</h5>
+                <h5 className={"text-sm truncate text-foreground"}>{name}</h5>
                 <p className={"text-muted text-sm"}>as {role}</p>
             </div>
         </div>

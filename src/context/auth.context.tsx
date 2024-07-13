@@ -6,7 +6,7 @@ import AppLoading from "@/components/AppLoading";
 
 
 interface AuthContextType {
-    user: any;
+    user: UserData | null;
     auth_loading: boolean;
     show_login: boolean;
 }
@@ -92,10 +92,10 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     useEffect(() => {
-        if(state.user && !state.user?.display_name){
+        if (state.user && !state.user?.display_name) {
             setAuthContextStateWrapper({ show_login: true })
         }
-    },[state.user])
+    }, [state.user])
 
     return (
         <>

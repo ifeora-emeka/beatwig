@@ -6,7 +6,12 @@ export interface FilmData {
     title: string;
     date: string;
     slug: string;
-    type: 'movie' | 'tv';
+    type: FilmType;
     overview?: string;
 }
 
+export type FilmType = 'movie' | 'tv';
+
+export interface FilmBookmarkDTO extends FilmData {
+
+}

@@ -6,13 +6,17 @@
   --white: #fdfaff;
 
   --background-dark: #171717;
-  --background-light: #f1f2f5;
+  --background-light: #f0eaeb;
 
   --theme-color: #A51BFF;
   --theme-foreground: var(--white);
 
+  --secondary-color: #EE5D6B;
+
   --card-dark: #282828;
-  --cark-light: var(--white);
+  --card-light: white;
+
+  --card-foreground-light: rgb(33, 25, 34);
 
   --border-color-dark: #313131;
   --border-color-light: #EDEDEF;
@@ -21,18 +25,18 @@
   --muted-dark: #989898;
 
   --hover-color-dark: #2d2d2d;
-  --hover-color-light: #ece7ef;
+  --hover-color-light: #f6f5f7;
 }
 
 @layer base {
   :root {
-    --hover-color: var(--hover-color-dark);
+    --hover-color: var(--hover-color-light);
 
-    --background: var(--background-dark);
+    --background: var(--background-light);
     --foreground: 222.2 84% 4.9%;
 
-    --card: var(--card-dark);
-    --card-foreground: 222.2 84% 4.9%;
+    --card: var(--card-light);
+    --card-foreground: var(--card-foreground-light);
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -40,10 +44,10 @@
     --primary: var(--theme-color);
     --primary-foreground: var(--theme-foreground);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: var(--secondary-color);
+    --secondary-foreground: white;
 
-    --muted: var(--muted-dark);
+    --muted: var(--muted-light);
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 210 40% 96.1%;
@@ -52,8 +56,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: var(--border-color-dark);
-    --input: var(--border-color-dark);
+    --border: var(--border-color-light);
+    --input: var(--border-color-light);
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
@@ -74,8 +78,8 @@
     --primary: var(--theme-color);
     --primary-foreground: var(--theme-foreground);
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: var(--secondary-color);
+    --secondary-foreground: white;
 
     --muted: var(--muted-dark);
     --muted-foreground: 215 20.2% 65.1%;
@@ -108,11 +112,11 @@
 }
 
 .bottom-gradient {
-  background: rgb(0,0,0);
-  background: linear-gradient(180deg, rgba(0,0,0,0.04805672268907568) 45%, rgba(0,0,0,0.5662640056022409) 70%, rgba(0,0,0,1) 100%);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04805672268907568) 45%, rgba(0, 0, 0, 0.5662640056022409) 70%, rgba(0, 0, 0, 1) 100%);
 }
 
 .hero-gradient {
-  background: rgb(0,0,0);
-  background: linear-gradient(270deg, rgba(0,0,0,0.41220238095238093) 0%, rgba(0,0,0,0.7679446778711485) 29%, rgba(0,0,0,0.8687850140056023) 58%);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.41220238095238093) 0%, rgba(0, 0, 0, 0.7679446778711485) 29%, rgba(0, 0, 0, 0.8687850140056023) 58%);
 }
