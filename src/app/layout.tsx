@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Providers from "@/Providers";
+import Providers from "@/providers/Providers";
 import "swiper/css";
 
 const font = Poppins({
@@ -23,7 +23,7 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
-            className="select-none text-muted"
+            className="select-none text-muted bg-background"
         >
             <body className={font.className}>
                 <Providers>{children}</Providers>

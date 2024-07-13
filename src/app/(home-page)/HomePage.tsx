@@ -35,27 +35,7 @@ export default function HomePage({ lineups, movies, series }: Props) {
     }, [lineups]);
 
     return (
-        <PageContainer>
-            <PageSection Icon={BiBroadcast} heading={"Now playing!"}>
-                {liveTournaments?.length > 0 ? (
-                    liveTournaments?.map((data) => {
-                        return (
-                            <EachSportCompetition
-                                data={data}
-                                key={crypto.randomUUID()}
-                            />
-                        );
-                    })
-                ) : (
-                    <div
-                        className={
-                            "bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"
-                        }
-                    >
-                        <span>No Live matches at the moment</span>
-                    </div>
-                )}
-            </PageSection>
+        <PageContainer withTopLinks>
             <PageSection Icon={BiFilm} heading={"Popular movie"}>
                 <div
                     className={
@@ -93,6 +73,26 @@ export default function HomePage({ lineups, movies, series }: Props) {
                             );
                         })}
                 </div>
+            </PageSection>
+            <PageSection Icon={BiBroadcast} heading={"Now playing!"}>
+                {liveTournaments?.length > 0 ? (
+                    liveTournaments?.map((data) => {
+                        return (
+                            <EachSportCompetition
+                                data={data}
+                                key={crypto.randomUUID()}
+                            />
+                        );
+                    })
+                ) : (
+                    <div
+                        className={
+                            "bg-card rounded-lg text-muted p-default_spacing text-center py-default_spacing_lg"
+                        }
+                    >
+                        <span>No Live matches at the moment</span>
+                    </div>
+                )}
             </PageSection>
             <PageSection Icon={BiCalendar} heading={`Today's lineup`}>
                 {lineups &&

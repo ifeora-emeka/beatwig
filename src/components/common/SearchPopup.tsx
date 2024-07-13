@@ -42,13 +42,15 @@ export default function SearchPopup() {
                         <div className={"p-default_spacing bg-card rounded-lg w-full"}>
                             <div
                                 className={
-                                    "h-12 flex items-center gap-default_spacing"
+                                    "h-12 flex items-center gap-default_spacing justify-between"
                                 }
                             >
-                                <SearchIcon />
+                                <div>
+                                    <SearchIcon />
+                                </div>
                                 <input
                                     placeholder={"Search for movies.."}
-                                    className={"bg-card flex-1 outline-none h-full"}
+                                    className={"bg-card flex-1 outline-none h-full max-w-[65%] sm:max-w-full"}
                                     autoFocus
                                     onChange={(e) => setKeyword(e.target.value)}
                                 />

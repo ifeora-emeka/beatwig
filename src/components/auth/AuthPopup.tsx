@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
+import Cookies from "js-cookie";
 
 export default function AuthPopup() {
     const {
@@ -39,6 +40,8 @@ export default function AuthPopup() {
                     const userRef = doc(db, dbCollectionName.USERS, user.uid);
                     const userSnapshot = await getDoc(userRef);
 
+                    Cookies.set('user_id', `${user.uid}`);
+
                     if (userSnapshot.exists()) {
                         await getAuthDependencies(user?.uid as string);
                         setLoading(false);
@@ -56,6 +59,7 @@ export default function AuthPopup() {
                             last_seen: firebaseTimeStamp(),
                             username: "user-" + Date.now(),
                         });
+                        
                         setLoading(false);
                     }
                 }
@@ -84,7 +88,7 @@ export default function AuthPopup() {
     }, []);
 
     const updateDisplayName = async () => {
-        if(displayName && user) {
+        if (displayName && user) {
             setLoading(true);
 
             const washingtonRef = doc(db, dbCollectionName.USERS, user?._id);
@@ -120,24 +124,16 @@ export default function AuthPopup() {
                 {!user && (
                     <>
                         <center className={"py-default_spacing_lg"}>
-                            <h3 className={"text-muted"}>Login / Signup</h3>
+                            <h3 className={"text-muted"}>Login / Register</h3>
                         </center>
-                        <button
-                            onClick={handleGoogleAuth}
-                            className={
-                                "flex justify-center gap-default_spacing items-center bg-white/20 w-full rounded-lg py-default_spacing"
-                            }
-                        >
+                        <EachMethod onClick={handleGoogleAuth}>
                             <BiLogoGoogle size={25} /> With Google
-                        </button>
+                        </EachMethod>
+
                         {process.env.NODE_ENV !== "production" && (
-                            <button
-                                className={
-                                    "flex justify-center gap-default_spacing items-center bg-white/20 w-full rounded-lg py-default_spacing"
-                                }
-                            >
+                            <EachMethod onClick={handleGoogleAuth}>
                                 <BiLogoFacebook size={25} /> With Facebook
-                            </button>
+                            </EachMethod>
                         )}
                         <button
                             className={"text-muted py-default_spacing_lg"}
@@ -149,7 +145,7 @@ export default function AuthPopup() {
                         </button>
                     </>
                 )}
-                {user && !user?.displayName && (
+                {user && !user?.display_name && (
                     <>
                         <center className={"py-default_spacing_lg"}>
                             <h3 className={"text-muted"}>Enter display name</h3>
@@ -179,4 +175,17 @@ export default function AuthPopup() {
             </div>
         </div>
     );
+}
+
+const EachMethod = ({ onClick, children }: { onClick: () => void; children: any }) => {
+    return <>
+        <button
+            onClick={onClick}
+            className={
+                "flex justify-center gap-default_spacing items-center bg-white/50 w-full rounded-lg py-default_spacing hover:bg-white/70"
+            }
+        >
+            {children}
+        </button>
+    </>
 }

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 import { useEffect } from "react";
 import { addDoc, collection } from "@firebase/firestore";
+import EachFilmLg from "@/app/film/components/EachFilmLg";
 
 export default function FilmRecommendations({ data }: any) {
 
@@ -36,7 +37,7 @@ export default function FilmRecommendations({ data }: any) {
             <PageSection Icon={BiMovie} heading={"Recommendations"}>
                 <div
                     className={
-                        "flex gap-default_spacing overflow-x-auto pb-default_spacing"
+                        "gap-default_spacing pb-default_spacing grid grid-cols-1 md:grid-cols-2"
                     }
                 >
                     {data &&
@@ -46,7 +47,7 @@ export default function FilmRecommendations({ data }: any) {
                                     key={crypto.randomUUID()}
                                     href={`/film${film.slug}`}
                                 >
-                                    <EachFilm
+                                    <EachFilmLg
                                         data={film}
                                         key={crypto.randomUUID()}
                                     />
