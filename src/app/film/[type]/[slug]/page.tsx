@@ -56,8 +56,9 @@ export default async function Page(props: any) {
         user_id: user_id as string
     })
 
+    
     let info = res?.info;
-
+    
     return (
         <div
             className={

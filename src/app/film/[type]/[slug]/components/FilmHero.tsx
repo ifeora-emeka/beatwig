@@ -8,12 +8,12 @@ import { useAuthContext } from "@/context/auth.context";
 import { FilmBookmarkDTO, FilmType } from "@/types/film.types";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function FilmHero({ data, bookmark }: { data: any; bookmark: FilmBookmarkDTO }) {
-    const router = useRouter();
+    const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
     const [isBookmarked, setIsBookmarked] = useState(bookmark ? true : false);
@@ -65,6 +65,14 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
             console.log('ERROR::', error)
             alert('An error occurred while bookmarking this film')
         }
+    }
+
+    useEffect(() => {
+        setShow(true);
+    },[]);
+
+    if(!show) {
+        return null;
     }
 
     return (

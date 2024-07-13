@@ -5,12 +5,12 @@ import EachFilm from "@/app/film/components/EachFilm";
 import { FilmData } from "@/types/film.types";
 import Link from "next/link";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addDoc, collection } from "@firebase/firestore";
 import EachFilmLg from "@/app/film/components/EachFilmLg";
 
 export default function FilmRecommendations({ data }: any) {
-
+    const [show, setShow] = useState(false)
     const saveMovieProgress = async (filmData: Partial<FilmData>) => {
         try {
             console.log('STORING MOVIE')
@@ -30,6 +30,14 @@ export default function FilmRecommendations({ data }: any) {
         }, 1000);
 
     }, []);
+
+    useEffect(() => {
+        setShow(true)
+    },[])
+
+    if(!show){
+        return null;
+    }
 
 
     return (
