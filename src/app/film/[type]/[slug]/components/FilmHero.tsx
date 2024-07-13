@@ -3,13 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import { BiBookmark, BiPlay, BiSolidBookmark } from "react-icons/bi";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { createFilmBookmark } from "@/firebase/film.firebase";
+import { createFilmBookmark, removeBookmark } from "@/firebase/film.firebase";
 import { useAuthContext } from "@/context/auth.context";
 import { FilmBookmarkDTO, FilmType } from "@/types/film.types";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function FilmHero({ data, bookmark }: { data: any; bookmark: FilmBookmarkDTO }) {
     const router = useRouter();
@@ -21,25 +22,35 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
     const handleBookmark = async () => {
         try {
             if (user && user.ref) {
-                setIsBookmarked(true);
-                toast({
-                    title: "Bookmark",
-                    description: "Film bookmarked successfully",
-                    duration: 3000,
-                    variant: 'default'
-                })
-                await createFilmBookmark({
-                    filmData: {
-                        poster: data.backdrop,
-                        date: data.release,
-                        slug: slug as string,
-                        title: data.title,
-                        type: type as FilmType,
-                        film_id: slug as string,
-                        overview: data.overview
-                    }, user_id: user?._id, user_ref: user.ref
-                });
-
+                if (isBookmarked) {
+                    setIsBookmarked(false);
+                    toast({
+                        title: "Bookmark removed",
+                        description: "Film removed from bookmarks",
+                        duration: 3000,
+                        variant: 'default'
+                    })
+                    await removeBookmark({ film_id: slug as string, user_id: user?._id });
+                }else {
+                    setIsBookmarked(true);
+                    toast({
+                        title: "Bookmark",
+                        description: "Film bookmarked successfully",
+                        duration: 3000,
+                        variant: 'default'
+                    })
+                    await createFilmBookmark({
+                        filmData: {
+                            poster: data.backdrop,
+                            date: data.release,
+                            slug: slug as string,
+                            title: data.title,
+                            type: type as FilmType,
+                            film_id: slug as string,
+                            overview: data.overview
+                        }, user_id: user?._id, user_ref: user.ref
+                    });
+                }
             } else {
                 setAuthContextState({ show_login: true })
             }
@@ -110,18 +121,26 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
                     </div>
 
                     <div className={"flex gap-default_spacing items-center"}>
-                        <button
-                            onClick={() => handleBookmark()}
-                            className={
-                                cn("rounded-full dark:text-card-foreground text-muted text-xl h-10 w-10 flex items-center justify-center hover:bg-primary bg-border", {
-                                    "bg-primary text-white": isBookmarked
-                                })
-                            }
-                        >
-                            {
-                                isBookmarked ? <BiSolidBookmark size={20} className='text-white' /> : <BiBookmark size={20} className="text-muted" />
-                            }
-                        </button>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button
+                                    onClick={() => handleBookmark()}
+                                    className={
+                                        cn("rounded-full dark:text-card-foreground text-muted text-xl h-11 w-11 flex items-center justify-center hover:bg-primary bg-border", {
+                                            "bg-primary text-white": isBookmarked
+                                        })
+                                    }
+                                >
+                                    {
+                                        isBookmarked ? <BiSolidBookmark size={20} className='text-white' /> : <BiBookmark size={20} className="text-muted" />
+                                    }
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Bookmark this</p>
+                            </TooltipContent>
+                        </Tooltip>
+                        
                         <Link
                             href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
                             className={"flex items-center bg-secondary px-3 py-2 rounded-md text-secondary-foreground"}

@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BrandLogo from "./BrandLogo";
 import { SearchIcon, User, SunIcon, BookmarkIcon, MoonIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,20 +15,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BiPowerOff, BiUser } from "react-icons/bi";
 import Link from "next/link";
-import SearchPopup from "@/components/common/SearchPopup";
 import { useAppContext } from "@/context/app.context";
 import { getAuth, signOut } from "firebase/auth";
 import { useTheme } from "next-themes";
+import Image from "next/image";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 
 type Props = {};
 
 export default function HomeHeader({ }: Props) {
+    const [show, setShow] = useState(false);
     const auth = getAuth();
     const { setTheme, theme } = useTheme();
     const { user, setAuthContextState } = useAuthContext();
     const {
-        appState: { showSearch },
         setAppContextState,
     } = useAppContext();
 
@@ -42,39 +43,70 @@ export default function HomeHeader({ }: Props) {
         });
     }
 
+    useEffect(() => {
+        setShow(true);
+    },[])
+
+    if(!show){
+        return null;
+    }
+
     return (
         <>
-            {showSearch && <SearchPopup />}
             <Card className="px-5 py-3 z-50 flex gap-5 justify-between sticky top-0 bg-card">
                 <Link href={"/"} className={"flex items-center"}>
                     <BrandLogo size={35} />
                 </Link>
                 <div className="flex gap-5 items-center">
-                    <Button
-                        onClick={() => setAppContextState({ showSearch: true })}
-                        variant="outline"
-                        size="icon"
-                        className="bg-inherit text-muted hover:bg-card hover:text-muted"
-                    >
-                        <SearchIcon className="h-5 w-5" />
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="bg-inherit text-muted hover:bg-card hover:text-muted"
-                    >
-                        <BookmarkIcon className="h-5 w-5" />
-                    </Button>
-                    <Button
-                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        variant="outline"
-                        size="icon"
-                        className="bg-inherit text-muted hover:bg-card hover:text-muted"
-                    >
-                        {
-                            theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />
-                        }
-                    </Button>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Button
+                                onClick={() => setAppContextState({ showSearch: true })}
+                                variant="outline"
+                                size="icon"
+                                className="bg-inherit text-muted hover:bg-card hover:text-muted"
+                            >
+                                <SearchIcon className="h-5 w-5" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Search</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="bg-inherit text-muted hover:bg-card hover:text-muted"
+                            >
+                                <BookmarkIcon className="h-5 w-5" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Your bookmarks</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Button
+                                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                                variant="outline"
+                                size="icon"
+                                className="bg-inherit text-muted hover:bg-card hover:text-muted"
+                            >
+                                {
+                                    theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />
+                                }
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Toggle theme</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    
                     {user ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger>
@@ -83,9 +115,11 @@ export default function HomeHeader({ }: Props) {
                                         "h-10 w-10 overflow-hidden rounded-full"
                                     }
                                 >
-                                    <img
+                                    <Image
                                         src={user?.avatar_url || ''}
                                         alt={user.display_name}
+                                        width={70}
+                                        height={70}
                                     />
                                 </div>
                             </DropdownMenuTrigger>

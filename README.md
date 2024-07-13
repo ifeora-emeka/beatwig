@@ -8,3 +8,7 @@ New Features
 - Light & dark mode switcher
 - Bookmark
 - Some UI improvements
+- Faster switching between season & episodes
+
+- Login reminder popup
+- New feature popup

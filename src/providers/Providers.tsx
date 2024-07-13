@@ -8,6 +8,13 @@ import { AuthProvider } from "@/context/auth.context";
 import AuthPopup from "@/components/auth/AuthPopup";
 import { AppProvider } from "@/context/app.context";
 import { Toaster } from "@/components/ui/toaster"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import SearchPopup from "@/components/common/SearchPopup";
 
 
 export default function Providers({ children }: any) {
@@ -26,14 +33,17 @@ export default function Providers({ children }: any) {
                     showOnShallow
                 />
                 <Toaster />
-                <AppProvider>
-                    <AuthProvider>
-                        <MatchProvider>
-                            <AuthPopup />
-                            {children}
-                        </MatchProvider>
-                    </AuthProvider>
-                </AppProvider>
+                <TooltipProvider>
+                    <AppProvider>
+                        <AuthProvider>
+                            <MatchProvider>
+                                <AuthPopup />
+                                <SearchPopup />
+                                {children}
+                            </MatchProvider>
+                        </AuthProvider>
+                    </AppProvider>
+                </TooltipProvider>
             </ThemeProvider>
         </>
     );

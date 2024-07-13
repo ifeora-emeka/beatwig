@@ -10,7 +10,7 @@ export default function PersonCard({ avatar_url, name, role }: Props) {
     return (
         <div
             className={
-                "p-default_spacing rounded-lg bg-hover text-card-foreground flex flex-col gap-default_spacing min-w-[160px] text-white"
+                "p-default_spacing rounded-lg hover:bg-hover text-card-foreground flex flex-col gap-default_spacing min-w-[160px] text-white"
             }
         >
             <div className={"h-40 rounded-lg relative overflow-hidden"}>
