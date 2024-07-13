@@ -74,7 +74,7 @@ export default async function Page(props: any) {
                         className={
                             cn("flex md:flex-row flex-col gap-default_spacing ", {
                                 "md:min-h-[500px] md:max-h-[500px] min-h-[650px] max-h-[600px]": type?.includes("tv"),
-                                "md:h-[500px] h-[450px]": !type?.includes("tv"),
+                                "md:h-[500px] h-[250px]": !type?.includes("tv"),
                             })
                         }
                     >
@@ -82,6 +82,7 @@ export default async function Page(props: any) {
                             className={
                                 cn("bg-card overflow-hidden rounded-lg h-full bg-black flex-1", {
                                     "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
+                                    "md:h-[500px] h-[250px]": !type?.includes("tv"),
                                 })
                             }
                         >
