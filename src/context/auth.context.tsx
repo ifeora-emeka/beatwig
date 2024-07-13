@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: any) => {
     });
 
     const setAuthContextStateWrapper = (newState: Partial<AuthContextType>) => {
-        console.log("SETTING AUTH STATE::", newState);
+        // console.log("SETTING AUTH STATE::", newState);
         setState((prevState) => ({
             ...prevState,
             ...newState,
@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const createNewUser = async (userData: UserData): Promise<UserData> => {
-        console.log("CREATING NEW USER::", userData);
         const userRef = doc(db, dbCollectionName.USERS, userData._id);
         const newUserData: UserData = {
             _id: userData._id,
