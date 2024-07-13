@@ -61,6 +61,7 @@ export default function AuthPopup() {
                         });
                         
                         setLoading(false);
+                        window.location.reload();
                     }
                 }
             })
