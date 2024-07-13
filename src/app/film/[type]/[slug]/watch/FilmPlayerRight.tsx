@@ -29,14 +29,14 @@ export default function FilmPlayerRight({
         <>
             <div
                 className={
-                    "flex flex-col bg-card rounded-lg md:min-w-80 md:max-w-80 overflow-hidden"
+                    "flex flex-col bg-card rounded-lg md:min-w-80 md:max-w-80 overflow-hidden min-h-[100px]"
                 }
             >
                 {!activeEpisode ? (
                     <>
                         <div
                             className={
-                                "h-14 flex items-center text-muted border-b px-default_spacing"
+                                "h-14 min-h-14 flex items-center text-muted border-b px-default_spacing"
                             }
                         >
                             <h6>Seasons</h6>
@@ -67,7 +67,7 @@ export default function FilmPlayerRight({
                     <>
                         <div
                             className={
-                                "h-14 flex items-center text-muted border-b px-default_spacing gap-default_spacing"
+                                "h-14 min-h-14 flex items-center text-muted border-b px-default_spacing gap-default_spacing"
                             }
                         >
                             <Link

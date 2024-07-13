@@ -35,7 +35,7 @@ export default function HomePage({ lineups, movies, series }: Props) {
     }, [lineups]);
 
     return (
-        <PageContainer>
+        <PageContainer withTopLinks>
             <PageSection Icon={BiFilm} heading={"Popular movie"}>
                 <div
                     className={

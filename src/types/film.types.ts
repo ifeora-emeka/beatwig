@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 
 
 export interface FilmData {
@@ -13,5 +14,6 @@ export interface FilmData {
 export type FilmType = 'movie' | 'tv';
 
 export interface FilmBookmarkDTO extends FilmData {
-
+    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
 }

@@ -12,3 +12,8 @@ New Features
 
 - Login reminder popup
 - New feature popup
+
+
+Next features
+- auto delete bookmarks after 8 months
+- 

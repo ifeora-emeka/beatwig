@@ -25,6 +25,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 type Props = {};
 
 export default function HomeHeader({ }: Props) {
+    const router = useRouter();
     const [show, setShow] = useState(false);
     const auth = getAuth();
     const { setTheme, theme } = useTheme();
@@ -43,11 +44,19 @@ export default function HomeHeader({ }: Props) {
         });
     }
 
+    const openBookmark = () => {
+        if (!user) {
+            setAuthContextState({ show_login: true })
+        }else {
+            router.push(`/user/${user._id}/bookmarks`);
+        }
+    }
+
     useEffect(() => {
         setShow(true);
-    },[])
+    }, [])
 
-    if(!show){
+    if (!show) {
         return null;
     }
 
@@ -73,10 +82,11 @@ export default function HomeHeader({ }: Props) {
                             <p>Search</p>
                         </TooltipContent>
                     </Tooltip>
-                    
+
                     <Tooltip>
                         <TooltipTrigger>
                             <Button
+                                onClick={openBookmark}
                                 variant="outline"
                                 size="icon"
                                 className="bg-inherit text-muted hover:bg-card hover:text-muted"
@@ -88,7 +98,7 @@ export default function HomeHeader({ }: Props) {
                             <p>Your bookmarks</p>
                         </TooltipContent>
                     </Tooltip>
-                    
+
                     <Tooltip>
                         <TooltipTrigger>
                             <Button
@@ -106,7 +116,7 @@ export default function HomeHeader({ }: Props) {
                             <p>Toggle theme</p>
                         </TooltipContent>
                     </Tooltip>
-                    
+
                     {user ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger>

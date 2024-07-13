@@ -12,6 +12,7 @@ import {
 import HomeHeader from "@/components/common/HomeHeader";
 import { Metadata, ResolvingMetadata } from "next";
 import { appData } from "@/constants";
+import { cn } from "@/lib/utils";
 
 
 export async function generateMetadata(
@@ -71,21 +72,28 @@ export default async function Page(props: any) {
                 </div>
                     <div
                         className={
-                            "flex md:flex-row flex-col gap-default_spacing md:h-[500px] h-[650px]"
+                            cn("flex md:flex-row flex-col gap-default_spacing ", {
+                                "md:min-h-[500px] md:max-h-[500px] min-h-[650px] max-h-[600px]": type?.includes("tv"),
+                                "md:h-[500px] h-[450px]": !type?.includes("tv"),
+                            })
                         }
                     >
                         <div
                             className={
-                                "bg-card p-default_spacing rounded-lg md:h-full min-h-[229px] bg-black flex-1"
+                                cn("bg-card overflow-hidden rounded-lg h-full bg-black flex-1", {
+                                    "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
+                                })
                             }
                         >
-                            {/*<iframe*/}
-                            {/*    src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}*/}
-                            {/*    width="100%"*/}
-                            {/*    height="100%"*/}
-                            {/*    allowFullScreen*/}
-                            {/*    className={"rounded-lg"}*/}
-                            {/*/>*/}
+                            <iframe
+                               src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
+                               width="100%"
+                               height="100%"
+                               allowFullScreen
+                                className={cn("rounded-lg", {
+                                    "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
+                                })}
+                            />
                         </div>
                         {type?.includes("tv") && (
                             <FilmPlayerRight

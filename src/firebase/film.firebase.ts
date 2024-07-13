@@ -1,15 +1,21 @@
-import { setDoc, doc, DocumentReference, getDoc, deleteDoc } from "firebase/firestore";
+import { setDoc, doc, DocumentReference, getDoc, deleteDoc, collection, query, where, getDocs, serverTimestamp, orderBy, limit, Timestamp } from "firebase/firestore";
 import { db, dbCollectionName } from "./index.firebase";
 import { FilmBookmarkDTO } from "@/types/film.types";
 
-export const createFilmBookmark = async ({ filmData, user_id }: { filmData: FilmBookmarkDTO; user_id: string; user_ref: DocumentReference; }) => {
+export const createFilmBookmark = async ({ filmData, user_id, user_ref }: { filmData: FilmBookmarkDTO; user_id: string; user_ref: DocumentReference; }) => {
     const customDocId = `${user_id}::${filmData.film_id}`;
     const bookmarkRef = doc(db, dbCollectionName.FILM_BOOKMARK, customDocId);
+
+    const deleteAtDate = new Date();
+    deleteAtDate.setMonth(deleteAtDate.getMonth() + 8);
+
     let payload = {
         ...filmData,
+        user_ref,
         user_id,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        deleteAt: Timestamp.fromDate(deleteAtDate),
     }
     return await setDoc(bookmarkRef, payload);
 }
@@ -21,7 +27,7 @@ export const getFilmBookmark = async ({ film_id, user_id }: { user_id: string, f
 
         const bookmarkSnap = await getDoc(bookmarkRef);
 
-        
+
 
         if (bookmarkSnap.exists()) {
             return { id: bookmarkSnap.id, ...bookmarkSnap.data() };
@@ -38,4 +44,30 @@ export const removeBookmark = async ({ film_id, user_id }: { user_id: string, fi
     const bookmarkRef = doc(db, dbCollectionName.FILM_BOOKMARK, customDocId);
 
     return await deleteDoc(bookmarkRef);
+}
+
+export const getAllUserBookmarks = async (user_id: string): Promise<FilmBookmarkDTO[]> => {
+    try {
+        const bookmarksRef = collection(db, dbCollectionName.FILM_BOOKMARK);
+        const q = query(
+            bookmarksRef,
+            where("user_id", "==", user_id),
+            orderBy("createdAt", "desc"),
+            limit(20)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        const bookmarks: any[] = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            // createdAt: doc.data()?.createdAt?.toDate(), 
+            // updatedAt: doc.data()?.updatedAt?.toDate()
+        }));
+
+        return bookmarks;
+    } catch (error) {
+        console.error('Error fetching user bookmarks:', error);
+        throw error;
+    }
 }

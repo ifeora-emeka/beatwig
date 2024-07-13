@@ -6,7 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-export default function PageContainer({ children }: any) {
+type Props = {
+    children: any;
+    withTopLinks?: boolean;
+}
+
+export default function PageContainer({ children, withTopLinks }: Props) {
     const pathname = usePathname();
     let topLinks: {
         label: string;
@@ -40,7 +45,7 @@ export default function PageContainer({ children }: any) {
                 <div className="flex flex-col gap-default_spacing_lg md:py-5 md:mb-0 mb-5">
                     <HomeHeader />
                     <main className="flex flex-col gap-default_spacing_xl">
-                        <nav
+                        {withTopLinks ? <nav
 
                         >
                             <ul className={
@@ -54,7 +59,7 @@ export default function PageContainer({ children }: any) {
                                             >
                                                 <div className={cn("px-8 py-2 rounded-lg", {
                                                     "bg-primary text-white": pathname === link.link,
-                                                    "text-muted": pathname !==  link.link,
+                                                    "text-muted": pathname !== link.link,
                                                 })}>
                                                     {link.label}
                                                 </div>
@@ -63,7 +68,7 @@ export default function PageContainer({ children }: any) {
                                     );
                                 })}
                             </ul>
-                        </nav>
+                        </nav>: <div />}
                         {children}
                     </main>
                 </div>
