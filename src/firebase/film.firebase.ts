@@ -48,6 +48,9 @@ export const removeBookmark = async ({ film_id, user_id }: { user_id: string, fi
 
 export const getAllUserBookmarks = async (user_id: string): Promise<FilmBookmarkDTO[]> => {
     try {
+        if (!user_id) {
+            alert("no user ID")
+        }
         const bookmarksRef = collection(db, dbCollectionName.FILM_BOOKMARK);
         const q = query(
             bookmarksRef,

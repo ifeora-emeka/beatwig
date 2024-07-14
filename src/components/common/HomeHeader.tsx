@@ -60,6 +60,8 @@ export default function HomeHeader({ }: Props) {
         return null;
     }
 
+    console.log('HEADER USER::', user);
+
     return (
         <>
             <Card className="px-5 py-3 z-50 flex gap-5 justify-between sticky top-0 bg-card">
@@ -127,7 +129,7 @@ export default function HomeHeader({ }: Props) {
                                 >
                                     <Image
                                         src={user?.avatar_url || ''}
-                                        alt={user.display_name}
+                                        alt={user?.display_name || 'no display name'}
                                         width={70}
                                         height={70}
                                     />
