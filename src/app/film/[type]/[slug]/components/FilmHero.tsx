@@ -16,7 +16,7 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
     const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
-    const [isBookmarked, setIsBookmarked] = useState(bookmark ? true : false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
     const { toast } = useToast()
 
     const handleBookmark = async () => {
@@ -70,6 +70,10 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
     useEffect(() => {
         setShow(true);
     },[]);
+
+    useEffect(() => {
+        setIsBookmarked(!!bookmark);
+    }, [bookmark])
 
     if(!show) {
         return null;
