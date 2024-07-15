@@ -143,6 +143,11 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
 
         return filmDetails;
     } catch (error) {
+        console.log('\n\n')
+        console.log('\n\n')
+        console.log('GET MOVIE DETAILS ERROR:::', error)
+        console.log('\n\n');
+        console.log('\n\n');
         return Promise.reject(error);
     }
 };

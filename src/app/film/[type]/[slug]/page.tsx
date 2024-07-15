@@ -13,49 +13,47 @@ import { getFilmBookmark } from "@/firebase/film.firebase";
 import { cookies, headers } from "next/headers";
 
 
-export async function generateMetadata(
-    { params, searchParams }: any,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+// export async function generateMetadata(
+//     { params, searchParams }: any,
+//     parent: ResolvingMetadata
+// ): Promise<Metadata> {
 
-    let res = await getFilmDetails({
-        film_type: params.type,
-        film_slug: params.slug
-    });
+//     let res = await getFilmDetails({
+//         film_type: params.type,
+//         film_slug: params.slug
+//     });
 
-    return {
-        title: `Watch ${res.title} on ${appData.name}`,
-        description: res.overview || `Watch ${res.title} on ${appData.name}`,
-        keywords: [
-            ...res.genres.map(genre => genre.name),
-            appData.name,
-            ...appData.keywords
-        ],
-        openGraph: {
-            images: [res.poster],
-        },
-    }
-}
+//     return {
+//         title: `Watch ${res.title} on ${appData.name}`,
+//         description: res.overview || `Watch ${res.title} on ${appData.name}`,
+//         keywords: [
+//             ...res.genres.map(genre => genre.name),
+//             appData.name,
+//             ...appData.keywords
+//         ],
+//         openGraph: {
+//             images: [res.poster],
+//         },
+//     }
+// }
 
 
 
 export default async function Page(props: any) {
     const { params } = props;
-    let bookmark: any = null;
-
-    let res = await getFilmDetails({
-        film_type: params.type,
-        film_slug: params.slug
-    })
 
     const head = cookies();
     const user_id = head.get('user_id')?.value;
 
-    bookmark = await getFilmBookmark({
+    let bookmark = await getFilmBookmark({
         film_id: params.slug as string,
         user_id: user_id as string
     })
 
+    let res = await getFilmDetails({
+        film_type: params.type,
+        film_slug: params.slug
+    });
     
     let info = res?.info;
     
@@ -69,7 +67,7 @@ export default async function Page(props: any) {
                 <div className={'flex flex-col gap-default_spacing'}>
                     <HomeHeader />
                     <div className={"flex flex-col gap-default_spacing"}>
-                        <FilmHero data={res} bookmark={bookmark} />
+                        <FilmHero data={res} bookmark={bookmark as any} />
                         <div
                             className={
                                 "flex gap-default_spacing lg:flex-row flex-col-reverse"
