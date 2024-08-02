@@ -88,7 +88,7 @@ export default async function Page(props: any) {
                         >
                             <iframe
                                // src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
-                               src={`https://vidsrc.xyz/embed/${type}/${extractFilmIdFromSlug(slug)}`}
+                               src={`https://vidsrc.xyz/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
                                width="100%"
                                height="100%"
                                allowFullScreen
