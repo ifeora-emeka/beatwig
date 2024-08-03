@@ -13,29 +13,29 @@ import { getFilmBookmark } from "@/firebase/film.firebase";
 import { cookies, headers } from "next/headers";
 
 
-// export async function generateMetadata(
-//     { params, searchParams }: any,
-//     parent: ResolvingMetadata
-// ): Promise<Metadata> {
+export async function generateMetadata(
+    { params, searchParams }: any,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
 
-//     let res = await getFilmDetails({
-//         film_type: params.type,
-//         film_slug: params.slug
-//     });
+    let res = await getFilmDetails({
+        film_type: params.type,
+        film_slug: params.slug
+    });
 
-//     return {
-//         title: `Watch ${res.title} on ${appData.name}`,
-//         description: res.overview || `Watch ${res.title} on ${appData.name}`,
-//         keywords: [
-//             ...res.genres.map(genre => genre.name),
-//             appData.name,
-//             ...appData.keywords
-//         ],
-//         openGraph: {
-//             images: [res.poster],
-//         },
-//     }
-// }
+    return {
+        title: `Watch ${res.title} on ${appData.name}`,
+        description: res.overview || `Watch ${res.title} on ${appData.name}`,
+        keywords: [
+            ...res.genres.map(genre => genre.name),
+            appData.name,
+            ...appData.keywords
+        ],
+        openGraph: {
+            images: [res.poster],
+        },
+    }
+}
 
 
 
