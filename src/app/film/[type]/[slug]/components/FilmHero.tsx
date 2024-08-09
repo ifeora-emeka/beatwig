@@ -5,14 +5,13 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { createFilmBookmark, removeBookmark } from "@/firebase/film.firebase";
 import { useAuthContext } from "@/context/auth.context";
-import { FilmBookmarkDTO, FilmType } from "@/types/film.types";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { FilmType } from "@/types/film.types";
 
-export default function FilmHero({ data, bookmark }: { data: any; bookmark: FilmBookmarkDTO }) {
+export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: boolean }) {
     const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
@@ -72,8 +71,8 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
     },[]);
 
     useEffect(() => {
-        setIsBookmarked(!!bookmark);
-    }, [bookmark])
+        setIsBookmarked(bookmarked);
+    }, [bookmarked])
 
     if(!show) {
         return null;
@@ -136,7 +135,7 @@ export default function FilmHero({ data, bookmark }: { data: any; bookmark: Film
                         <Tooltip>
                             <TooltipTrigger>
                                 <button
-                                    onClick={() => handleBookmark()}
+                                    onClick={handleBookmark}
                                     className={
                                         cn("rounded-full dark:text-card-foreground text-muted text-xl h-11 w-11 flex items-center justify-center hover:bg-primary bg-border", {
                                             "bg-primary text-white": isBookmarked

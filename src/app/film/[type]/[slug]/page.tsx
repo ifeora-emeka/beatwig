@@ -67,7 +67,7 @@ export default async function Page(props: any) {
                 <div className={'flex flex-col gap-default_spacing'}>
                     <HomeHeader />
                     <div className={"flex flex-col gap-default_spacing"}>
-                        <FilmHero data={res} bookmark={bookmark as any} />
+                        <FilmHero data={res} bookmarked={bookmark?.id ? true : false} />
                         <div
                             className={
                                 "flex gap-default_spacing lg:flex-row flex-col-reverse"

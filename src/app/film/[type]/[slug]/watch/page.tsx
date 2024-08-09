@@ -13,6 +13,13 @@ import HomeHeader from "@/components/common/HomeHeader";
 import { Metadata, ResolvingMetadata } from "next";
 import { appData } from "@/constants";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { TbBookmark } from "react-icons/tb";
+import { Button } from "@/components/ui/button";
+import FilmInfo from "@/app/film/[type]/[slug]/watch/FilmInfo";
+import { FilmData } from "@/types/film.types";
+import { cookies } from "next/headers";
+import { getFilmBookmark } from "@/firebase/film.firebase";
 
 
 export async function generateMetadata(
@@ -50,6 +57,16 @@ export default async function Page(props: any) {
         film_slug: slug,
     });
 
+    const { params } = props;
+
+    const head = cookies();
+    const user_id = head.get('user_id')?.value;
+
+    let bookmark = await getFilmBookmark({
+        film_id: params.slug as string,
+        user_id: user_id as string
+    })
+
     let episode = query?.episode || 0;
     let season = query?.season || 1;
 
@@ -67,9 +84,9 @@ export default async function Page(props: any) {
         <div className={"text-white flex justify-center py-default_spacing"}>
             <ContainerLg>
                 <div className={"flex flex-col gap-default_spacing"}>
-                <div className={'hidden md:block'}>
-                    <HomeHeader />
-                </div>
+                    <div className={'hidden md:block'}>
+                        <HomeHeader />
+                    </div>
                     <div
                         className={
                             cn("flex md:flex-row flex-col gap-default_spacing ", {
@@ -87,11 +104,11 @@ export default async function Page(props: any) {
                             }
                         >
                             <iframe
-                               // src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
-                               src={`https://vidsrc.xyz/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
-                               width="100%"
-                               height="100%"
-                               allowFullScreen
+                                // src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
+                                src={`https://vidsrc.xyz/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
+                                width="100%"
+                                height="100%"
+                                allowFullScreen
                                 className={cn("rounded-lg", {
                                     "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
                                 })}
@@ -106,6 +123,7 @@ export default async function Page(props: any) {
                             />
                         )}
                     </div>
+                    <FilmInfo filmData={res as any} bookmarked={bookmark ? true : false} />
                     <FilmRecommendations data={res.recommendations} />
                 </div>
             </ContainerLg>

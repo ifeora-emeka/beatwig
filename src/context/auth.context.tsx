@@ -3,6 +3,8 @@ import { UserData } from "@/types/auth.types";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 import AppLoading from "@/components/AppLoading";
+import Cookie from 'js-cookie'
+import Cookies from "js-cookie";
 
 
 interface AuthContextType {
@@ -54,6 +56,7 @@ export const AuthProvider = ({ children }: any) => {
             };
 
             setAuthContextStateWrapper({ user: theUser, auth_loading: false });
+            Cookie.set('user_id', user_id)
 
             return Promise.resolve(theUser);
         } catch (error) {

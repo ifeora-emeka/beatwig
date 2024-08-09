@@ -30,7 +30,6 @@ export default function HomeHeader({ }: Props) {
     const auth = getAuth();
     const { setTheme, theme } = useTheme();
     const { user, setAuthContextState } = useAuthContext();
-    console.log('HEADER USER::', user);
 
     const {
         setAppContextState,
