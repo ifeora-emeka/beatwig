@@ -27,7 +27,7 @@ export default function HomePage({ lineups, movies, series }: Props) {
                 let lives = lineup.lineups.filter(
                     (x) => x.startTime === "LIVE",
                 );
-                if (lives.length > 0) {
+                if (lives?.length > 0) {
                     allLives.push(lineup);
                 }
             });

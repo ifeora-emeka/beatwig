@@ -6,6 +6,7 @@ import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { shuffleArray } from "@/utils/index.utils";
 import { Metadata } from "next";
+import HomePageNew from "@/app/(home-page)/HomePageNew";
 
 // export const dynamic = "force-dynamic";
 export const revalidate = 10;
@@ -27,13 +28,17 @@ export default async function page() {
 
     // revalidatePath("/");
 
-    return (
-        <>
-            <HomePage
-                lineups={res.data.football_lineup}
-                movies={shuffleArray(res.data.movies)}
-                series={shuffleArray(res.data.series)}
-            />
-        </>
-    );
+    if(process.env.NODE_ENV === 'production') {
+        return (
+            <>
+                <HomePage
+                    lineups={res.data.football_lineup}
+                    movies={shuffleArray(res.data.movies)}
+                    series={shuffleArray(res.data.series)}
+                />
+            </>
+        );
+    }else {
+        return <HomePageNew />
+    }
 }
