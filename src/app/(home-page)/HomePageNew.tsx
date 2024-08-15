@@ -14,9 +14,9 @@ import { useAppContext } from "@/context/app.context";
 import { getRandomNumber } from "@/utils/index.utils";
 
 const banners = [
-// 'https://teaser-trailer.com/wp-content/uploads/2017/07/Avengers-Infinity-War-Banner.jpg',
-//     'https://cdna.artstation.com/p/assets/images/images/017/022/542/large/amirhosein-naseri-desktop-screenshot-2019-04-03-18-17-47-11.jpg?1554338571',
-//     'https://images.thedirect.com/media/article_full/marvel-posters-ranked.jpg',
+'https://teaser-trailer.com/wp-content/uploads/2017/07/Avengers-Infinity-War-Banner.jpg',
+    'https://cdna.artstation.com/p/assets/images/images/017/022/542/large/amirhosein-naseri-desktop-screenshot-2019-04-03-18-17-47-11.jpg?1554338571',
+    'https://images.thedirect.com/media/article_full/marvel-posters-ranked.jpg',
     'https://www.google.com/url?sa=i&url=https%3A%2F%2Fdeadline.com%2F2022%2F04%2Ffrom-renewed-season-2-epix-harold-perrineau-1235008774%2F&psig=AOvVaw1U5Gk5QkDvYZYRR_NwK0gv&ust=1723668953972000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjOv7Ht8ocDFQAAAAAdAAAAABAx'
 
 ]
