@@ -118,7 +118,7 @@ export async function getFilmDetails({ film_slug, film_type }: { film_slug: stri
         // Extract specific details
         const { Status, 'Original Language': OriginalLanguage, Budget, Revenue } = additionalInfo;
 
-        let recommendations = await getMovieRecommendations(genres?.length > 2 ? genres[1].slug : genres[0].slug);
+        let recommendations = await getMovieRecommendations(genres?.length > 2 ? genres[1]?.slug : genres[0]?.slug);
 
 
         const filmDetails = {
