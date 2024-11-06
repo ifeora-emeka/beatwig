@@ -4,7 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FilmData } from "@/types/film.types";
 import { useAppContext } from "@/context/app.context";
-import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface Props {
     Icon: any;
@@ -20,33 +21,25 @@ export default function EachSearchResults({
     isLoading,
 }: Props) {
     const { setAppContextState } = useAppContext();
-    const params = useSearchParams();
+    const [showMore, setShowMore] = useState(false);
 
     return (
         <div className="bg-card rounded-xl p-default_spacing shadow-md">
             <PageSection
                 Icon={Icon}
                 heading={heading}
-                rightHeadingComp={
-                    <Link
-                        target={"_blank"}
-                        href={`/search/?q=${params.get("q")}`}
-                        className="text-primary flex"
-                    >
-                        Show all <ArrowUpRight className="ml-2" />
-                    </Link>
-                }
             >
                 <div>
                     {isLoading &&
-                        new Array(4).fill(null).map((_, index) => {
+                        new Array(4).fill(null).map((_) => {
                             return <EachResultLoading />;
                         })}
                     {!isLoading &&
                         list.map((data, index) => {
-                            if (index < 5) {
+                            if (index < 4) {
                                 return (
                                     <Link
+                                        prefetch
                                         href={`/film${data.slug}`}
                                         onClick={() =>
                                             setAppContextState({
@@ -66,7 +59,7 @@ export default function EachSearchResults({
                 </div>
                 {list.length > 5 ? (
                     <div className={`text-center`}>
-                        <button className={"hover:text-primary"}>
+                        <button className={"hover:text-primary"} onClick={() => setShowMore(true)}>
                             Show More
                         </button>
                     </div>
@@ -85,9 +78,18 @@ export const EachResult = ({
     subTitle: string;
     imgURL: string;
 }) => {
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setShow(true)
+    },[])
+
     return (
         <>
-            <div className="bg-card p-default_spacing rounded-lg border-t hover:bg-hover flex gap-default_spacing hover:shadow-sm cursor-pointer">
+            <div className={cn("bg-card p-default_spacing rounded-lg border-t hover:bg-hover flex gap-default_spacing cursor-pointer text-muted hover:text-foreground hover:shadow-md group transition-opacity duration-500", {
+                "opacity-100": show,
+                "opacity-0": !show,
+            })}>
                 <div className="flex gap-default_spacing max-w-[90%] truncate flex-1">
                     <div
                         className={` min-h-14 min-w-11 bg-cover bg-center rounded-md`}
@@ -97,29 +99,40 @@ export const EachResult = ({
                     />
                     <div className="truncate">
                         <h5 className={"truncate"}>{title}</h5>
-                        <small className="text-muted truncate">
+                        <p className="text-muted truncate text-xs">
                             {subTitle}
-                        </small>
+                        </p>
                     </div>
                 </div>
-                <div className="min-h-10 min-w-10"></div>
+                <div className="min-h-10 min-w-10 flex justify-end opacity-0 group-hover:opacity-100">
+                    <ArrowUpRight />
+                </div>
             </div>
         </>
     );
 };
 
 export const EachResultLoading = () => {
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setShow(true)
+    },[])
+
     return (
         <>
-            <div className="opacity-30 bg-card p-default_spacing rounded-lg border-t flex gap-default_spacing">
+            <div className={cn("opacity-30 bg-card p-default_spacing rounded-lg border-t flex gap-default_spacing transition-all duration-500", {
+                "h-auto max-h-60 opacity-100": show,
+                "h-0 max-h-0 opacity-0": !show,
+            })}>
                 <div className="flex gap-default_spacing max-w-[90%] truncate flex-1">
                     <Skeleton className="min-h-14 min-w-11 bg-cover bg-center rounded-md" />
                     <div className="truncate w-full flex flex-col gap-default_spacing justify-center">
                         <h5>
-                            <Skeleton className="h-3 w-[40%]" />
+                            <Skeleton className="h-4 w-[40%]" />
                         </h5>
                         <small className="text-muted truncate w-full">
-                            <Skeleton className="p-1 w-[70%]" />
+                            <Skeleton className="p-2 w-[70%]" />
                         </small>
                     </div>
                 </div>

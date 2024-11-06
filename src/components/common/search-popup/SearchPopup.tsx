@@ -63,6 +63,16 @@ export default function SearchPopup() {
         }
     };
 
+    const handleClose = () => {
+        setAppContextState({ showSearch: false })
+        setTimeout(() => {
+            setSearchData({
+                movies: [],
+                series: [],
+            })
+        }, 500)
+    }
+
     useEffect(() => {
         if (keyword && keyword?.length > 2) {
             searchMovies();
@@ -93,9 +103,7 @@ export default function SearchPopup() {
                         <SearchInput
                             value={keyword}
                             onChange={(e) => setKeyword(e)}
-                            onClose={() =>
-                                setAppContextState({ showSearch: false })
-                            }
+                            onClose={handleClose}
                         />
                         {keyword && (
                             <div
@@ -120,7 +128,7 @@ export default function SearchPopup() {
                         <SearchHistory
                             setKeyword={(text) => setKeyword(text)}
                         />
-                        <SearchContinueWatching />
+                        {process.env.NODE_ENV !== 'production' && <SearchContinueWatching />}
                     </div>
                 </Container>
             </div>

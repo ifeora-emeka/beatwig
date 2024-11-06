@@ -9,6 +9,11 @@ export default function SearchHistory({
 }) {
     const [history, setHistory] = useState<string[]>([]);
 
+    const clearHistory = () => {
+        localStorage.removeItem("searchHistory");
+        setHistory([]);
+    }
+
     useEffect(() => {
         // fetch search history from local storageHistory
         const searchHistory = localStorage.getItem("searchHistory") || "";
@@ -27,7 +32,7 @@ export default function SearchHistory({
                     Icon={HistoryIcon}
                     heading={"Search history"}
                     rightHeadingComp={
-                        <button className="text-primary flex">
+                        <button className="text-primary flex" onClick={clearHistory}>
                             Clear <Trash className="ml-2 h-5 w-5" />
                         </button>
                     }
@@ -60,7 +65,7 @@ const EachSearchResult = ({
         <>
             <div
                 className={
-                    "rounded-xl hover:bg-hover flex gap-default_spacing p-default_spacing cursor-pointer hover:shadow-md"
+                    "rounded-xl hover:bg-hover flex gap-default_spacing p-default_spacing cursor-pointer hover:shadow-md text-muted hover:text-foreground"
                 }
                 onClick={onClick}
             >
