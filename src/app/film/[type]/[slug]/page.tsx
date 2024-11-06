@@ -1,6 +1,5 @@
 import { ContainerLg } from "@/components/common/Container";
 import FilmHero from "@/app/film/[type]/[slug]/components/FilmHero";
-import axios from "axios";
 import { appData, baseUrl } from "@/constants";
 import FilmDetailsLeft from "@/app/film/[type]/[slug]/components/FilmDetailsLeft";
 import { BiInfoCircle, BiMovie } from "react-icons/bi";

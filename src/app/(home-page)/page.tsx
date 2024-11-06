@@ -2,8 +2,6 @@ import React from "react";
 
 import HomePage from "./HomePage";
 import { appData, baseUrl } from "@/constants";
-import axios from "axios";
-import { revalidatePath } from "next/cache";
 import { shuffleArray } from "@/utils/index.utils";
 import { Metadata } from "next";
 import HomePageNew from "@/app/(home-page)/HomePageNew";
@@ -22,23 +20,23 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-    const req = await fetch(`${baseUrl}/api/public`);
-    const data = await req.json();
-    const res = { data }
+    // const req = await fetch(`${baseUrl}/api/public`);
+    // const data = await req.json();
+    // const res = { data }
 
-    // revalidatePath("/");
+    // // revalidatePath("/");
 
-    if(process.env.NODE_ENV === 'production') {
-        return (
-            <>
-                <HomePage
-                    lineups={res.data.football_lineup}
-                    movies={shuffleArray(res.data.movies)}
-                    series={shuffleArray(res.data.series)}
-                />
-            </>
-        );
-    }else {
-        return <HomePageNew />
-    }
+    // if(process.env.NODE_ENV === 'production') {
+    //     return (
+    //         <>
+    //             <HomePage
+    //                 lineups={res.data.football_lineup}
+    //                 movies={shuffleArray(res.data.movies)}
+    //                 series={shuffleArray(res.data.series)}
+    //             />
+    //         </>
+    //     );
+    // }else {
+    // }
+    return <HomePageNew />
 }
