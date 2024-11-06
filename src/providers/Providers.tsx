@@ -14,7 +14,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import SearchPopup from "@/components/common/SearchPopup";
+import SearchPopup from "@/components/common/search-popup/SearchPopup";
 
 
 export default function Providers({ children }: any) {
@@ -38,7 +38,7 @@ export default function Providers({ children }: any) {
                         <AuthProvider>
                             <MatchProvider>
                                 <AuthPopup />
-                                <SearchPopup />
+                            
                                 {children}
                             </MatchProvider>
                         </AuthProvider>

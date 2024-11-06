@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/providers/Providers";
 import "swiper/css";
+import SearchPopup from "@/components/common/search-popup/SearchPopup";
 
 const font = Poppins({
     weight: ["100", "300", "400", "700", "900"],
@@ -14,11 +15,13 @@ export const metadata: Metadata = {
     description: "#1 online community. Watch live sports and stream movie",
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
+export default function RootLayout(props: Readonly<{
     children: React.ReactNode;
 }>) {
+    const {
+        children,
+    } = props;
+    
     return (
         <html
             lang="en"
@@ -26,7 +29,10 @@ export default function RootLayout({
             className="select-none text-muted bg-background"
         >
             <body className={font.className}>
-                <Providers>{children}</Providers>
+                <Providers>
+                    <SearchPopup />
+                    {children}
+                </Providers>
             </body>
         </html>
     );

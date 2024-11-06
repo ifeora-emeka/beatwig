@@ -8,7 +8,6 @@ import React from "react";
 import Container from "@/components/common/Container";
 
 export default async function Page(props: any) {
-    console.log("THE PROPS::", props);
     const { searchParams } = props;
 
     let series = await scrapeSearch({

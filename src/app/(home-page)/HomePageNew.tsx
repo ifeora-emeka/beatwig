@@ -13,12 +13,14 @@ import { useAppContext } from "@/context/app.context";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next13-progressbar";
 
 
 export default function HomePageNew() {
     const { user } = useAuthContext();
     const { setAppContextState } = useAppContext();
     const { setTheme, theme } = useTheme();
+    const router = useRouter();
 
     return <>
         <div className={'min-h-screen flex items-center justify-center z-50'}>
@@ -76,7 +78,7 @@ export default function HomePageNew() {
                     onClick={() => setAppContextState({
                         showSearch: true
                     })}
-                    className={"border-border border rounded-full flex w-full bg-card text-card-foreground hover:shadow-md p-default_spacing cursor-pointer items-center hover:border-secondary z-50"}>
+                    className={"border-border border rounded-full flex md:w-[80%] w-full bg-card text-card-foreground hover:shadow-md p-default_spacing cursor-pointer items-center hover:border-secondary z-50"}>
                     <p className={'flex-1 text-muted'}>Search movies and tv shows...</p>
                     <div className={'text-muted'}>
                         <TbSearch size={25} />
