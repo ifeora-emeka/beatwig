@@ -10,15 +10,15 @@ import { addDoc, collection } from "@firebase/firestore";
 import EachFilmLg from "@/app/film/components/EachFilmLg";
 
 export default function FilmRecommendations({ data }: any) {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
     const saveMovieProgress = async (filmData: Partial<FilmData>) => {
         try {
-            console.log('STORING MOVIE')
+            console.log("STORING MOVIE");
             const messagesRef = collection(db, dbCollectionName.WATCHED_MOVIE);
 
             return await addDoc(messagesRef, filmData);
         } catch (error) {
-            console.error('Error saving movie progress:', error);
+            console.error("Error saving movie progress:", error);
         }
     };
 
@@ -28,17 +28,15 @@ export default function FilmRecommendations({ data }: any) {
             //     title: "This is the title"
             // });
         }, 1000);
-
     }, []);
 
     useEffect(() => {
-        setShow(true)
-    },[])
+        setShow(true);
+    }, []);
 
-    if(!show){
+    if (!show) {
         return null;
     }
-
 
     return (
         <div className={"bg-card p-default_spacing rounded-lg"}>

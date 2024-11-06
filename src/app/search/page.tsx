@@ -32,7 +32,8 @@ export default async function Page(props: any) {
                             <HomeHeader />
 
                             <h1 className={"text-muted text-xl"}>
-                                Result for: <strong>{`"${searchParams.q}"`}</strong>
+                                Result for:{" "}
+                                <strong>{`"${searchParams.q}"`}</strong>
                             </h1>
 
                             <PageSection Icon={VideoIcon} heading={"Movies"}>

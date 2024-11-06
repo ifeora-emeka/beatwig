@@ -21,32 +21,28 @@ import { FilmData } from "@/types/film.types";
 import { cookies } from "next/headers";
 import { getFilmBookmark } from "@/firebase/film.firebase";
 
-
 export async function generateMetadata(
     { params, searchParams }: any,
-    parent: ResolvingMetadata
+    parent: ResolvingMetadata,
 ): Promise<Metadata> {
-
     let res = await getFilmDetails({
         film_type: params.type,
-        film_slug: params.slug
+        film_slug: params.slug,
     });
 
     return {
         title: `Watch ${res.title} on ${appData.name}`,
         description: res.overview || `Watch ${res.title} on ${appData.name}`,
         keywords: [
-            ...res.genres.map(genre => genre.name),
+            ...res.genres.map((genre) => genre.name),
             appData.name,
-            "Live steam"
+            "Live steam",
         ],
         openGraph: {
             images: [res.poster],
         },
-    }
+    };
 }
-
-
 
 export default async function Page(props: any) {
     const { slug, type } = props.params;
@@ -60,12 +56,12 @@ export default async function Page(props: any) {
     const { params } = props;
 
     const head = cookies();
-    const user_id = head.get('user_id')?.value;
+    const user_id = head.get("user_id")?.value;
 
     let bookmark = await getFilmBookmark({
         film_id: params.slug as string,
-        user_id: user_id as string
-    })
+        user_id: user_id as string,
+    });
 
     let episode = query?.episode || 0;
     let season = query?.season || 1;
@@ -84,24 +80,29 @@ export default async function Page(props: any) {
         <div className={"text-white flex justify-center py-default_spacing"}>
             <ContainerLg>
                 <div className={"flex flex-col gap-default_spacing"}>
-                    <div className={'hidden md:block'}>
+                    <div className={"hidden md:block"}>
                         <HomeHeader />
                     </div>
                     <div
-                        className={
-                            cn("flex md:flex-row flex-col gap-default_spacing ", {
-                                "md:min-h-[500px] md:max-h-[500px] min-h-[650px] max-h-[600px]": type?.includes("tv"),
+                        className={cn(
+                            "flex md:flex-row flex-col gap-default_spacing ",
+                            {
+                                "md:min-h-[500px] md:max-h-[500px] min-h-[650px] max-h-[600px]":
+                                    type?.includes("tv"),
                                 "md:h-[500px] h-[250px]": !type?.includes("tv"),
-                            })
-                        }
+                            },
+                        )}
                     >
                         <div
-                            className={
-                                cn("bg-card overflow-hidden rounded-lg h-full bg-black flex-1", {
-                                    "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
-                                    "md:h-[500px] h-[250px]": !type?.includes("tv"),
-                                })
-                            }
+                            className={cn(
+                                "bg-card overflow-hidden rounded-lg h-full bg-black flex-1",
+                                {
+                                    "min-h-[250px] md:min-h-[500px]":
+                                        type?.includes("tv"),
+                                    "md:h-[500px] h-[250px]":
+                                        !type?.includes("tv"),
+                                },
+                            )}
                         >
                             <iframe
                                 // src={`https://vidsrc.to/embed/${type}/${extractFilmIdFromSlug(slug)}${type.includes("tv") ? `/${season}/${episode}` : ``}`}
@@ -110,7 +111,8 @@ export default async function Page(props: any) {
                                 height="100%"
                                 allowFullScreen
                                 className={cn("rounded-lg", {
-                                    "min-h-[250px] md:min-h-[500px]": type?.includes("tv"),
+                                    "min-h-[250px] md:min-h-[500px]":
+                                        type?.includes("tv"),
                                 })}
                             />
                         </div>
@@ -123,7 +125,10 @@ export default async function Page(props: any) {
                             />
                         )}
                     </div>
-                    <FilmInfo filmData={res as any} bookmarked={bookmark ? true : false} />
+                    <FilmInfo
+                        filmData={res as any}
+                        bookmarked={bookmark ? true : false}
+                    />
                     <FilmRecommendations data={res.recommendations} />
                 </div>
             </ContainerLg>

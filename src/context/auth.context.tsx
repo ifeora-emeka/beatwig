@@ -3,9 +3,8 @@ import { UserData } from "@/types/auth.types";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db, dbCollectionName } from "@/firebase/index.firebase";
 import AppLoading from "@/components/AppLoading";
-import Cookie from 'js-cookie'
+import Cookie from "js-cookie";
 import Cookies from "js-cookie";
-
 
 interface AuthContextType {
     user: UserData | null;
@@ -56,7 +55,7 @@ export const AuthProvider = ({ children }: any) => {
             };
 
             setAuthContextStateWrapper({ user: theUser, auth_loading: false });
-            Cookie.set('user_id', user_id)
+            Cookie.set("user_id", user_id);
 
             return Promise.resolve(theUser);
         } catch (error) {
@@ -95,9 +94,9 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         if (state.user && !state.user?.display_name) {
-            setAuthContextStateWrapper({ show_login: true })
+            setAuthContextStateWrapper({ show_login: true });
         }
-    }, [state.user])
+    }, [state.user]);
 
     return (
         <>

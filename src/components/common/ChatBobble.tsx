@@ -51,13 +51,15 @@ export default function ChatBobble({ data, isPending }: Props) {
                 <div className={"flex flex-col"}>
                     <div className={"flex items-center gap-default_spacing"}>
                         <small className={"text-muted"}>
-                            {user?._id == data.sender?._id ? "You" : data.sender?.display_name}
+                            {user?._id == data.sender?._id
+                                ? "You"
+                                : data.sender?.display_name}
                         </small>
                         <small className={"text-muted"}>
                             {moment(data.createdAt.toDate()).fromNow()}
                         </small>
                     </div>
-                    <small className={'text-white'}>{data.content}</small>
+                    <small className={"text-white"}>{data.content}</small>
                     {user && (
                         <>
                             <div

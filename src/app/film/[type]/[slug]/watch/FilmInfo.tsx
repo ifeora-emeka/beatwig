@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { TbBookmark, TbBookmarkFilled } from "react-icons/tb";
@@ -8,7 +8,7 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 import { createFilmBookmark, removeBookmark } from "@/firebase/film.firebase";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -16,13 +16,18 @@ import { useAuthContext } from "@/context/auth.context";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
-
-export default function FilmInfo({ filmData, bookmarked }: { bookmarked: boolean, filmData: FilmData & { info: any } }){
+export default function FilmInfo({
+    filmData,
+    bookmarked,
+}: {
+    bookmarked: boolean;
+    filmData: FilmData & { info: any };
+}) {
     const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
     const [isBookmarked, setIsBookmarked] = useState(false);
-    const { toast } = useToast()
+    const { toast } = useToast();
 
     const res = filmData;
 
@@ -35,17 +40,20 @@ export default function FilmInfo({ filmData, bookmarked }: { bookmarked: boolean
                         title: "Bookmark removed",
                         description: "Film removed from bookmarks",
                         duration: 3000,
-                        variant: 'default'
-                    })
-                    await removeBookmark({ film_id: slug as string, user_id: user?._id });
-                }else {
+                        variant: "default",
+                    });
+                    await removeBookmark({
+                        film_id: slug as string,
+                        user_id: user?._id,
+                    });
+                } else {
                     setIsBookmarked(true);
                     toast({
                         title: "Bookmark",
                         description: "Film bookmarked successfully",
                         duration: 3000,
-                        variant: 'default'
-                    })
+                        variant: "default",
+                    });
                     await createFilmBookmark({
                         filmData: {
                             poster: res.poster,
@@ -55,63 +63,96 @@ export default function FilmInfo({ filmData, bookmarked }: { bookmarked: boolean
                             title: res.title,
                             type: type as FilmType,
                             film_id: slug as string,
-                            overview: res.overview
-                        }, user_id: user?._id, user_ref: user.ref
+                            overview: res.overview,
+                        },
+                        user_id: user?._id,
+                        user_ref: user.ref,
                     });
                 }
             } else {
-                setAuthContextState({ show_login: true })
+                setAuthContextState({ show_login: true });
             }
         } catch (error) {
             toast({
                 title: "Bookmark Error",
                 description: "Error, please try again!",
                 duration: 5000,
-                variant: 'destructive'
-            })
+                variant: "destructive",
+            });
             setIsBookmarked(false);
-            console.log('ERROR::', error)
-            alert('An error occurred while bookmarking this film')
+            console.log("ERROR::", error);
+            alert("An error occurred while bookmarking this film");
         }
-    }
+    };
 
     useEffect(() => {
-        if(bookmarked) {
-            setIsBookmarked(true)
+        if (bookmarked) {
+            setIsBookmarked(true);
         }
     }, [bookmarked]);
 
-    return <>
-        <div className={'p-default_spacing bg-card rounded-lg min-h-24 flex gap-default_spacing'}>
-            <div className={'relative h-20 w-20 min-w-20 min-h-20 rounded-xl overflow-hidden'}>
-                <Image src={res.poster as any} alt={res.title} fill className={'absolute'} />
-            </div>
-            <div className={'flex-1 truncate flex flex-col justify-between'}>
-                <div className={'flex flex-col'}>
-                    <h1 className={"text-xl"}>{res?.title}</h1>
-                    <p className={"truncate text-muted text-sm"}>{res.overview}</p>
+    return (
+        <>
+            <div
+                className={
+                    "p-default_spacing bg-card rounded-lg min-h-24 flex gap-default_spacing"
+                }
+            >
+                <div
+                    className={
+                        "relative h-20 w-20 min-w-20 min-h-20 rounded-xl overflow-hidden"
+                    }
+                >
+                    <Image
+                        src={res.poster as any}
+                        alt={res.title}
+                        fill
+                        className={"absolute"}
+                    />
                 </div>
-                <small className={"truncate text-muted text-sm"}>Status: {res?.info?.status}</small>
+                <div
+                    className={"flex-1 truncate flex flex-col justify-between"}
+                >
+                    <div className={"flex flex-col"}>
+                        <h1 className={"text-xl"}>{res?.title}</h1>
+                        <p className={"truncate text-muted text-sm"}>
+                            {res.overview}
+                        </p>
+                    </div>
+                    <small className={"truncate text-muted text-sm"}>
+                        Status: {res?.info?.status}
+                    </small>
+                </div>
+                <div className={"min-w-20 flex justify-center items-center"}>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    onClick={handleBookmark}
+                                    variant={"outline"}
+                                    size={"icon"}
+                                    className={cn(
+                                        "text-muted hover:bg-primary hover:text-primary-foreground",
+                                        {
+                                            "bg-primary text-primary-foreground":
+                                                isBookmarked,
+                                        },
+                                    )}
+                                >
+                                    {isBookmarked ? (
+                                        <TbBookmarkFilled size={25} />
+                                    ) : (
+                                        <TbBookmark size={25} />
+                                    )}
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Save this film</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </div>
             </div>
-            <div className={'min-w-20 flex justify-center items-center'}>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button onClick={handleBookmark} variant={'outline'} size={'icon'}
-                                    className={cn('text-muted hover:bg-primary hover:text-primary-foreground', {
-                                        "bg-primary text-primary-foreground": isBookmarked
-                                    })}>
-                                {
-                                    isBookmarked ? <TbBookmarkFilled size={25} />:<TbBookmark size={25} />
-                                }
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Save this film</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            </div>
-        </div>
-    </>;
+        </>
+    );
 }

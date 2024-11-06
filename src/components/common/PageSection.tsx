@@ -7,7 +7,12 @@ type Props = {
     rightHeadingComp?: any;
 };
 
-export default function PageSection({ heading, Icon, children, rightHeadingComp }: Props) {
+export default function PageSection({
+    heading,
+    Icon,
+    children,
+    rightHeadingComp,
+}: Props) {
     return (
         <section className={"flex flex-col gap-default_spacing"}>
             <div className="flex justify-between">

@@ -40,13 +40,16 @@ export default function AuthPopup() {
                     const userRef = doc(db, dbCollectionName.USERS, user.uid);
                     const userSnapshot = await getDoc(userRef);
 
-                    Cookies.set('user_id', `${user.uid}`);
+                    Cookies.set("user_id", `${user.uid}`);
 
                     if (userSnapshot.exists()) {
                         await getAuthDependencies(user?.uid as string);
                         setLoading(false);
                     } else {
-                        const displayName = user?.displayName && user?.displayName?.length > 17 ? user.displayName.slice(0, 17) : user.displayName || "user-" + Date.now();
+                        const displayName =
+                            user?.displayName && user?.displayName?.length > 17
+                                ? user.displayName.slice(0, 17)
+                                : user.displayName || "user-" + Date.now();
 
                         await createNewUser({
                             email: user.email,
@@ -59,7 +62,7 @@ export default function AuthPopup() {
                             last_seen: firebaseTimeStamp(),
                             username: "user-" + Date.now(),
                         });
-                        
+
                         setLoading(false);
                         window.location.reload();
                     }
@@ -94,13 +97,13 @@ export default function AuthPopup() {
 
             const washingtonRef = doc(db, dbCollectionName.USERS, user?._id);
             await updateDoc(washingtonRef, {
-                display_name: displayName
+                display_name: displayName,
             });
             await getAuthDependencies(user._id);
 
             setLoading(false);
         }
-    }
+    };
 
     if (!show_login) {
         return null;
@@ -178,15 +181,23 @@ export default function AuthPopup() {
     );
 }
 
-const EachMethod = ({ onClick, children }: { onClick: () => void; children: any }) => {
-    return <>
-        <button
-            onClick={onClick}
-            className={
-                "flex justify-center gap-default_spacing items-center bg-white/50 w-full rounded-lg py-default_spacing hover:bg-white/70"
-            }
-        >
-            {children}
-        </button>
-    </>
-}
+const EachMethod = ({
+    onClick,
+    children,
+}: {
+    onClick: () => void;
+    children: any;
+}) => {
+    return (
+        <>
+            <button
+                onClick={onClick}
+                className={
+                    "flex justify-center gap-default_spacing items-center bg-white/50 w-full rounded-lg py-default_spacing hover:bg-white/70"
+                }
+            >
+                {children}
+            </button>
+        </>
+    );
+};

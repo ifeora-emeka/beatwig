@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     description: "#1 online community. Watch live sports and stream movie",
 };
 
-export default function RootLayout(props: Readonly<{
-    children: React.ReactNode;
-}>) {
-    const {
-        children,
-    } = props;
-    
+export default function RootLayout(
+    props: Readonly<{
+        children: React.ReactNode;
+    }>,
+) {
+    const { children } = props;
+
     return (
         <html
             lang="en"

@@ -97,9 +97,9 @@ export default function FootballComments({}: Props) {
 
     useEffect(() => {
         const scrollToBottom = () => {
-            const endDiv = document.getElementById('end');
+            const endDiv = document.getElementById("end");
             if (endDiv) {
-                endDiv.scrollIntoView({ behavior: 'smooth' });
+                endDiv.scrollIntoView({ behavior: "smooth" });
             }
         };
 
@@ -158,9 +158,13 @@ export default function FootballComments({}: Props) {
                             <ChatBobble key={chat._id} data={chat} isPending />
                         );
                     })}
-                    <div id={'end'} />
+                    <div id={"end"} />
                 </div>
-                <div className={"p-default_spacing bg-card flex fixed md:relative bottom-0 w-full md:rounded-lg md:w-auto"}>
+                <div
+                    className={
+                        "p-default_spacing bg-card flex fixed md:relative bottom-0 w-full md:rounded-lg md:w-auto"
+                    }
+                >
                     <ChatInput onSend={sendMessage} />
                 </div>
             </div>
