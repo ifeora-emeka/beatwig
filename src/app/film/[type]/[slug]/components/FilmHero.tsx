@@ -188,7 +188,7 @@ export default function FilmHero({
                         </Tooltip>
 
                         <Link
-                            href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
+                            href={`/film/${type}/${slug}/watch${type?.includes("tv") ? `?season=1&episode=1` : ``}`}
                             className={
                                 "flex items-center bg-secondary px-3 py-2 rounded-md text-secondary-foreground"
                             }

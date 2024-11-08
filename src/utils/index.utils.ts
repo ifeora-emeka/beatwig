@@ -1,5 +1,4 @@
 export function shuffleArray(array: any[]) {
-    console.log("SHUFFLING ARRAY :::", array)
     if(!array) {
         return []
     }

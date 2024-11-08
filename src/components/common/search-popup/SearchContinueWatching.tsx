@@ -11,7 +11,7 @@ export default function SearchContinueWatching() {
             <div className="bg-card rounded-xl p-default_spacing shadow-md">
                 <PageSection Icon={Popcorn} heading={"Continue watching"}>
                     <EachResultLoading />
-                    <EachResult />
+                    {/* <EachResult  /> */}
                 </PageSection>
             </div>
         </>
