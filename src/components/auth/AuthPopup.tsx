@@ -128,7 +128,7 @@ export default function AuthPopup() {
                 {!user && (
                     <>
                         <center className={"py-default_spacing_lg"}>
-                            <h3 className={"text-muted"}>Login / Register</h3>
+                            <h3 className={"text-muted text-xl"}>Login / Register</h3>
                         </center>
                         <EachMethod onClick={handleGoogleAuth}>
                             <BiLogoGoogle size={25} /> With Google

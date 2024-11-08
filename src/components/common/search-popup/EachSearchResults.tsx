@@ -1,17 +1,20 @@
+'use client';
 import PageSection from "@/components/common/PageSection";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Tv } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FilmData } from "@/types/film.types";
 import { useAppContext } from "@/context/app.context";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
+
 interface Props {
     Icon: any;
     heading: string;
     isLoading?: boolean;
     list: FilmData[];
+    placeholderText: string;
 }
 
 export default function EachSearchResults({
@@ -19,26 +22,68 @@ export default function EachSearchResults({
     Icon,
     list,
     isLoading,
+    placeholderText
 }: Props) {
     const { setAppContextState } = useAppContext();
     const [showMore, setShowMore] = useState(false);
+    const limit = 5;
+    const id = crypto.randomUUID();
+
+    const smoothScrollToID = () => {
+        const element = document.getElementById(`${id}`);
+        if (element) {
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    }
+
+    const toggleMore = () => {
+        if(showMore) {
+            smoothScrollToID();
+        }
+        setShowMore(!showMore);
+    }
 
     return (
-        <div className="bg-card rounded-xl p-default_spacing shadow-md">
+        <div className="bg-card rounded-xl p-default_spacing shadow-md" id={id}>
             <PageSection
                 Icon={Icon}
                 heading={heading}
             >
                 <div>
                     {isLoading &&
-                        new Array(4).fill(null).map((_) => {
-                            return <EachResultLoading />;
+                        new Array(4).fill(null).map((_, index) => {
+                            return <EachResultLoading key={`result-loading-${index}`} />;
                         })}
                     {!isLoading &&
                         list.map((data, index) => {
-                            if (index < 4) {
+                            if(!showMore) {
+                                if (index < limit) {
+                                    return (
+                                        <Link
+                                            key={`result--${index}`}
+                                            prefetch
+                                            href={`/film${data.slug}`}
+                                            onClick={() =>
+                                                setAppContextState({
+                                                    showSearch: false,
+                                                })
+                                            }
+                                        >
+                                            <EachResult
+                                                title={data.title}
+                                                subTitle={data.overview || ""}
+                                                imgURL={data.poster || ""}
+                                            />
+                                        </Link>
+                                    );
+                                }
+                            } else {
                                 return (
                                     <Link
+                                        key={`result--${index}`}
                                         prefetch
                                         href={`/film${data.slug}`}
                                         onClick={() =>
@@ -57,10 +102,11 @@ export default function EachSearchResults({
                             }
                         })}
                 </div>
-                {list.length > 5 ? (
+                {!isLoading && list.length === 0 && <ResultEmpty text={placeholderText} />}
+                {list.length > limit ? (
                     <div className={`text-center`}>
-                        <button className={"hover:text-primary"} onClick={() => setShowMore(true)}>
-                            Show More
+                        <button className={"hover:text-primary"} onClick={toggleMore}>
+                            {showMore ? "Show Less": "Show More"}
                         </button>
                     </div>
                 ) : null}
@@ -82,17 +128,17 @@ export const EachResult = ({
 
     useEffect(() => {
         setShow(true)
-    },[])
+    }, [])
 
     return (
         <>
-            <div className={cn("bg-card p-default_spacing rounded-lg border-t hover:bg-hover flex gap-default_spacing cursor-pointer text-muted hover:text-foreground hover:shadow-md group transition-opacity duration-500", {
+            <div className={cn("bg-card p-default_spacing rounded-lg border-t hover:bg-hover flex gap-default_spacing cursor-pointer text-muted hover:text-foreground hover:shadow-md group transition-opacity duration-500 hover:z-50", {
                 "opacity-100": show,
                 "opacity-0": !show,
             })}>
                 <div className="flex gap-default_spacing max-w-[90%] truncate flex-1">
                     <div
-                        className={` min-h-14 min-w-11 bg-cover bg-center rounded-md`}
+                        className={` min-h-14 min-w-11 bg-cover bg-center rounded-md bg-background`}
                         style={{
                             backgroundImage: `url(${imgURL})`,
                         }}
@@ -117,11 +163,11 @@ export const EachResultLoading = () => {
 
     useEffect(() => {
         setShow(true)
-    },[])
+    }, [])
 
     return (
         <>
-            <div className={cn("opacity-30 bg-card p-default_spacing rounded-lg border-t flex gap-default_spacing transition-all duration-500", {
+            <div className={cn("opacity-5 bg-card p-default_spacing rounded-lg border-t flex gap-default_spacing transition-all duration-500", {
                 "h-auto max-h-60 opacity-100": show,
                 "h-0 max-h-0 opacity-0": !show,
             })}>
@@ -132,7 +178,7 @@ export const EachResultLoading = () => {
                             <Skeleton className="h-4 w-[40%]" />
                         </h5>
                         <small className="text-muted truncate w-full">
-                            <Skeleton className="p-2 w-[70%]" />
+                            <Skeleton className="h-2 w-[70%]" />
                         </small>
                     </div>
                 </div>
@@ -141,3 +187,12 @@ export const EachResultLoading = () => {
         </>
     );
 };
+
+const ResultEmpty = ({ text }: { text: string }) => {
+    return <>
+        <div className="flex items-center justify-center min-h-80 w-full flex-col gap-default_spacing">
+            <Tv className="h-20 w-20" />
+            <h1 className="text-center">{`${text}`}</h1>
+        </div>
+    </>
+}

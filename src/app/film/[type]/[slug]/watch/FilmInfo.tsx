@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { TbBookmark, TbBookmarkFilled } from "react-icons/tb";
 import { FilmData, FilmType } from "@/types/film.types";
@@ -23,7 +22,6 @@ export default function FilmInfo({
     bookmarked: boolean;
     filmData: FilmData & { info: any };
 }) {
-    const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
     const [isBookmarked, setIsBookmarked] = useState(false);
@@ -100,22 +98,23 @@ export default function FilmInfo({
             >
                 <div
                     className={
-                        "relative h-20 w-20 min-w-20 min-h-20 rounded-xl overflow-hidden"
+                        "relative bg-cover bg-center h-32 w-20 min-w-20 min-h-20 rounded-xl overflow-hidden"
                     }
+                    style={{ backgroundImage: `url(${res.poster})` }}
                 >
-                    <Image
+                    {/* <Image
                         src={res.poster as any}
                         alt={res.title}
                         fill
                         className={"absolute"}
-                    />
+                    /> */}
                 </div>
                 <div
-                    className={"flex-1 truncate flex flex-col justify-between"}
+                    className={"flex-1 flex flex-col justify-between"}
                 >
                     <div className={"flex flex-col"}>
                         <h1 className={"text-xl"}>{res?.title}</h1>
-                        <p className={"truncate text-muted text-sm"}>
+                        <p className={"line-clamp-3 text-muted text-sm"}>
                             {res.overview}
                         </p>
                     </div>

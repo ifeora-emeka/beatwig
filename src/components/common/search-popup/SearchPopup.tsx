@@ -112,12 +112,14 @@ export default function SearchPopup() {
                                 )}
                             >
                                 <EachSearchResults
+                                    placeholderText={`Couldn't find any Movies for "${keyword}"`}
                                     isLoading={loading}
                                     list={searchData.movies}
                                     Icon={VideoIcon}
                                     heading={"Movies"}
                                 />
                                 <EachSearchResults
+                                    placeholderText={`Couldn't find any Tv Shows for "${keyword}"`}
                                     isLoading={loading}
                                     list={searchData.series}
                                     Icon={TvIcon}

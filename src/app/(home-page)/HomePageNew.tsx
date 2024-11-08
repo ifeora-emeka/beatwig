@@ -1,5 +1,4 @@
 "use client";
-
 import { TbBookmark, TbSearch } from "react-icons/tb";
 import { useAuthContext } from "@/context/auth.context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,11 +14,20 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next13-progressbar";
 
+
 export default function HomePageNew() {
-    const { user } = useAuthContext();
+    const { user, setAuthContextState } = useAuthContext();
     const { setAppContextState } = useAppContext();
     const { setTheme, theme } = useTheme();
     const router = useRouter();
+
+    const openBookmark = () => {
+        if (!user) {
+            setAuthContextState({ show_login: true });
+        } else {
+            router.push(`/user/${user._id}/bookmarks`);
+        }
+    };
 
     return (
         <>
@@ -56,20 +64,23 @@ export default function HomePageNew() {
                                 <p>Toggle theme</p>
                             </TooltipContent>
                         </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    size={"icon"}
-                                    variant="outline"
-                                    className="bg-inherit text-muted hover:bg-card hover:text-muted"
-                                >
-                                    <TbBookmark size={25} />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Your bookmarks</p>
-                            </TooltipContent>
-                        </Tooltip>
+                        {
+                            user && <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        onClick={openBookmark}
+                                        size={"icon"}
+                                        variant="outline"
+                                        className="bg-inherit text-muted hover:bg-card hover:text-muted"
+                                    >
+                                        <TbBookmark size={25} />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Your bookmarks</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        }
                         <Separator orientation="vertical" />
                         {user ? (
                             <Avatar>
@@ -84,6 +95,7 @@ export default function HomePageNew() {
                             </Avatar>
                         ) : (
                             <Button
+                                onClick={() => setAuthContextState({ show_login: true })}
                                 variant={"outline"}
                                 className="bg-inherit text-muted hover:bg-card hover:text-muted"
                             >

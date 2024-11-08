@@ -55,7 +55,6 @@ export default function FilmRecommendations({ data }: any) {
                                 >
                                     <EachFilmLg
                                         data={film}
-                                        key={crypto.randomUUID()}
                                     />
                                 </Link>
                             );
