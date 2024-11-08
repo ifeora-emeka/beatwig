@@ -56,6 +56,7 @@ export default async function Page(props: any) {
     const { params } = props;
 
     const head = cookies();
+    //@ts-ignore
     const user_id = head.get("user_id")?.value;
 
     let bookmark = await getFilmBookmark({
