@@ -8,8 +8,8 @@ import FilmRecommendations from "@/app/film/[type]/[slug]/components/FilmRecomme
 import HomeHeader from "@/components/common/HomeHeader";
 import { getFilmDetails } from "@/app/api/public/film/film.api";
 import { Metadata, ResolvingMetadata } from "next";
-import { getFilmBookmark } from "@/firebase/film.firebase";
-import { cookies, headers } from "next/headers";
+// import { getFilmBookmark } from "@/firebase/film.firebase";
+// import { cookies, headers } from "next/headers";
 
 export async function generateMetadata(
     { params, searchParams }: any,
@@ -37,13 +37,13 @@ export async function generateMetadata(
 export default async function Page(props: any) {
     const { params } = props;
 
-    const head = cookies();
-    const user_id = head.get("user_id")?.value;
+    // const head = cookies();
+    // const user_id = head.get("user_id")?.value;
 
-    let bookmark = await getFilmBookmark({
-        film_id: params.slug as string,
-        user_id: user_id as string,
-    });
+    // let bookmark = await getFilmBookmark({
+    //     film_id: params.slug as string,
+    //     user_id: user_id as string,
+    // });
 
     let res = await getFilmDetails({
         film_type: params.type,
@@ -64,7 +64,7 @@ export default async function Page(props: any) {
                     <div className={"flex flex-col gap-default_spacing"}>
                         <FilmHero
                             data={res}
-                            bookmarked={bookmark?.id ? true : false}
+                            // bookmarked={bookmark?.id ? true : false}
                         />
                         <div
                             className={

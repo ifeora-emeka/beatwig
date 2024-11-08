@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { BiBookmark, BiPlay, BiSolidBookmark } from "react-icons/bi";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { createFilmBookmark, removeBookmark } from "@/firebase/film.firebase";
+import { createFilmBookmark, getFilmBookmark, removeBookmark } from "@/firebase/film.firebase";
 import { useAuthContext } from "@/context/auth.context";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -17,16 +17,27 @@ import { FilmType } from "@/types/film.types";
 
 export default function FilmHero({
     data,
-    bookmarked,
+    // bookmarked,
 }: {
     data: any;
-    bookmarked: boolean;
+    // bookmarked: boolean;
 }) {
     const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
     const [isBookmarked, setIsBookmarked] = useState(false);
+    const [bookmarked, setBookmarked] = useState(false);
     const { toast } = useToast();
+
+    const getBookmarks = async () => {
+        let bookmark = await getFilmBookmark({
+            film_id: slug as string,
+            user_id: user?._id as string,
+        });
+        if (bookmark?.id) {
+            setBookmarked(true);
+        }
+    }
 
     const handleBookmark = async () => {
         try {
@@ -83,6 +94,7 @@ export default function FilmHero({
 
     useEffect(() => {
         setShow(true);
+        getBookmarks()
     }, []);
 
     useEffect(() => {
