@@ -55,6 +55,7 @@ export default async function Page(props: any) {
 
     const { params } = props;
 
+    //@ts-ignore
     const head = cookies();
     //@ts-ignore
     const user_id = head.get("user_id")?.value;

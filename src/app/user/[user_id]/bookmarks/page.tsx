@@ -11,6 +11,7 @@ export default async function page() {
     const headers = cookies();
 
     let bookmarks = await getAllUserBookmarks(
+        //@ts-ignore
         headers.get("user_id")?.value as string,
     );
 
