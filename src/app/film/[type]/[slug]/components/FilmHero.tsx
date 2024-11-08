@@ -8,15 +8,25 @@ import { useAuthContext } from "@/context/auth.context";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { FilmType } from "@/types/film.types";
 
-export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: boolean }) {
+export default function FilmHero({
+    data,
+    bookmarked,
+}: {
+    data: any;
+    bookmarked: boolean;
+}) {
     const [show, setShow] = useState(false);
     const { slug, type } = useParams();
     const { user, setAuthContextState } = useAuthContext();
     const [isBookmarked, setIsBookmarked] = useState(false);
-    const { toast } = useToast()
+    const { toast } = useToast();
 
     const handleBookmark = async () => {
         try {
@@ -27,17 +37,20 @@ export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: 
                         title: "Bookmark removed",
                         description: "Film removed from bookmarks",
                         duration: 3000,
-                        variant: 'default'
-                    })
-                    await removeBookmark({ film_id: slug as string, user_id: user?._id });
-                }else {
+                        variant: "default",
+                    });
+                    await removeBookmark({
+                        film_id: slug as string,
+                        user_id: user?._id,
+                    });
+                } else {
                     setIsBookmarked(true);
                     toast({
                         title: "Bookmark",
                         description: "Film bookmarked successfully",
                         duration: 3000,
-                        variant: 'default'
-                    })
+                        variant: "default",
+                    });
                     await createFilmBookmark({
                         filmData: {
                             poster: data.backdrop,
@@ -46,35 +59,37 @@ export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: 
                             title: data.title,
                             type: type as FilmType,
                             film_id: slug as string,
-                            overview: data.overview
-                        }, user_id: user?._id, user_ref: user.ref
+                            overview: data.overview,
+                        },
+                        user_id: user?._id,
+                        user_ref: user.ref,
                     });
                 }
             } else {
-                setAuthContextState({ show_login: true })
+                setAuthContextState({ show_login: true });
             }
         } catch (error) {
             toast({
                 title: "Bookmark Error",
                 description: "Error, please try again!",
                 duration: 5000,
-                variant: 'destructive'
-            })
+                variant: "destructive",
+            });
             setIsBookmarked(false);
-            console.log('ERROR::', error)
-            alert('An error occurred while bookmarking this film')
+            console.log("ERROR::", error);
+            alert("An error occurred while bookmarking this film");
         }
-    }
+    };
 
     useEffect(() => {
         setShow(true);
-    },[]);
+    }, []);
 
     useEffect(() => {
         setIsBookmarked(bookmarked);
-    }, [bookmarked])
+    }, [bookmarked]);
 
-    if(!show) {
+    if (!show) {
         return null;
     }
 
@@ -109,13 +124,23 @@ export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: 
                                 "flex items-center gap-default_spacing text-xs text-muted"
                             }
                         >
-                            <div className={"border px-3 py-1 rounded-sm text-card-foreground"}>
+                            <div
+                                className={
+                                    "border px-3 py-1 rounded-sm text-card-foreground"
+                                }
+                            >
                                 {data?.certification}
                             </div>
-                            <div className='text-card-foreground'>{data?.release}</div>
-                            <div className=" text-card-foreground">{data?.runtime}</div>
+                            <div className="text-card-foreground">
+                                {data?.release}
+                            </div>
+                            <div className=" text-card-foreground">
+                                {data?.runtime}
+                            </div>
                         </div>
-                        <h1 className={"text-3xl mb-2 text-card-foreground"}>{data?.title}</h1>
+                        <h1 className={"text-3xl mb-2 text-card-foreground"}>
+                            {data?.title}
+                        </h1>
                         <div className={"flex gap-default_spacing flex-wrap "}>
                             {data?.genres?.map((genre: any) => {
                                 return (
@@ -136,25 +161,37 @@ export default function FilmHero({ data, bookmarked }: { data: any; bookmarked: 
                             <TooltipTrigger>
                                 <button
                                     onClick={handleBookmark}
-                                    className={
-                                        cn("rounded-full dark:text-card-foreground text-muted text-xl h-11 w-11 flex items-center justify-center hover:bg-primary bg-border", {
-                                            "bg-primary text-white": isBookmarked
-                                        })
-                                    }
+                                    className={cn(
+                                        "rounded-full dark:text-card-foreground text-muted text-xl h-11 w-11 flex items-center justify-center hover:bg-primary bg-border",
+                                        {
+                                            "bg-primary text-white":
+                                                isBookmarked,
+                                        },
+                                    )}
                                 >
-                                    {
-                                        isBookmarked ? <BiSolidBookmark size={20} className='text-white' /> : <BiBookmark size={20} className="text-muted" />
-                                    }
+                                    {isBookmarked ? (
+                                        <BiSolidBookmark
+                                            size={20}
+                                            className="text-white"
+                                        />
+                                    ) : (
+                                        <BiBookmark
+                                            size={20}
+                                            className="text-muted"
+                                        />
+                                    )}
                                 </button>
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Bookmark this</p>
                             </TooltipContent>
                         </Tooltip>
-                        
+
                         <Link
                             href={`/film/${type}/${slug}/watch${type.includes("tv") ? `?season=1&episode=1` : ``}`}
-                            className={"flex items-center bg-secondary px-3 py-2 rounded-md text-secondary-foreground"}
+                            className={
+                                "flex items-center bg-secondary px-3 py-2 rounded-md text-secondary-foreground"
+                            }
                             role={"button"}
                         >
                             <div>

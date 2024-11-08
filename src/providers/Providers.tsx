@@ -7,15 +7,14 @@ import { MatchProvider } from "@/context/match.context";
 import { AuthProvider } from "@/context/auth.context";
 import AuthPopup from "@/components/auth/AuthPopup";
 import { AppProvider } from "@/context/app.context";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
-import SearchPopup from "@/components/common/SearchPopup";
-
+} from "@/components/ui/tooltip";
+import SearchPopup from "@/components/common/search-popup/SearchPopup";
 
 export default function Providers({ children }: any) {
     return (
@@ -38,7 +37,7 @@ export default function Providers({ children }: any) {
                         <AuthProvider>
                             <MatchProvider>
                                 <AuthPopup />
-                                <SearchPopup />
+
                                 {children}
                             </MatchProvider>
                         </AuthProvider>

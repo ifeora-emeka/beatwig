@@ -2,7 +2,13 @@
 import { Card } from "@/components/ui/card";
 import React, { useEffect, useState } from "react";
 import BrandLogo from "./BrandLogo";
-import { SearchIcon, User, SunIcon, BookmarkIcon, MoonIcon } from "lucide-react";
+import {
+    SearchIcon,
+    User,
+    SunIcon,
+    BookmarkIcon,
+    MoonIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next13-progressbar";
 import { useAuthContext } from "@/context/auth.context";
@@ -21,46 +27,44 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
-
 type Props = {};
 
-export default function HomeHeader({ }: Props) {
+export default function HomeHeader({}: Props) {
     const router = useRouter();
     const [show, setShow] = useState(false);
     const auth = getAuth();
     const { setTheme, theme } = useTheme();
     const { user, setAuthContextState } = useAuthContext();
 
-    const {
-        setAppContextState,
-    } = useAppContext();
+    const { setAppContextState } = useAppContext();
 
     const logout = async () => {
-        signOut(auth).then(() => {
-            setAuthContextState({
-                user: null,
+        signOut(auth)
+            .then(() => {
+                setAuthContextState({
+                    user: null,
+                });
             })
-        }).catch((error) => {
-            alert("An error happened.");
-        });
-    }
+            .catch((error) => {
+                alert("An error happened.");
+            });
+    };
 
     const openBookmark = () => {
         if (!user) {
-            setAuthContextState({ show_login: true })
-        }else {
+            setAuthContextState({ show_login: true });
+        } else {
             router.push(`/user/${user._id}/bookmarks`);
         }
-    }
+    };
 
     useEffect(() => {
         setShow(true);
-    }, [])
+    }, []);
 
     if (!show) {
         return null;
     }
-
 
     return (
         <>
@@ -72,7 +76,9 @@ export default function HomeHeader({ }: Props) {
                     <Tooltip>
                         <TooltipTrigger>
                             <Button
-                                onClick={() => setAppContextState({ showSearch: true })}
+                                onClick={() =>
+                                    setAppContextState({ showSearch: true })
+                                }
                                 variant="outline"
                                 size="icon"
                                 className="bg-inherit text-muted hover:bg-card hover:text-muted"
@@ -104,14 +110,20 @@ export default function HomeHeader({ }: Props) {
                     <Tooltip>
                         <TooltipTrigger>
                             <Button
-                                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                                onClick={() =>
+                                    setTheme(
+                                        theme === "dark" ? "light" : "dark",
+                                    )
+                                }
                                 variant="outline"
                                 size="icon"
                                 className="bg-inherit text-muted hover:bg-card hover:text-muted"
                             >
-                                {
-                                    theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />
-                                }
+                                {theme === "dark" ? (
+                                    <SunIcon className="h-5 w-5" />
+                                ) : (
+                                    <MoonIcon className="h-5 w-5" />
+                                )}
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -128,23 +140,28 @@ export default function HomeHeader({ }: Props) {
                                     }
                                 >
                                     <Image
-                                        src={user?.avatar_url || ''}
-                                        alt={user?.display_name || 'no display name'}
+                                        src={user?.avatar_url || ""}
+                                        alt={
+                                            user?.display_name ||
+                                            "no display name"
+                                        }
                                         width={70}
                                         height={70}
                                     />
                                 </div>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className={'bg-card text-muted'}>
-                                {
-                                    process.env.NODE_ENV !== "production" && <DropdownMenuItem>
+                            <DropdownMenuContent
+                                className={"bg-card text-muted"}
+                            >
+                                {process.env.NODE_ENV !== "production" && (
+                                    <DropdownMenuItem>
                                         <BiUser
                                             size={20}
                                             className={"text-muted"}
                                         />
                                         My Account
                                     </DropdownMenuItem>
-                                }
+                                )}
                                 <DropdownMenuSeparator
                                     className={"bg-border"}
                                 />
@@ -159,7 +176,9 @@ export default function HomeHeader({ }: Props) {
                         </DropdownMenu>
                     ) : (
                         <Button
-                            onClick={() => setAuthContextState({ show_login: true })}
+                            onClick={() =>
+                                setAuthContextState({ show_login: true })
+                            }
                             variant="outline"
                             size="icon"
                             className="bg-inherit text-muted hover:bg-card hover:text-muted"

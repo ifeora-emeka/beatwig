@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { SportTournament } from "@/types/sports.types";
 import { RadioTower } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -48,7 +48,9 @@ export default function EachSportCompetition({
                         >
                             <article
                                 key={crypto.randomUUID()}
-                                className={"border-t hover:bg-hover text-card-foreground hover:shadow-sm"}
+                                className={
+                                    "border-t hover:bg-hover text-card-foreground hover:shadow-sm"
+                                }
                             >
                                 <div className={"flex items-center"}>
                                     <div

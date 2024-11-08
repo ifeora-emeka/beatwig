@@ -19,14 +19,12 @@ export default async function Page() {
     const res = await axios(`${baseUrl}/api/public/sports/football`);
     let lineups = res.data.lineupData;
 
-    let liveTournaments:SportTournament[] = [];
+    let liveTournaments: SportTournament[] = [];
 
     let allLives: SportTournament[] = [];
 
-    lineups?.forEach((lineup:SportTournament) => {
-        let lives = lineup.lineups.filter(
-            (x) => x.startTime === "LIVE",
-        );
+    lineups?.forEach((lineup: SportTournament) => {
+        let lives = lineup.lineups.filter((x) => x.startTime === "LIVE");
         if (lives.length > 0) {
             allLives.push(lineup);
         }
@@ -58,7 +56,7 @@ export default async function Page() {
 
                 <PageSection Icon={BiCalendar} heading={`Today's lineup`}>
                     {lineups &&
-                        lineups?.map((data:SportTournament) => {
+                        lineups?.map((data: SportTournament) => {
                             return (
                                 <EachSportCompetition
                                     data={data}

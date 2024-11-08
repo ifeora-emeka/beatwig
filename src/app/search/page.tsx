@@ -8,7 +8,6 @@ import React from "react";
 import Container from "@/components/common/Container";
 
 export default async function Page(props: any) {
-    console.log("THE PROPS::", props);
     const { searchParams } = props;
 
     let series = await scrapeSearch({
@@ -33,7 +32,8 @@ export default async function Page(props: any) {
                             <HomeHeader />
 
                             <h1 className={"text-muted text-xl"}>
-                                Result for: <strong>{`"${searchParams.q}"`}</strong>
+                                Result for:{" "}
+                                <strong>{`"${searchParams.q}"`}</strong>
                             </h1>
 
                             <PageSection Icon={VideoIcon} heading={"Movies"}>

@@ -8,6 +8,7 @@ interface AppState {
 interface AppContextType {
     appState: AppState;
     setAppContextState: (newState: Partial<AppState>) => void;
+    saveSearchHistory: (keyword: string) => void;
 }
 
 const initialAppState: AppState = {
@@ -34,9 +35,19 @@ export const AppProvider = ({ children }: any) => {
         }));
     };
 
+    const saveSearchHistory = (keyword: string) => {
+        const searchHistory = localStorage.getItem("searchHistory") || "";
+        const history = searchHistory.split(",").filter(Boolean);
+        if (!history.includes(keyword)) {
+            const newHistory = [keyword, ...history].slice(0, 5);
+            localStorage.setItem("searchHistory", newHistory.join(","));
+        }
+    };
+
     const contextValue: AppContextType = {
         appState: state,
         setAppContextState,
+        saveSearchHistory,
     };
 
     return (

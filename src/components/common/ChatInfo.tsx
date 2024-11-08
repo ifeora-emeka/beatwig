@@ -34,9 +34,11 @@ export default function ChatInfo({ data }: Props) {
                 <div className={"flex flex-col items-center"}>
                     <div className={"flex items-center gap-default_spacing"}>
                         <small className={"text-muted"}>
-                            {data?.sender?._id == user?._id ? "You" : data.sender?.display_name}
+                            {data?.sender?._id == user?._id
+                                ? "You"
+                                : data.sender?.display_name}
                         </small>
-                        <small className={'text-muted'}>{data.content}</small>
+                        <small className={"text-muted"}>{data.content}</small>
                     </div>
                 </div>
             </div>
