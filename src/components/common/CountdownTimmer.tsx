@@ -21,7 +21,7 @@ const CountdownTimer: React.FC<Props> = ({ matchStartTime, done, overdue }) => {
     useEffect(() => {
         const { date, time } = matchStartTime;
         const [day, month, year] = date?.split(".")?.map(Number);
-        const [hours, minutes] = time?.split(":")?.map(Number);
+        const [hours, minutes] = time ? time?.split(":")?.map(Number) : [0, 0];
 
         const matchStartDateTime = new Date(
             year,
