@@ -19,7 +19,7 @@ export async function POST(request: NextRequest, route: any) {
     try {
         let data = await request.json();
         const { match_id } = data;
-        const url = `https://v1.givemeredditstreams.me/football/event/${match_id}`;
+        const url = `https://pre.givemeredditstreams.me/football/event/${match_id}`;
         const { data: html } = await axios.get(url);
 
         const $ = cheerio.load(html);

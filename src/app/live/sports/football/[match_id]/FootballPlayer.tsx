@@ -15,6 +15,7 @@ type Props = {
 
 export default function FootballPlayer({ data }: Props) {
     const { match_id } = useParams();
+    console.log('THE DATA:::', data);
     const [activeLink, setActiveLink] = useState(data?.stream_url || "");
 
     useEffect(() => {
@@ -71,7 +72,6 @@ export default function FootballPlayer({ data }: Props) {
                             {/*    allowFullScreen*/}
                             {/*    allowTransparency*/}
                             {/*/>*/}
-                            {activeLink ? (
                                 <iframe
                                     // @ts-ignore
                                     scrolling="no"
@@ -84,18 +84,16 @@ export default function FootballPlayer({ data }: Props) {
                                     allowTransparency
                                     className="lg:rounded-lg"
                                 />
-                            ) : (
-                                <div
-                                    className={
-                                        "h-full w-full flex justify-center items-center"
-                                    }
-                                >
-                                    <p>
-                                        Live streaming will start by{" "}
-                                        {data?.startTime.time}
-                                    </p>
-                                </div>
-                            )}
+                                {/*<div*/}
+                                {/*    className={*/}
+                                {/*        "h-full w-full flex justify-center items-center"*/}
+                                {/*    }*/}
+                                {/*>*/}
+                                {/*    <p>*/}
+                                {/*        Live streaming will start by{" "}*/}
+                                {/*        {data?.startTime.time}*/}
+                                {/*    </p>*/}
+                                {/*</div>*/}
                         </div>
                         <div
                             className={
